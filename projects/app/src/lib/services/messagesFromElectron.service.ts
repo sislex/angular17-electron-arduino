@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {IpcService} from './ipc.service';
-import {setUsbList} from '../state/usb/usb.actions';
-import {IMessage} from '../state/messages/messages.reducer';
+import {IMessage} from '../+state/messages/messages.reducer';
+import {setUsbList} from '../+state/usb/usb.actions';
 
 @Injectable({
   providedIn: 'root'
