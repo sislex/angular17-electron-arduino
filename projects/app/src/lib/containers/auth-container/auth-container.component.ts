@@ -26,7 +26,7 @@ export class AuthContainerComponent {
 
   events($event: any) {
     // console.log($event);
-    if ($event.event === 'UsbListComponent:BUTTON_CLICKED') {
+    if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED') {
       this.store.dispatch(setAndSaveUser({user: $event.data.user}));
     }
   }

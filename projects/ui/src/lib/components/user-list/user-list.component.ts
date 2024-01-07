@@ -21,7 +21,7 @@ export class UserListComponent {
 
   buttonClicked(user: IUser) {
     this.emitter.emit({
-      event: 'UsbListComponent:BUTTON_CLICKED',
+      event: 'UsbListContainerComponent:BUTTON_CLICKED',
       data: {user},
     });
   }

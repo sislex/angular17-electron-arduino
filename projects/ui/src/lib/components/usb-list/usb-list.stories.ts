@@ -27,7 +27,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 const meta: Meta<UsbListComponent> = {
-  title: 'UI Components/UsbListComponent',
+  title: 'UI Components/UsbListContainerComponent',
   component: UsbListComponent,
   decorators: [
     moduleMetadata({
