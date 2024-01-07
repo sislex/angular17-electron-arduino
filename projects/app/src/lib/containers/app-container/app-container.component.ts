@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import {StateModule} from '../../+state/state.module';
-import {RouterOutlet} from '@angular/router';
+import { AppLayoutComponent } from '../../../../../ui/src/public-api';
 
 @Component({
   selector: 'app-container',
   standalone: true,
-  imports: [StateModule, RouterOutlet],
+  imports: [AppLayoutComponent],
   templateUrl: './app-container.component.html',
   styleUrl: './app-container.component.scss'
 })

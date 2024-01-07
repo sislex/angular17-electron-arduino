@@ -15,13 +15,13 @@ import {ConfigEffects} from './+state/config/config.effects';
 import {AccountEffects} from './+state/account/account.effects';
 import {MessagesEffects} from './+state/messages/messages.effects';
 import {UsbEffects} from './+state/usb/usb.effects';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouterStore(),
     provideStore({}),
     provideStoreDevtools(),
-
     IpcService,
     provideState('router', routerReducer),
     provideState(CONFIG_FEATURE_KEY, configReducer),
@@ -29,10 +29,11 @@ export const appConfig: ApplicationConfig = {
     provideState(MESSAGES_FEATURE_KEY, messagesReducer),
     provideState(USB_FEATURE_KEY, usbReducer),
     provideEffects([
-      ConfigEffects,
-      AccountEffects,
-      MessagesEffects,
-      UsbEffects,
+        ConfigEffects,
+        AccountEffects,
+        MessagesEffects,
+        UsbEffects,
     ]),
-  ]
+    provideAnimations()
+]
 };
