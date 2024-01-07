@@ -8,7 +8,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const meta: Meta<NavPanelComponent> = {
-  title: 'UI Components/NavPanelComponent',
+  title: 'UI Components/NavPanelContainerComponent',
   component: NavPanelComponent,
   decorators: [
     moduleMetadata({

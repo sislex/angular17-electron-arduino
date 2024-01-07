@@ -1,3 +1,8 @@
-<app-layout>
-  <p>app-container works!</p>
-</app-layout>
+<h100-layout>
+  @if (!(isUserLogin$ | async)) {
+    <auth-container></auth-container>
+  }
+  @if (isUserLogin$ | async) {
+    <main-container></main-container>
+  }
+</h100-layout>

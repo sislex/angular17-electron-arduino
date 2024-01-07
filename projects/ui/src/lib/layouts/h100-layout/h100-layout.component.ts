@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'h100-layout',
   standalone: true,
-  templateUrl: './app-layout.component.html',
-  styleUrls: ['./app-layout.component.scss'],
+  templateUrl: './h100-layout.component.html',
+  styleUrls: ['./h100-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppLayoutComponent {
+export class H100LayoutComponent {
 
 }

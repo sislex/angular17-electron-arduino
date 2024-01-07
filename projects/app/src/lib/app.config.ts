@@ -1,9 +1,7 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
 
 import {provideState, provideStore} from '@ngrx/store';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
-import {appRoutes} from './app.routes';
 import {IpcService} from './services/ipc.service';
 import {provideRouterStore, routerReducer} from '@ngrx/router-store';
 import {CONFIG_FEATURE_KEY, configReducer} from './+state/config/config.reducer';

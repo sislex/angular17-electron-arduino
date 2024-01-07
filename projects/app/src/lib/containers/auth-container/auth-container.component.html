@@ -1,1 +1,1 @@
-<p>auth-container works!</p>
+<user-list [users]="getUserList$ | async" (emitter)="events($event)"></user-list>
