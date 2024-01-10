@@ -7,9 +7,7 @@
   <button mat-icon-button class="example-icon favorite-icon">
     <mat-icon>settings</mat-icon>
   </button>
-  <button [matMenuTriggerFor]="account"  mat-icon-button class="example-icon">
-    <mat-icon>account_circle</mat-icon>
-  </button>
+  <account-menu event="note"></account-menu>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item>
@@ -25,11 +23,5 @@
       <span>Disable alerts</span>
     </button>
   </mat-menu>
-
-  <mat-menu #account="matMenu">
-    <button mat-menu-item (click)="buttonClicked('Sign out')">
-      <mat-icon>logout</mat-icon>
-      <span>Sign out</span>
-    </button>
-  </mat-menu>
+ 
 </mat-toolbar>

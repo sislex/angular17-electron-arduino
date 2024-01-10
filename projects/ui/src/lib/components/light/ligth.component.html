@@ -1,0 +1,21 @@
+<!-- <button (click)='click()'>
+    Light {{ light ? 'ON' : 'OFF' }} 
+</button> -->
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+        <mat-icon>
+            {{light ? 'circle' : 'light_mode'}}
+        </mat-icon>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-icon>auto_awesome</mat-icon>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <button (click)="buttonClick('switch')" >
+            Light {{ light ? 'ON' : 'OFF' }} 
+        </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <button (click)="buttonClick('blink')">Blink</button>
+    </mat-grid-tile>
+</mat-grid-list>
