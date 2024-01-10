@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
@@ -16,16 +16,10 @@ import { AccountMenuComponent } from '../account-menu/account-menu.component';
     MatButtonModule,
     AccountMenuComponent
   ],
-  styleUrls: ['./nav-panel.component.scss']
+  styleUrls: ['./nav-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavPanelComponent {
   @Input() message: string = '';
   @Output() emitter = new EventEmitter();
-
-  buttonClicked(note: string) {
-    this.emitter.emit({
-      event: 'NavPanelContainerComponent:BUTTON_CLICKED',
-      data: {note},
-    });
-  }
 }

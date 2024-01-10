@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 
 export interface ILog {
@@ -13,7 +13,8 @@ export interface ILog {
   standalone: true,
   imports: [MatTableModule],
   templateUrl: './logs.component.html',
-  styleUrl: './logs.component.scss'
+  styleUrl: './logs.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class LogsComponent {

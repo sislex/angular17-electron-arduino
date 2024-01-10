@@ -29,6 +29,7 @@ export class MessagesEffects {
                   message,
                 }
               }));
+              console.log(message);
               this.messagesFromElectronService.events(message);
             }
           });

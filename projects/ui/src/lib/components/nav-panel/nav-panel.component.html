@@ -7,7 +7,7 @@
   <button mat-icon-button class="example-icon favorite-icon">
     <mat-icon>settings</mat-icon>
   </button>
-  <account-menu event="note"></account-menu>
+  <account-menu (emitter)="emitter.emit($event)"></account-menu>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item>
@@ -23,5 +23,5 @@
       <span>Disable alerts</span>
     </button>
   </mat-menu>
- 
+
 </mat-toolbar>

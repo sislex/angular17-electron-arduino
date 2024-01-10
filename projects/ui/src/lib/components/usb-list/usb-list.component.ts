@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {IUsb} from '../../../../../app/src/lib/+state/usb/usb.reducer';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
@@ -15,7 +15,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatTableModule,
     MatButtonModule
   ],
-  styleUrls: ['./usb-list.component.scss']
+  styleUrls: ['./usb-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsbListComponent {
   @Input() usbList: IUsb[] | null = [];

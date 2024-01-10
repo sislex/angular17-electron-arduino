@@ -31,6 +31,7 @@ function createWindow(launchMode) {
   win.webContents.openDevTools();
 
   getMessages(channelName, (event, message) => {
+    console.log('getMessages');
     messagesHandlerFromWeb(message, { win, channelName });
   });
 

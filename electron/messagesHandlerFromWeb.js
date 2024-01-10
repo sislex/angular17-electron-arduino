@@ -11,6 +11,7 @@ function messagesHandlerFromWeb(json, note) {
   const data = messageObj.data;
   if (event === 'GET_USB_DEVICES') {
     getSerialPortList().then((ports) => {
+      console.log(ports);
       sendMessage(note.win, note.channelName, JSON.stringify({ event: 'USB_DEVICES', data: ports }));
     });
   } else if (event === 'CONNECT_USB_DEVICE') {

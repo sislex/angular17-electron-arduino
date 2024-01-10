@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {getUsbList} from '../../+state/usb/usb.selectors';
 import {sendMessage} from '../../+state/messages/messages.actions';
 import {AsyncPipe} from '@angular/common';
 import {UsbListComponent} from '../../../../../ui/src/lib/components/usb-list/usb-list.component';
+import {IUsb} from '../../+state/usb/usb.reducer';
 
 @Component({
   selector: 'usb-list-container',
@@ -21,7 +22,12 @@ export class UsbListContainerComponent {
 
   constructor(
     private readonly store: Store,
+    private cdr: ChangeDetectorRef,
   ) {
+    this.getUsbList$.subscribe((usbList: IUsb[]) => {
+      // Когда шлю данные в usbList, то они не отображаются в шаблоне, пока не вызову detectChanges()
+      setTimeout(() => {this.cdr.detectChanges();}, 0);
+    });
   }
 
   events($event: any) {

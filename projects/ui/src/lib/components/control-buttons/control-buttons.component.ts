@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 
@@ -7,14 +7,15 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './control-buttons.component.html',
-  styleUrl: './control-buttons.component.scss'
+  styleUrl: './control-buttons.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlButtonsComponent {
-  @Output() emitter = new EventEmitter() 
+  @Output() emitter = new EventEmitter()
 
   buttonClick(data: string) {
     const message = {
-      event: 'ControlButtonsComponent:buttonClick', 
+      event: 'ControlButtonsComponent:buttonClick',
       data,
     };
     this.emitter.emit(message);

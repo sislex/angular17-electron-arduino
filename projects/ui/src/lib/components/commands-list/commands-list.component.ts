@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 
 export interface ICommand {
@@ -13,7 +13,8 @@ export interface ICommand {
   standalone: true,
   imports: [MatTableModule],
   templateUrl: './commands-list.component.html',
-  styleUrl: './commands-list.component.scss'
+  styleUrl: './commands-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommandsListComponent {
   @Input() commandsList: ICommand[]=[];
@@ -22,7 +23,7 @@ export class CommandsListComponent {
 
   ButtonClick(data: string) {
     const message = {
-      event: 'ControlButtonsComponent:buttonClick', 
+      event: 'ControlButtonsComponent:buttonClick',
       data,
     };
     this.emitter.emit(message);

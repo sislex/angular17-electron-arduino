@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 
 export interface IInfo {
@@ -11,7 +11,8 @@ export interface IInfo {
   standalone: true,
   imports: [MatTableModule],
   templateUrl: './info.component.html',
-  styleUrl: './info.component.scss'
+  styleUrl: './info.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoComponent {
   @Input() title: string = '';

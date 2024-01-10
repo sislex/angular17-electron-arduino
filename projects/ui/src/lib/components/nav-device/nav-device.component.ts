@@ -1,4 +1,4 @@
-import { Component, Output ,Input, EventEmitter } from '@angular/core';
+import {Component, Output, Input, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,15 +10,16 @@ import { UserListComponent } from '../user-list/user-list.component';
 @Component({
   selector: 'nav-device',
   standalone: true,
-  imports: [CommonModule, 
-    MatToolbarModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    MatFormFieldModule, 
-    MatMenuModule, 
+  imports: [CommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatMenuModule,
     UserListComponent],
   templateUrl: './nav-device.component.html',
-  styleUrl: './nav-device.component.scss'
+  styleUrl: './nav-device.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavDeviceComponent {
   @Input() message: string = '';

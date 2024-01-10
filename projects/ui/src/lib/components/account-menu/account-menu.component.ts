@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
 import { UserListComponent } from '../user-list/user-list.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatMenuModule, UserListComponent, MatIconModule, MatFormFieldModule, MatButtonModule],
   templateUrl: './account-menu.component.html',
-  styleUrl: './account-menu.component.scss'
+  styleUrl: './account-menu.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountMenuComponent {
   @Output() emitter = new EventEmitter();

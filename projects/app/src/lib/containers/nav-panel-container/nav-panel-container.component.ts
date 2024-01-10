@@ -13,8 +13,6 @@ import {NavPanelComponent} from '../../../../../ui/src/lib/components/nav-panel/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavPanelContainerComponent {
-  getUsbList$ = this.store.pipe(select(getUsbList));
-
   constructor(
     private readonly store: Store,
   ) {
@@ -22,7 +20,7 @@ export class NavPanelContainerComponent {
 
   events($event: any) {
     // console.log($event);
-    if ($event.event === 'NavPanelContainerComponent:BUTTON_CLICKED' && $event.data.note === 'Sign out') {
+    if ($event.event === 'NavPanelComponent:BUTTON_CLICKED' && $event.data === 'Sign out') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
     }
   }
