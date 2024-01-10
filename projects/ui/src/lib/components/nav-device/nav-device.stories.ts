@@ -1,6 +1,7 @@
-import {componentWrapperDecorator, Meta, moduleMetadata, StoryObj} from '@storybook/angular';
+import {argsToTemplate, componentWrapperDecorator, Meta, moduleMetadata, StoryObj} from '@storybook/angular';
 import {NavDeviceComponent} from './nav-device.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { action } from '@storybook/addon-actions';
 
 
 const meta: Meta<NavDeviceComponent> = {
@@ -17,7 +18,11 @@ const meta: Meta<NavDeviceComponent> = {
   render: (args: NavDeviceComponent) => ({
     props: {
       ...args,
+      events: action('emitter'),
     },
+    template: `
+        <nav-device ${argsToTemplate(args)} (emitter)="events($event)"></nav-device>
+`,
   }),
 };
 
@@ -26,5 +31,6 @@ type Story = StoryObj<NavDeviceComponent>;
 
 export const Primary: Story = {
   args: {
+    message: 'message123',
   },
 };
