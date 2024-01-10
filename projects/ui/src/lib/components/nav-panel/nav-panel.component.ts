@@ -3,6 +3,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import { AccountMenuComponent } from '../account-menu/account-menu.component';
 
 @Component({
   selector: 'nav-panel',
@@ -13,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    AccountMenuComponent
   ],
   styleUrls: ['./nav-panel.component.scss']
 })
