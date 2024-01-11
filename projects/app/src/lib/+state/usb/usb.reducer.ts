@@ -1,12 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 
 import * as UsbActions from './usb.actions';
-import {setUsbList} from './usb.actions';
 
 export const USB_FEATURE_KEY = 'usb';
 
 export interface IUsb {
   name: string;
+  type: string;
+  isOpen?: boolean;
+  infoFields?: any;
 }
 
 export interface UsbState {

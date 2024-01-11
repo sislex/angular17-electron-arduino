@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {IpcService} from './ipc.service';
 import {IMessage} from '../+state/messages/messages.reducer';
-import {setUsbList} from '../+state/usb/usb.actions';
+import {messageFromUSBDevice, setClosePort} from '../+state/usb/usb.actions';
+import {usbDevicePortIsOpen, usbDevices} from '../+state/messages/messages.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,13 @@ export class MessagesFromElectronService {
 
   events(message: IMessage) {
     if (message.event === 'USB_DEVICES') {
-      const usbList = message.data.map((usb: any) => ({name: usb.path}));
-      this.store.dispatch(setUsbList({ usbList }));
+      this.store.dispatch(usbDevices({data: message.data}));
+    } else if (message.event === 'USB_DEVICES_PORT_IS_OPEN') {
+      this.store.dispatch(usbDevicePortIsOpen({data: message.data}));
+    } else if (message.event === 'USB_DEVICES_PORT_IS_CLOSED') {
+      this.store.dispatch(setClosePort({ name: message.data.name }));
+    } else if (message.event === 'MESSAGE_FROM_USB_DEVICE') {
+      this.store.dispatch(messageFromUSBDevice({ data: message.data }));
     }
   }
 }

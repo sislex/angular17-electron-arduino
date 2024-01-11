@@ -35,8 +35,17 @@ export class UsbListContainerComponent {
     if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'GET_USB_DEVICES') {
       this.store.dispatch(sendMessage({message: {event: 'GET_USB_DEVICES'}}));
     } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONNECT_USB_DEVICE') {
-      console.log($event.data.note);
-      this.store.dispatch(sendMessage({message: {event: 'CONNECT_USB_DEVICE', data: $event.data.note}}));
+      const now = new Date();
+      const timestamp = now.getTime();
+      const name =  $event.data.note.item.name;
+      this.store.dispatch(sendMessage({message: {event: 'CONNECT_USB_DEVICE', data: {name, timestamp}}}));
+    } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'DISCONNECT_USB_DEVICE') {
+      const now = new Date();
+      const timestamp = now.getTime();
+      const name =  $event.data.note.item.name;
+      this.store.dispatch(sendMessage({message: {event: 'DISCONNECT_USB_DEVICE', data: {name, timestamp}}}));
+    } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONTROL') {
+
     }
   }
 }

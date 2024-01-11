@@ -22,7 +22,7 @@ export class UsbListComponent {
   @Input() usbList: IUsb[] | null = [];
   @Output() emitter = new EventEmitter();
 
-  displayedColumns: string[] = ['name', 'actions', 'status'];
+  displayedColumns: string[] = ['name', 'type', 'actions',];
 
   buttonClick(message: string, note: any = {}) {
     this.emitter.emit({

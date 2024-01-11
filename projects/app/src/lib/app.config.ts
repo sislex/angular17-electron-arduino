@@ -14,9 +14,13 @@ import {AccountEffects} from './+state/account/account.effects';
 import {MessagesEffects} from './+state/messages/messages.effects';
 import {UsbEffects} from './+state/usb/usb.effects';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import {provideRouter} from '@angular/router';
+import {routes} from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes),
+
     provideRouterStore(),
     provideStore({}),
     provideStoreDevtools(),

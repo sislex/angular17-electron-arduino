@@ -1,35 +1,75 @@
 import { Injectable } from '@angular/core';
-import {Actions, concatLatestFrom, createEffect, ofType} from '@ngrx/effects';
-import {EMPTY, take, tap} from 'rxjs';
-import { map, exhaustMap, catchError } from 'rxjs/operators';
-import {IpcService} from '../../services/ipc.service';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import { tap, withLatestFrom} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {getChannelName} from '../messages/messages.selectors';
-import {sendMessage} from '../messages/messages.actions';
+import {messageFromUSBDevice, setClosePort, setOpenPort, setUsbList} from './usb.actions';
+import {getUsbList} from './usb.selectors';
 
 @Injectable()
 export class UsbEffects {
 
-  // eventGetUsbDevices$ = createEffect(() => this.actions$.pipe(
-  //     ofType(eventSendGetUsbDevices),
-  //     tap(() => {
-  //       console.log('eventGetUsbDevices');
-  //
-  //       // if (this.ipcService.isElectron()) {
-  //       //   if (command === 'GET_USB_DEVICES') {
-  //       //     this.getChannelName$.pipe(take(1)).subscribe((channelName: string) => {
-  //       //       const event = 'GET_USB_DEVICES';
-  //       //       const message = JSON.stringify({event});
-  //       //       this.ipcService.send(channelName, message);
-  //       //     });
-  //       //   }
-  //       // }
-  //     })
-  // ));
+  setOpenPort$ = createEffect(() => this.actions$.pipe(
+    ofType(setOpenPort),
+    withLatestFrom(
+      this.store.select(getUsbList),
+    ),
+    tap(([{name}, usbList]) => {
+      const newUsbList = usbList.map((usb) => {
+        if (usb.name === name) {
+          usb = {
+            ...usb,
+            isOpen: true,
+          };
+        }
+        return usb;
+      });
+      this.store.dispatch(setUsbList({ usbList: newUsbList }));
+    })
+  ), {dispatch: false});
+
+  setClosePort$ = createEffect(() => this.actions$.pipe(
+    ofType(setClosePort),
+    withLatestFrom(
+      this.store.select(getUsbList),
+    ),
+    tap(([{name}, usbList]) => {
+      const newUsbList = usbList.map((usb) => {
+        if (usb.name === name) {
+          usb = {
+            ...usb,
+            isOpen: false,
+          };
+        }
+        return usb;
+      });
+
+      this.store.dispatch(setUsbList({ usbList: newUsbList }));
+    })
+  ), {dispatch: false});
+
+  messageFromUSBDevice$ = createEffect(() => this.actions$.pipe(
+    ofType(messageFromUSBDevice),
+    withLatestFrom(
+      this.store.select(getUsbList),
+    ),
+    tap(([{data}, usbList]) => {
+      const newUsbList = usbList.map((usb) => {
+        if (usb.name === data.name) {
+          usb = {
+            ...usb,
+            type: data.infoFields.type,
+            infoFields: data.infoFields
+          };
+        }
+        return usb;
+      });
+
+      this.store.dispatch(setUsbList({ usbList: newUsbList }));
+    })
+  ), {dispatch: false});
 
   constructor(
     private readonly store: Store,
     private actions$: Actions,
-    private ipcService: IpcService,
   ) {}
 }

@@ -29,7 +29,7 @@ function setupSerialPort(portName, baudRate = 9600) {
       baudRate: baudRate,
     }, err => {
       if (err) {
-        reject('Ошибка при открытии порта: ' + err.message);
+        reject('Error port opening: ' + err.message);
       }
     });
 
@@ -41,7 +41,7 @@ function setupSerialPort(portName, baudRate = 9600) {
 
     // Обработка ошибок открытия порта
     port.on('error', (err) => {
-      reject('Ошибка порта: ' + err.message);
+      reject('Error port opening: ' + err.message);
     });
   });
 }
