@@ -4,9 +4,10 @@ import {PageLayoutComponent} from '../../../../../ui/src/lib/layouts/page-layout
 import {getUsbList} from '../../+state/usb/usb.selectors';
 import {NavPanelContainerComponent} from '../nav-panel-container/nav-panel-container.component';
 import {UsbListContainerComponent} from '../usb-list-container/usb-list-container.component';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
-  imports: [PageLayoutComponent, NavPanelContainerComponent, UsbListContainerComponent],
+  imports: [PageLayoutComponent, NavPanelContainerComponent, UsbListContainerComponent, RouterOutlet],
   selector: 'main-container',
   standalone: true,
   templateUrl: './main-container.component.html',
