@@ -1,13 +1,12 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {PageLayoutComponent} from '../../../../../ui/src/lib/layouts/page-layout/page-layout.component';
 import {getUsbList} from '../../+state/usb/usb.selectors';
 import {NavPanelContainerComponent} from '../nav-panel-container/nav-panel-container.component';
-import {UsbListContainerComponent} from '../usb-list-container/usb-list-container.component';
 import {RouterOutlet} from '@angular/router';
 
 @Component({
-  imports: [PageLayoutComponent, NavPanelContainerComponent, UsbListContainerComponent, RouterOutlet],
+  imports: [PageLayoutComponent, NavPanelContainerComponent, RouterOutlet],
   selector: 'main-container',
   standalone: true,
   templateUrl: './main-container.component.html',

@@ -8,10 +8,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { UserListComponent } from '../user-list/user-list.component';
 import { AccountMenuComponent } from '../account-menu/account-menu.component';
 
-
-
 @Component({
-  selector: 'app-nav',
+  selector: 'nav',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,7 +30,7 @@ export class NavComponent {
 
   buttonClick(data: string) {
     this.emitter.emit({
-      event: 'NavPanelComponent:BUTTON_CLICKED',
+      event: 'NavComponent:BUTTON_CLICKED',
       data
     });
   }

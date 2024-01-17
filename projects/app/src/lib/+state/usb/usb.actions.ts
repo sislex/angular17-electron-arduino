@@ -20,3 +20,8 @@ export const messageFromUSBDevice = createAction(
   '[Usb] messageFromUSBDevice',
   props<{ data: any }>()
 );
+
+export const setSelectedUsb = createAction(
+  '[Usb] setSelectedUsb',
+  props<{ selectedUsb: string }>()
+);

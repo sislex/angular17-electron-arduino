@@ -1,11 +1,11 @@
 import {componentWrapperDecorator, Meta, moduleMetadata, StoryObj} from '@storybook/angular';
-import {LigthCopyComponent} from './ligth.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {LightComponent} from './light.component';
 
 
-const meta: Meta<LigthCopyComponent> = {
-  title: 'UI Components/LigthCopyComponent',
-  component: LigthCopyComponent,
+const meta: Meta<LightComponent> = {
+  title: 'UI Components/LightComponent',
+  component: LightComponent,
   decorators: [
     moduleMetadata({
       imports: [MatGridListModule],
@@ -14,7 +14,7 @@ const meta: Meta<LigthCopyComponent> = {
       (story) => `<div>${story}</div>`
     ),
   ],
-  render: (args: LigthCopyComponent) => ({
+  render: (args: LightComponent) => ({
     props: {
       ...args,
     },
@@ -22,7 +22,7 @@ const meta: Meta<LigthCopyComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<LigthCopyComponent>;
+type Story = StoryObj<LightComponent>;
 
 export const Primary: Story = {
   args: {

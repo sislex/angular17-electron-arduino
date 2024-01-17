@@ -50,8 +50,8 @@ type Story = StoryObj<UsbListComponent>;
 export const Primary: Story = {
   args: {
     usbList: [
-      {name: '/dev/tty.Buds2ProAlexey'},
-      {name: '/dev/tty.Bluetooth-Incoming-Port'},
+      {name: '/dev/tty.Buds2ProAlexey', type: 'blink'},
+      {name: '/dev/tty.Bluetooth-Incoming-Port', type: 'blink'},
     ] ,
   },
 };

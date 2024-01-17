@@ -1,6 +1,5 @@
 /*
- * Public API Surface of blink
+ * Public API Surface of blink-container
  */
 
-export * from './lib/blink.service';
-export * from './lib/blink.component';
+export * from './lib/containers/blink-container/blink-container.component';

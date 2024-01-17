@@ -28,7 +28,7 @@ export class NavDeviceComponent {
 
   buttonClick (data: string) {
     this.emitter.emit({
-      event: 'NavPanelComponent:BUTTON_CLICKED',
+      event: 'NavDeviceComponent:BUTTON_CLICKED',
       data,
     });
   }

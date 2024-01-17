@@ -40,13 +40,6 @@ async  function messagesHandlerFromWeb(json, note) {
         }
       }));
     }
-
-
-
-    // if (port[data.name]) {
-    //   ledStatus = ledStatus === '1' ? '2' : '1';
-    //   port[data.name].write(ledStatus);
-    // }
   } else if (event === 'DISCONNECT_USB_DEVICE') {
     if (port[data.name]) {
       try {
@@ -83,7 +76,7 @@ async  function messagesHandlerFromWeb(json, note) {
         responseFor: data.timestamp,
         infoFields: {
           type: 'blink',
-          description: 'Arduino uno, blink',
+          description: 'Arduino uno, blink-container',
           electronicDevices: ['Arduino uno'],
           commandsList: [
             {command: '1', description: 'LED ON'},
@@ -93,7 +86,14 @@ async  function messagesHandlerFromWeb(json, note) {
         }
       }
     }));
+  } else if (event === 'TO_DEVICE') {
+    if (port[data.deviceName]) {
+      ledStatus = ledStatus === '1' ? '2' : '1';
+      port[data.deviceName].write(ledStatus);
+    }
+
   }
+
 }
 
 module.exports = { messagesHandlerFromWeb };

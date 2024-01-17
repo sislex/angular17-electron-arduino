@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {getUsbList} from '../../+state/usb/usb.selectors';
 import {resetUserFromLocalStorageAndState} from '../../+state/account/account.actions';
-import {NavPanelComponent} from '../../../../../ui/src/lib/components/nav-panel/nav-panel.component';
+import {NavComponent} from '../../../../../ui/src/lib/components/nav/nav.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'nav-panel-container',
-  imports: [NavPanelComponent, ],
+  imports: [NavComponent],
   standalone: true,
   templateUrl: './nav-panel-container.component.html',
   styleUrls: ['./nav-panel-container.component.scss'],
@@ -15,6 +15,7 @@ import {NavPanelComponent} from '../../../../../ui/src/lib/components/nav-panel/
 export class NavPanelContainerComponent {
   constructor(
     private readonly store: Store,
+    private router: Router,
   ) {
   }
 
@@ -22,6 +23,8 @@ export class NavPanelContainerComponent {
     // console.log($event);
     if ($event.event === 'NavPanelComponent:BUTTON_CLICKED' && $event.data === 'Sign out') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
+    } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'cable') {
+      this.router.navigate(['/usb-list']);
     }
   }
 }

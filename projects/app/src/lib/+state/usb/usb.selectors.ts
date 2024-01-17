@@ -7,3 +7,8 @@ export const getUsbList = createSelector(
   selectFeature,
   (state: UsbState) => state.usbList
 );
+
+export const getSelectedUsb = createSelector(
+  selectFeature,
+  (state: UsbState) => state.selectedUsb
+);

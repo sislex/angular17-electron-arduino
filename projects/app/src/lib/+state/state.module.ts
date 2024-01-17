@@ -8,7 +8,7 @@ import {CONFIG_FEATURE_KEY, configReducer} from './config/config.reducer';
   declarations: [],
   imports: [
     CommonModule,
-    // StateModule.forFeature(CONFIG_FEATURE_KEY, configReducer),
+    // StateModule.forFeature(CONFIG_FEATURE_KEY, blinkConfigReducer),
   ]
 })
 export class StateModule { }
