@@ -1,7 +1,6 @@
 const { getSerialPortList, setupSerialPort} = require('./serialport');
 const {sendMessage} = require('./messagesWeb');
 
-let ledStatus = '2';
 const port = {};
 
 async  function messagesHandlerFromWeb(json, note) {
@@ -64,10 +63,6 @@ async  function messagesHandlerFromWeb(json, note) {
         }));
       }
     }
-    // if (port[data.name]) {
-    //   ledStatus = ledStatus === '1' ? '2' : '1';
-    //   port[data.name].write(ledStatus);
-    // }
   } else if (event === 'SEND_MESSAGE_TO_USB_DEVICE') {
     sendMessage(note.win, note.channelName, JSON.stringify({
       event: 'MESSAGE_FROM_USB_DEVICE',
@@ -88,8 +83,8 @@ async  function messagesHandlerFromWeb(json, note) {
     }));
   } else if (event === 'TO_DEVICE') {
     if (port[data.deviceName]) {
-      ledStatus = ledStatus === '1' ? '2' : '1';
-      port[data.deviceName].write(ledStatus);
+      console.log(data.message);
+      port[data.deviceName].write(JSON.stringify(data.message) + '\n');
     }
 
   }
