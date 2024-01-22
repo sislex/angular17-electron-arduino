@@ -20,11 +20,13 @@ export class NavPanelContainerComponent {
   }
 
   events($event: any) {
-    // console.log($event);
+    console.log($event);
     if ($event.event === 'NavPanelComponent:BUTTON_CLICKED' && $event.data === 'Sign out') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
     } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'cable') {
       this.router.navigate(['/usb-list']);
+    } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'logs') {
+      this.router.navigate(['/logs']);
     }
   }
 }

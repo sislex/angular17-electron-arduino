@@ -7,3 +7,10 @@ export const getChannelName = createSelector(
   selectFeature,
   (state: MessagesState) => state.channelName
 );
+
+export const addLogList = createSelector(
+  selectFeature,
+  (state: MessagesState) => state.logList.map(item => {
+    return {...item, message: JSON.stringify(item.message)};
+  }),
+);
