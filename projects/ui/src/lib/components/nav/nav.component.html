@@ -3,22 +3,22 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{ message }}</span>
-  <button mat-icon-button>
+  <!-- <button mat-icon-button>
     <mat-icon>mic_none</mat-icon>
   </button>
   <button mat-icon-button>
     <mat-icon>safety_check</mat-icon>
-  </button>
+  </button> -->
   <span class="example-spacer"></span>
-  <button mat-icon-button>
+  <!-- <button mat-icon-button>
     <mat-icon>location_on</mat-icon>
-  </button>
+  </button> -->
   <button mat-icon-button>
     <mat-icon>email</mat-icon>
   </button>
-  <button mat-icon-button>
+  <!-- <button mat-icon-button>
     <mat-icon>search</mat-icon>
-  </button>
+  </button> -->
   <button mat-icon-button [matMenuTriggerFor]="setting" class="example-icon favorite-icon">
     <mat-icon>settings</mat-icon>
   </button>
@@ -36,7 +36,7 @@
       <mat-icon>feed</mat-icon>
       <span>Logs</span>
     </button>
-    <button mat-menu-item (click)="buttonClick('commands')">
+    <button mat-menu-item (click)="buttonClick('commands-list')">
       <mat-icon>format_list_numbered</mat-icon>
       <span>Commands list</span>
     </button>
