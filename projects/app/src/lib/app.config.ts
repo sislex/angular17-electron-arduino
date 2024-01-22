@@ -8,6 +8,7 @@ import {CONFIG_FEATURE_KEY, configReducer} from './+state/config/config.reducer'
 import {ACCOUNT_FEATURE_KEY, accountReducer} from './+state/account/account.reducer';
 import {MESSAGES_FEATURE_KEY, messagesReducer} from './+state/messages/messages.reducer';
 import {USB_FEATURE_KEY, usbReducer} from './+state/usb/usb.reducer';
+import {ABOUT_FEATURE_KEY, aboutReducer} from './+state/about/about.reducer';
 import {provideEffects} from '@ngrx/effects';
 import {ConfigEffects} from './+state/config/config.effects';
 import {AccountEffects} from './+state/account/account.effects';
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideState(ACCOUNT_FEATURE_KEY, accountReducer),
     provideState(MESSAGES_FEATURE_KEY, messagesReducer),
     provideState(USB_FEATURE_KEY, usbReducer),
+    provideState(ABOUT_FEATURE_KEY, aboutReducer),
     provideEffects([
         ConfigEffects,
         AccountEffects,

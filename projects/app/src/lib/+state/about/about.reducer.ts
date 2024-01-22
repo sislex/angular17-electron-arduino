@@ -1,34 +1,32 @@
-// import { createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
 // import * as UsbActions from './usb.actions';
 // import {setSelectedUsb} from './usb.actions';
 
-// export const USB_FEATURE_KEY = 'usb';
+export const ABOUT_FEATURE_KEY = 'about';
 
-// export interface IUsb {
-//   name: string;
-//   type: string;
-//   isOpen?: boolean;
-//   infoFields?: any;
-// }
+export interface IAbout {
+    name: string;
+    description: string;
+}
 
-// export interface UsbState {
-//   selectedUsb: string;
-//   usbList: IUsb[];
-// }
+export interface AboutState {
+    titleAbout: string;
+    aboutList: IAbout[];
+}
 
-// export interface UsbPartialState {
-//   readonly [USB_FEATURE_KEY]: UsbState;
-// }
+export interface AboutPartialState {
+    readonly [ABOUT_FEATURE_KEY]: AboutState;
+}
 
-// export const initialState: UsbState = {
-//   selectedUsb: '',
-//   usbList: [],
-// };
+export const initialState: AboutState = {
+    titleAbout: '',
+    aboutList: [],
+};
 
-// export const usbReducer = createReducer(
-//   initialState,
+export const aboutReducer = createReducer(
+    initialState,
 //   on(UsbActions.setUsbList, (state, {usbList}) => ({ ...state, usbList })),
 //   on(UsbActions.setSelectedUsb, (state, {selectedUsb}) => ({ ...state, selectedUsb })),
-// );
+);
 
