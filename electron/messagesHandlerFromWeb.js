@@ -17,7 +17,6 @@ async  function messagesHandlerFromWeb(json, note) {
       port[data.name].close();
       delete port[data.name];
     }
-
     try {
       port[data.name] = await setupSerialPort(data.name);
       sendMessage(note.win, note.channelName, JSON.stringify({
@@ -28,6 +27,18 @@ async  function messagesHandlerFromWeb(json, note) {
           responseFor: data.timestamp,
         }
       }));
+
+      port[data.name].on('data', (message) => {
+        sendMessage(note.win, note.channelName, JSON.stringify({
+          event: 'FROM_USB_DEVICE',
+          data: {
+            timestamp: (new Date()).getTime(),
+            deviceName: data.name,
+            message:  message.toString()
+          },
+        }));
+
+      });
     } catch (error) {
       console.error(error);
       sendMessage(note.win, note.channelName, JSON.stringify({
@@ -64,23 +75,23 @@ async  function messagesHandlerFromWeb(json, note) {
       }
     }
   } else if (event === 'SEND_MESSAGE_TO_USB_DEVICE') {
-    sendMessage(note.win, note.channelName, JSON.stringify({
-      event: 'MESSAGE_FROM_USB_DEVICE',
-      data: {
-        name: data.name,
-        responseFor: data.timestamp,
-        infoFields: {
-          type: 'blink',
-          description: 'Arduino uno, blink-container',
-          electronicDevices: ['Arduino uno'],
-          commandsList: [
-            {command: '1', description: 'LED ON'},
-            {command: '2', description: 'LED OFF'},
-            {command: '3', description: 'LED BLINK'},
-          ]
-        }
-      }
-    }));
+    // sendMessage(note.win, note.channelName, JSON.stringify({
+    //   event: 'MESSAGE_FROM_USB_DEVICE',
+    //   data: {
+    //     name: data.name,
+    //     responseFor: data.timestamp,
+    //     infoFields: {
+    //       type: 'blink',
+    //       description: 'Arduino uno, blink-container',
+    //       electronicDevices: ['Arduino uno'],
+    //       commandsList: [
+    //         {command: '1', description: 'LED ON'},
+    //         {command: '2', description: 'LED OFF'},
+    //         {command: '3', description: 'LED BLINK'},
+    //       ]
+    //     }
+    //   }
+    // }));
   } else if (event === 'TO_DEVICE') {
     if (port[data.deviceName]) {
       console.log(data.message);

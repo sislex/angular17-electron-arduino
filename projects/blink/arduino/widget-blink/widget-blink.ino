@@ -3,12 +3,14 @@
 const int ledPin = 13;
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
-const char* info = "{\"type\":\"blink\",\"description\":\"Arduino UNO\"}";
+const char* info = "{\"type\":\"blink\"}";
+const char* deviceIsReady = "{\"event\":\"DEVICE_IS_READY\"}";
 
 void setup() {
   pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
   inputString.reserve(200);      // резервируем место для входной строки
+  Serial.println(deviceIsReady);
 }
 
 void loop() {
@@ -27,7 +29,6 @@ void loop() {
           digitalWrite(ledPin, LOW);
         }
       } else if (strcmp(event, "GET_INFO") == 0) {
-        digitalWrite(ledPin, HIGH);
         Serial.println(info);
       }
     }
