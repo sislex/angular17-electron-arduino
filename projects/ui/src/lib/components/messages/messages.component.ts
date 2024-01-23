@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { ILog } from '../../../../../app/src/lib/+state/messages/messages.reducer';
 import { AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({

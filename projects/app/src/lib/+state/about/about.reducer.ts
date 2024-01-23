@@ -1,7 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-
-// import * as UsbActions from './usb.actions';
-// import {setSelectedUsb} from './usb.actions';
+import * as AboutActions from './about.actions';
 
 export const ABOUT_FEATURE_KEY = 'about';
 
@@ -26,7 +24,7 @@ export const initialState: AboutState = {
 
 export const aboutReducer = createReducer(
     initialState,
-//   on(UsbActions.setUsbList, (state, {usbList}) => ({ ...state, usbList })),
-//   on(UsbActions.setSelectedUsb, (state, {selectedUsb}) => ({ ...state, selectedUsb })),
+    on(AboutActions.setData, (state, {titleAbout}) => ({ ...state, titleAbout })),
+    on(AboutActions.setData, (state, {aboutList}) => ({ ...state, aboutList })),
 );
 

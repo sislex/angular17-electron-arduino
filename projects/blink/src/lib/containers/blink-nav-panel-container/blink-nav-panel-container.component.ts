@@ -3,6 +3,8 @@ import {NavDeviceComponent} from '../../../../../ui/src/lib/components/nav-devic
 import {resetUserFromLocalStorageAndState} from '../../../../../app/src/lib/+state/account/account.actions';
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
+import { setData } from '../../../../../app/src/lib/+state/about/about.actions';
+import { sendMessage } from '../../../../../app/src/lib/+state/messages/messages.actions';
 
 @Component({
   selector: 'blink-nav-panel-container',
@@ -24,7 +26,29 @@ export class BlinkNavPanelContainerComponent {
     if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'control') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'cable') {
-
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
+      this.router.navigate(['/about']);
+      this.store.dispatch(setData({ 
+        titleAbout: 'widget', 
+        aboutList: [
+          {name: 'Name', description: 'Page of device'},
+          {name: 'Description', description: 'Contains main device controls.'},
+          {name: 'Date of create', description: '23.01.2024'},
+          {name: 'Version', description: '1.0.0'}
+        ]
+      })) ;
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDevice') {
+      this.router.navigate(['/about']);
+      this.store.dispatch(sendMessage({message: {event: 'GET_INFORMATION__ABOUT_DEVICE'}}));
+      // this.store.dispatch(setData({ 
+      //   titleAbout: 'widget', 
+      //   aboutList: [
+      //     {name: 'Name', description: 'Page of device'},
+      //     {name: 'Description', description: 'Contains main device controls.'},
+      //     {name: 'Date of create', description: '23.01.2024'},
+      //     {name: 'Version', description: '1.0.0'}
+      //   ]
+      // }));
     }
-  }
+  } 
 }

@@ -1,14 +1,14 @@
-// import {createFeatureSelector, createSelector} from '@ngrx/store';
-// import {USB_FEATURE_KEY, UsbState} from './usb.reducer';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import { ABOUT_FEATURE_KEY, AboutState } from './about.reducer';
 
-// export const selectFeature = createFeatureSelector<UsbState>(USB_FEATURE_KEY);
+export const selectFeature = createFeatureSelector<AboutState>(ABOUT_FEATURE_KEY);
 
-// export const getUsbList = createSelector(
-//   selectFeature,
-//   (state: UsbState) => state.usbList
-// );
+export const getAboutTitle = createSelector(
+    selectFeature,
+    (state: AboutState) => state.titleAbout
+);
 
-// export const getSelectedUsb = createSelector(
-//   selectFeature,
-//   (state: UsbState) => state.selectedUsb
-// );
+export const getAboutList = createSelector(
+    selectFeature,
+    (state: AboutState) => state.aboutList
+);

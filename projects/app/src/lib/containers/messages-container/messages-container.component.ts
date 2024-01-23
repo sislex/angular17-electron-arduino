@@ -17,12 +17,6 @@ import { ILog, MessagesState } from '../../../../../app/src/lib/+state/messages/
 })
 
 export class MessagesContainerComponent {
-
-  // logList$: Observable<ILog[]>;
-
-  // constructor(private store$: Store<MessagesState>) {
-  //     this.logList$ = this.store$.select(addLogList);
-  //   }
   logList$ = this.store$.select(addLogList);
 
   constructor(private store$: Store<MessagesState>) {
