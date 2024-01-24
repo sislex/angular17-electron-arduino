@@ -14,6 +14,15 @@ export const blinkRoutes: Routes = [
         BlinkConfigEffects,
       ]),
     ],
-    component: BlinkContainerComponent,
+    children: [
+      {
+        path: '',
+        component: BlinkContainerComponent,
+      },
+      {
+        path: '**',
+        redirectTo: '',
+      },
+    ],
   },
 ];
