@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { addLogList } from '../../../../../app/src/lib/+state/messages/messages.selectors';
-import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MessagesComponent } from '../../../../../ui/src/lib/components/messages/messages.component';
 import { ILog, MessagesState } from '../../../../../app/src/lib/+state/messages/messages.reducer';

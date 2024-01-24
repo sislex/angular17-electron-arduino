@@ -4,6 +4,9 @@ import {BlinkNavPanelContainerComponent} from '../blink-nav-panel-container/blin
 import {select, Store} from '@ngrx/store';
 import {ActivatedRoute} from '@angular/router';
 import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-config.actions';
+import {RouterOutlet} from '@angular/router';
+import { BlinkAboutContainerComponent } from '../blink-about-container/blink-about-container.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'lib-blink-container',
@@ -12,6 +15,8 @@ import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-c
     PageLayoutComponent,
     BlinkNavPanelContainerComponent,
     LightComponent,
+    RouterOutlet,
+    BlinkAboutContainerComponent
   ],
   templateUrl: './blink-container.component.html',
   styles: ``,
@@ -20,6 +25,7 @@ import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-c
 export class BlinkContainerComponent implements OnInit {
   constructor(
     private readonly store: Store,
+    private router: Router,
     private route: ActivatedRoute
   ) {
   }
@@ -38,6 +44,15 @@ export class BlinkContainerComponent implements OnInit {
           command:  $event.data,
         },
       }}));
-    }
+    } 
+    // else if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
+      // this.router.navigate(['control', 'blink', 'widget']); }
+    
+    
+    // if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
+    //   this.a = true)
+    // } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
+    //   this.a = falce);
+    // }
   }
 }

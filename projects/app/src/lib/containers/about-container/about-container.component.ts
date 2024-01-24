@@ -22,17 +22,4 @@ export class AboutContainerComponent {
 
   constructor(private store$: Store<AboutState>) {
   }
-
-  // events($event: any) {
-  //   if ($event.event === 'NavComponent:BUTTON_CLICKED'  && $event.data.message === 'aboutWidget'){
-    // this.store.dispatch(setData({ titleAbout: 'widget', aboutList: [{name: 'GG', description: 'AA'}]})
-  //   } else if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.message === 'aboutWidget'){
-    // this.store.dispatch(setData({ titleAbout: 'widget', aboutList: [{name: 'GG', description: 'AA'}]})
-  //   } else if($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.message === 'aboutDevice'){
-  //     this.store.dispatch(sendMessage({message: {event: 'ABOUT_DEVICE'}}));
-  // this.store.dispatch(setData({ titleAbout: 'device',  })
-  //   }
-
-  // этот кусок раскинуть в nav и nav-sevice Container
-
 }
