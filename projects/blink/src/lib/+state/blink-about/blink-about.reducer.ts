@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 // import * as AboutActions from './blink-about.actions';
 
-export const BLINK_ABOUT_FEATURE_KEY = 'about';
+export const BLINK_ABOUT_FEATURE_KEY = 'aboutWidgetDevice';
 
 export interface IAbout {
     name: string;
@@ -29,7 +29,5 @@ export const initialState: blinkAboutState = {
 
 export const blinkAboutReducer = createReducer(
     initialState,
-    // on(AboutActions.setData, (state, {titleAbout}) => ({ ...state, titleAbout })),
-    // on(AboutActions.setData, (state, {aboutList}) => ({ ...state, aboutList })),
 );
 

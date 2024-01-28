@@ -3,7 +3,6 @@ import {select, Store} from '@ngrx/store';
 import {resetUserFromLocalStorageAndState} from '../../+state/account/account.actions';
 import {NavComponent} from '../../../../../ui/src/lib/components/nav/nav.component';
 import {Router} from '@angular/router';
-// import { setData } from '../../+state/about/about.actions';
 
 @Component({
   selector: 'nav-panel-container',
@@ -35,15 +34,6 @@ export class NavPanelContainerComponent {
       this.router.navigate(['/commands-list']);
     } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
       this.router.navigate(['/about']);
-      // this.store.dispatch(setData({ 
-      //   titleAbout: 'widget', 
-      //   aboutList: [
-      //     {name: 'Name', description: 'Main page'},
-      //     {name: 'Description', description: 'Contains the main application control panels'},
-      //     {name: 'Date of create', description: '23.01.2024'},
-      //     {name: 'Version', description: '1.0.0'}
-      //   ]
-      // }));
-    }
+    } 
   }
 }

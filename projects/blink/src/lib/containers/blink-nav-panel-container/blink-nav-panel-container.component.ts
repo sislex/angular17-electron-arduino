@@ -26,31 +26,8 @@ export class BlinkNavPanelContainerComponent {
     if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'control') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'cable') {
-    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
-      this.router.navigate(['/blink-about']);
-    //   this.store.dispatch(setData({ 
-    //     titleAbout: 'widget', 
-    //     aboutList: [
-    //       {name: 'Name', description: 'Page of device'},
-    //       {name: 'Description', description: 'Contains main device controls.'},
-    //       {name: 'Date of create', description: '23.01.2024'},
-    //       {name: 'Version', description: '1.0.0'}
-    //     ]
-    //   })) ;
-    // } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDevice') {
-    //   this.router.navigate(['/about']);
-    //   this.store.dispatch(sendMessage({message: {event: 'GET_INFORMATION__ABOUT_DEVICE'}}));
-
-    //   // Изменить получение данных
-    //   this.store.dispatch(setData({ 
-    //     titleAbout: 'device', 
-    //     aboutList: [
-    //       {name: 'Name', description: 'Lamp'},
-    //       {name: 'Description', description: 'has 3 operating modes: on, off, blink '},
-    //       {name: 'Date of create', description: '23.01.2024'},
-    //       {name: 'Version', description: '1.0.0'}
-    //     ]
-    //   }));
-    }
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDWidget') {
+      this.router.navigate(['control/blink/:deviceName/aboutDevWidget']);
+    } 
   } 
 }

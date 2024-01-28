@@ -21,7 +21,6 @@ import {routes} from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-
     provideRouterStore(),
     provideStore({}),
     provideStoreDevtools(),
@@ -38,6 +37,7 @@ export const appConfig: ApplicationConfig = {
         MessagesEffects,
         UsbEffects,
     ]),
+    provideAnimations(),
     provideAnimations()
 ]
 };

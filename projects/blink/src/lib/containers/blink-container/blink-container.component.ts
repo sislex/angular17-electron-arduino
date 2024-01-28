@@ -6,7 +6,6 @@ import {ActivatedRoute} from '@angular/router';
 import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-config.actions';
 import {RouterOutlet} from '@angular/router';
 import { BlinkAboutContainerComponent } from '../blink-about-container/blink-about-container.component';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'lib-blink-container',
@@ -25,7 +24,6 @@ import {Router} from '@angular/router';
 export class BlinkContainerComponent implements OnInit {
   constructor(
     private readonly store: Store,
-    private router: Router,
     private route: ActivatedRoute
   ) {
   }
@@ -45,14 +43,5 @@ export class BlinkContainerComponent implements OnInit {
         },
       }}));
     } 
-    // else if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
-      // this.router.navigate(['control', 'blink', 'widget']); }
-    
-    
-    // if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
-    //   this.a = true)
-    // } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'aboutWidget') {
-    //   this.a = falce);
-    // }
   }
 }

@@ -1,6 +1,7 @@
 <page-layout>
     <blink-nav-panel-container  toplBar></blink-nav-panel-container>
     <div body>
-        <about [title]="(titles$ |async)!" [about]="(abouts$ |async)"></about>
+        <messages  [stateLog]="(logList$ |async)!"></messages>
     </div>
   </page-layout>
+ 
