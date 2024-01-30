@@ -15,7 +15,7 @@
 //   changeDetection: ChangeDetectionStrategy.OnPush,
 // })
 
-// export class BlinkDeviceAboutContainerComponent {
+export class BlinkDeviceAboutContainerComponent {
 
 //   abouts$ = this.store$.select(getAboutList);
 //   titles$ = this.store$.select(getAboutTitle);
@@ -35,4 +35,4 @@
 
   // этот кусок раскинуть в nav и nav-sevice Container
 
-// }
+}

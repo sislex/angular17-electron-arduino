@@ -23,7 +23,7 @@ export interface UsbPartialState {
 
 export const initialState: UsbState = {
   selectedUsb: '',
-  usbList: [{ name: 'string', type: 'string', isOpen: true, infoFields: 'GG'}],
+  usbList: [],
 };
 
 export const usbReducer = createReducer(

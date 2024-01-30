@@ -1,5 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {MESSAGES_FEATURE_KEY, MessagesState} from './messages.reducer';
+import * as UsbReducer from '../usb/usb.reducer';
 
 export const selectFeature = createFeatureSelector<MessagesState>(MESSAGES_FEATURE_KEY);
 
@@ -20,14 +21,10 @@ export const addLogList = createSelector(
 
 export const addLogFilterList = createSelector(
   selectFeature,
-  (state: MessagesState) => state.logList.filter(item => item.message.event === 'your_event_name').map(item => {
-    return {...item, message: JSON.stringify(item.message)};
-  }),
+  (state: MessagesState) => {
+    const deviceName = 'COM1';
+    state.logList.filter(item => 
+    item.message.data !== undefined && item.message.data.deviceName === 'deviceName'
+  ).map(item => ({...item, message: JSON.stringify(item.message)}));
+  },
 );
-
-
-
-// export const selectFilteredDataByName = createSelector(
-//   selectFeature,
-//   (filteredData, name) => filteredData.filter(item => item.name === name)
-// );

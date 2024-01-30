@@ -17,7 +17,7 @@ import { PageLayoutComponent } from '../../../../../ui/src/public-api';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class MessagesContainerComponent {
+export class BlinkMessagesContainerComponent {
   logList$ = this.store$.select(addLogFilterList);
 
   constructor(private store$: Store<MessagesState>) {
