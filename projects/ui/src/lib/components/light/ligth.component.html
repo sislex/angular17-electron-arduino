@@ -1,5 +1,5 @@
 <!-- <button (click)='click()'>
-    Light {{ light ? 'ON' : 'OFF' }} 
+    Light {{ light ? 'ON' : 'OFF' }}
 </button> -->
 <mat-grid-list cols="2" rowHeight="2:1">
     <mat-grid-tile>
@@ -11,11 +11,11 @@
         <mat-icon>auto_awesome</mat-icon>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button (click)="buttonClick('switch')" >
-            Light {{ light ? 'ON' : 'OFF' }} 
+        <button (click)="buttonClick('ON')" >
+            Light ON
         </button>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button (click)="buttonClick('blink')">Blink</button>
+        <button (click)="buttonClick('OFF')">Light OFF</button>
     </mat-grid-tile>
 </mat-grid-list>

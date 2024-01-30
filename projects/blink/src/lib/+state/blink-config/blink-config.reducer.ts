@@ -6,6 +6,7 @@ export const BLINK_CONFIG_FEATURE_KEY = 'blink/config';
 
 export interface BlinkConfigState {
   deviceName: string;
+  about: string;
 }
 
 export interface BlinkConfigPartialState {
@@ -14,6 +15,7 @@ export interface BlinkConfigPartialState {
 
 export const initialState: BlinkConfigState = {
   deviceName: '',
+  about: '',
 };
 
 export const blinkConfigReducer = createReducer(

@@ -21,12 +21,3 @@ export const sendMessage = createAction(
   props<{ message: IMessage }>()
 );
 
-export const usbDevices = createAction(
-  '[Messages] usbDevices',
-  props<{ data: {name: string}[] }>()
-);
-
-export const usbDevicePortIsOpen = createAction(
-  '[Messages] usbDevicePortIsOpen',
-  props<{ data: {name: string, responseFor: number} }>()
-);

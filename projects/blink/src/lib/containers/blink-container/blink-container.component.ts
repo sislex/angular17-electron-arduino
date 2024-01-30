@@ -39,7 +39,12 @@ export class BlinkContainerComponent implements OnInit {
       this.store.dispatch(blinkSendMessage({message: {
         event: 'TO_DEVICE',
         data: {
-          command:  $event.data,
+          message: {
+            event: 'LED',
+            data: {
+              command: $event.data,
+            },
+          },
         },
       }}));
     } 
