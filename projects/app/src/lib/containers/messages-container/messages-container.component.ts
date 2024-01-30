@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { Store } from '@ngrx/store';
-import { addLogList } from '../../../../../app/src/lib/+state/messages/messages.selectors';
+import {addLogListForTable} from '../../../../../app/src/lib/+state/messages/messages.selectors';
 import { AsyncPipe } from '@angular/common';
 import { MessagesComponent } from '../../../../../ui/src/lib/components/messages/messages.component';
-import { ILog, MessagesState } from '../../../../../app/src/lib/+state/messages/messages.reducer';
+import { MessagesState } from '../../../../../app/src/lib/+state/messages/messages.reducer';
 
 
 @Component({
@@ -16,7 +16,7 @@ import { ILog, MessagesState } from '../../../../../app/src/lib/+state/messages/
 })
 
 export class MessagesContainerComponent {
-  logList$ = this.store$.select(addLogList);
+  logList$ = this.store$.select(addLogListForTable);
 
   constructor(private store$: Store<MessagesState>) {
   }

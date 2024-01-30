@@ -13,8 +13,12 @@ export const getChannelName = createSelector(
 );
 
 export const addLogList = createSelector(
-  selectFeature,
-  (state: MessagesState) => state.logList.map(item => {
+  selectFeature, (state: MessagesState) => state.logList
+);
+
+export const addLogListForTable = createSelector(
+  addLogList,
+  (logList) => logList.map(item => {
     return {...item, message: JSON.stringify(item.message)};
   }),
 );
