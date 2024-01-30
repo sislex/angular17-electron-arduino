@@ -21,10 +21,7 @@ export const addLogList = createSelector(
 
 export const addLogFilterList = createSelector(
   selectFeature,
-  (state: MessagesState) => {
-    const deviceName = 'COM1';
-    state.logList.filter(item => 
-    item.message.data !== undefined && item.message.data.deviceName === 'deviceName'
-  ).map(item => ({...item, message: JSON.stringify(item.message)}));
-  },
+  (state: MessagesState) => state.logList.filter(item => item.message.data !== undefined && item.message.data.deviceName === 'COM1').map(item => {
+    return {...item, message: JSON.stringify(item.message)};
+  }),
 );

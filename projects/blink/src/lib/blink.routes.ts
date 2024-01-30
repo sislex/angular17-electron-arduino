@@ -8,6 +8,7 @@ import { BlinkAboutContainerComponent } from './containers/blink-about-container
 import { BlinkMessagesContainerComponent } from './containers/blink-message-container/blink-message-container.component';
 // import { BlinkDeviceAboutContainerComponent } from './containers/blink-device-about-container/blink-device-about-container.component';
 import { BLINK_ABOUT_FEATURE_KEY, blinkAboutReducer } from './+state/blink-about/blink-about.reducer';
+import { BlinkCommandsListContainer } from './containers/blink-commands-list-container/blink-commands-list-container.component';
   
   export const blinkRoutes: Routes = [
     {
@@ -24,6 +25,10 @@ import { BLINK_ABOUT_FEATURE_KEY, blinkAboutReducer } from './+state/blink-about
         //   path: 'aboutDevice',
         //   component: BlinkDeviceAboutContainerComponent,
         // },
+        {
+          path: 'commandsList',
+          component: BlinkCommandsListContainer,
+        },
         {
           path: 'logDevice',
           component: BlinkMessagesContainerComponent,
