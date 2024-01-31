@@ -33,10 +33,7 @@ export class UsbListContainerComponent {
   }
 
   buttonClick(message: string, note: any = {}) {
-    this.emitter.emit({
-      event: 'UsbListContainerComponent:BUTTON_CLICKED',
-      data: {message, note},
-    });
+    this.store.dispatch(sendMessage({message: {event: 'GET_USB_DEVICES'}}));
   }
 
   events($event: any) {

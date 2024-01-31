@@ -33,11 +33,4 @@ export class UsbListComponent {
       
     });
   }
-
-  // buttonClicked(user: IUser) {
-  //   this.emitter.emit({
-  //     event: 'UsbListContainerComponent:BUTTON_CLICKED',
-  //     data: {user},
-  //   });
-  // }
 }
