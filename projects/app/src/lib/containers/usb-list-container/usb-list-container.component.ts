@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Output, EventEmitter} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {getUsbList} from '../../+state/usb/usb.selectors';
 import {sendMessage} from '../../+state/messages/messages.actions';
@@ -6,6 +6,8 @@ import {AsyncPipe} from '@angular/common';
 import {UsbListComponent} from '../../../../../ui/src/lib/components/usb-list/usb-list.component';
 import {Router} from '@angular/router';
 import {setSelectedUsb} from '../../+state/usb/usb.actions';
+import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'usb-list-container',
@@ -15,10 +17,13 @@ import {setSelectedUsb} from '../../+state/usb/usb.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AsyncPipe,
-    UsbListComponent
+    UsbListComponent,
+    DevicePageLayoutComponent,
+    MatIconModule
   ]
 })
 export class UsbListContainerComponent {
+  @Output() emitter = new EventEmitter();
   getUsbList$ = this.store.pipe(select(getUsbList));
 
   constructor(
@@ -27,11 +32,16 @@ export class UsbListContainerComponent {
   ) {
   }
 
+  buttonClick(message: string, note: any = {}) {
+    this.emitter.emit({
+      event: 'UsbListContainerComponent:BUTTON_CLICKED',
+      data: {message, note},
+    });
+  }
+
   events($event: any) {
     // console.log($event);
-    if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'GET_USB_DEVICES') {
-      this.store.dispatch(sendMessage({message: {event: 'GET_USB_DEVICES'}}));
-    } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONNECT_USB_DEVICE') {
+    if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONNECT_USB_DEVICE') {
       const now = new Date();
       const timestamp = now.getTime();
       const name =  $event.data.note.item.name;

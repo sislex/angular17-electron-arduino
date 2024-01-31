@@ -1,25 +1,24 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { Store } from '@ngrx/store';
-import {addLogFilterList, addLogList} from '../../../../../app/src/lib/+state/messages/messages.selectors';
+import { addLogList, addLogListForTable} from '../../../../../app/src/lib/+state/messages/messages.selectors';
 import { AsyncPipe } from '@angular/common';
 import { MessagesComponent } from '../../../../../ui/src/lib/components/messages/messages.component';
-import { ILog, MessagesState } from '../../../../../app/src/lib/+state/messages/messages.reducer';
+import { MessagesState } from '../../../../../app/src/lib/+state/messages/messages.reducer';
 import { BlinkNavPanelContainerComponent } from '../blink-nav-panel-container/blink-nav-panel-container.component';
-import { PageLayoutComponent } from '../../../../../ui/src/public-api';
-import {getDeviceName} from '../../+state/blink-config/blink-config.selectors';
+import { getDeviceName } from '../../+state/blink-config/blink-config.selectors';
+import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
 
 
 @Component({
   selector: 'blink-messages-container',
   standalone: true,
-  imports: [AsyncPipe, MessagesComponent, BlinkNavPanelContainerComponent, PageLayoutComponent],
+  imports: [AsyncPipe, MessagesComponent, BlinkNavPanelContainerComponent, DevicePageLayoutComponent],
   templateUrl: './blink-message-container.component.html',
   styleUrl: './blink-message-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class BlinkMessagesContainerComponent {
-  logList$ = this.store$.select(addLogFilterList);
   getDeviceName$ = this.store$.select(getDeviceName);
   logListAll$ = this.store$.select(addLogList);
   logListBlink: any[] = [];
@@ -32,10 +31,13 @@ export class BlinkMessagesContainerComponent {
         deviceName = item;
       });
       this.logListBlink = logList.filter((item) => {
-        return item.message?.data?.deviceName === deviceName;
+        return item.message?.data?.deviceName === deviceName || item.message?.data?.name === deviceName;
+      }).map(item => {
+        return {...item, message: JSON.stringify(item.message)};
       });
       console.log('logListBlink', this.logListBlink);
     });
-
   }
 }
+
+

@@ -5,13 +5,13 @@ import { Store } from '@ngrx/store';
 import { getAboutList, getAboutTitle } from '../../+state/blink-about/blink-about.selectors';
 import { blinkAboutState} from '../../+state/blink-about/blink-about.reducer';
 import { BlinkNavPanelContainerComponent } from '../blink-nav-panel-container/blink-nav-panel-container.component';
-import { PageLayoutComponent } from '../../../../../ui/src/public-api';
+import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
 
 
 @Component({
   selector: 'about-container',
   standalone: true,
-  imports: [AsyncPipe, AboutComponent, BlinkNavPanelContainerComponent, PageLayoutComponent],
+  imports: [AsyncPipe, AboutComponent, BlinkNavPanelContainerComponent, DevicePageLayoutComponent],
   templateUrl: './blink-about-container.component.html',
   styleUrl: './blink-about-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

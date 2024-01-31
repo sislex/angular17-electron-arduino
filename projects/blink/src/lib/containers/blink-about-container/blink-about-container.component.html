@@ -1,6 +1,6 @@
-<page-layout>
+<device-page-layout [title]="('About')">
     <blink-nav-panel-container  toplBar></blink-nav-panel-container>
     <div body>
         <about [title]="(titles$ |async)!" [about]="(abouts$ |async)"></about>
     </div>
-  </page-layout>
+</device-page-layout>
