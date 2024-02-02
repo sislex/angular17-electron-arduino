@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { ICommands } from '../../../../../app/src/lib/+state/commands-list/commands-list.reducer';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'commands-list',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './commands-list.component.html',
   styleUrl: './commands-list.component.scss'
 })
