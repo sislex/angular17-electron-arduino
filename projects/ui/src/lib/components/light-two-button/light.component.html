@@ -1,0 +1,34 @@
+<mat-grid-list  cols="2" rowHeight="2:1">
+
+    @if (light===true) { 
+        <mat-grid-tile>
+            <img src="./assets/images/blink/on.png">
+        </mat-grid-tile>
+    } @else if (light===false){
+        <mat-grid-tile>
+        <img src="./assets/images/blink/off.png">
+    </mat-grid-tile>
+}
+    <mat-grid-tile>
+        <img src="./assets/images/blink/blink.png">
+    </mat-grid-tile>
+
+    @if (light===false) {
+    <mat-grid-tile>
+        <button mat-raised-button color="primary" (click)="buttonClick('ON')" >
+            Light ON
+        </button>
+    </mat-grid-tile>
+} @else if (light===true){
+    <mat-grid-tile>
+        <button mat-raised-button color="primary" (click)="buttonClick('OFF')">
+            Light OFF
+        </button>
+    </mat-grid-tile>
+}
+    <mat-grid-tile>
+        <button mat-raised-button color="primary" (click)="buttonClick('BLINK')">
+            Blink
+        </button>
+    </mat-grid-tile>
+</mat-grid-list>

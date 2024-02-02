@@ -4,11 +4,12 @@ import { ICommands } from '../../../../../app/src/lib/+state/commands-list/comma
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'commands-list',
   standalone: true,
-  imports: [MatTableModule, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [MatTableModule, MatInputModule, MatFormFieldModule, FormsModule, MatButtonModule],
   templateUrl: './commands-list.component.html',
   styleUrl: './commands-list.component.scss'
 })

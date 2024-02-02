@@ -5,6 +5,7 @@ import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
 // import { setData } from '../../../../../app/src/lib/+state/about/about.actions';
 import { sendMessage } from '../../../../../app/src/lib/+state/messages/messages.actions';
+import { setMode } from '../../+state/blink-mode/blink-mode.actions';
 
 @Component({
   selector: 'blink-nav-panel-container',
@@ -34,6 +35,10 @@ export class BlinkNavPanelContainerComponent {
       this.router.navigate(['control/blink/:deviceName/logDevice']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'commandsList') {
       this.router.navigate(['control/blink/:deviceName/commandsList']);
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'two') {
+      this.store.dispatch(setMode({mode: 'two'}));
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'three') {
+      this.store.dispatch(setMode({mode: 'three'}));
     } 
     // else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDevice') {
     //   this.router.navigate(['control/blink/:deviceName/aboutDevice']);

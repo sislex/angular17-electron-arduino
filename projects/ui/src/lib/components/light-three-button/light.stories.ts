@@ -1,11 +1,11 @@
 import {componentWrapperDecorator, Meta, moduleMetadata, StoryObj} from '@storybook/angular';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {LightComponent} from './light.component';
+import {LightThreeComponent} from './light.component';
 
 
-const meta: Meta<LightComponent> = {
-  title: 'UI Components/LightComponent',
-  component: LightComponent,
+const meta: Meta<LightThreeComponent> = {
+  title: 'UI Components/LightThreeComponent',
+  component: LightThreeComponent,
   decorators: [
     moduleMetadata({
       imports: [MatGridListModule],
@@ -14,7 +14,7 @@ const meta: Meta<LightComponent> = {
       (story) => `<div>${story}</div>`
     ),
   ],
-  render: (args: LightComponent) => ({
+  render: (args: LightThreeComponent) => ({
     props: {
       ...args,
     },
@@ -22,7 +22,7 @@ const meta: Meta<LightComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<LightComponent>;
+type Story = StoryObj<LightThreeComponent>;
 
 export const Primary: Story = {
   args: {

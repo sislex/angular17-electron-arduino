@@ -4,14 +4,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'light',
+  selector: 'light-two',
   standalone: true,
   imports: [MatIconModule, MatGridListModule, MatButtonModule],
   templateUrl: './light.component.html',
   styleUrls: ['./light.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LightComponent {
+export class LightTwoComponent {
   @Input() light = false;
   @Output() emitter = new EventEmitter()
 
