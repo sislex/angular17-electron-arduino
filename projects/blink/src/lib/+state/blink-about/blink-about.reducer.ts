@@ -18,11 +18,11 @@ export interface AboutPartialState {
 }
 
 export const initialState: blinkAboutState = {
-    titleAbout: 'device',
+    titleAbout: 'widget',
     aboutList: [
-        {name: 'Name', description: 'Page of device'},
-        {name: 'Description', description: 'Contains main device controls.'},
-        {name: 'Date of create', description: '23.01.2024'},
+        {name: 'Name', description: 'Blink widget'},
+        {name: 'Description', description: 'Works with a microcontroller. Sends sets of commands to turn on, turn off and blink the light bulb on the microcontroller.'},
+        {name: 'Date of create', description: '01.02.2024'},
         {name: 'Version', description: '1.0.0'}
         ],
 };

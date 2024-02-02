@@ -26,6 +26,6 @@ type Story = StoryObj<CommandsListComponent>;
 
 export const Primary: Story = {
   args: {
-    commandsList: [{ num: 1,  name: 'name1', event: 'event1', prop: 'true' }, { num: 1,  name: 'name1', event: 'event123123123', prop: 'true' }]
+    commandsList: [{ num: 1,  name: 'name1', event: 'event1'}, { num: 1,  name: 'name1', event: 'event123123123'}]
     },
 };

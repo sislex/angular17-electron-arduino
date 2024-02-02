@@ -26,6 +26,8 @@ import { AccountMenuComponent } from '../account-menu/account-menu.component';
 })
 export class NavComponent {
   @Input() message: string = '';
+  @Input() authorizedUser: string | null = '';
+
   @Output() emitter = new EventEmitter();
 
   buttonClick(data: string) {

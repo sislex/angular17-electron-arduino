@@ -3,7 +3,7 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th class="head" mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let item">{{item.name}}</td>
     </ng-container>
 
@@ -23,36 +23,45 @@
           <button
             (click)="buttonClick('CONNECT_USB_DEVICE', {item})"
             mat-raised-button
-            color="primary"
-            class="example-icon">
-            <mat-icon>account_circle</mat-icon>
+            class="example-icon no-icon">
+            <mat-icon>settings_input_hdmi</mat-icon>
             <span>Connect</span>
           </button>
         } @else {
           <button
-            (click)="buttonClick('DISCONNECT_USB_DEVICE', {item})"
-            mat-raised-button
-            color="warn"
-            class="example-icon">
-            <mat-icon>account_circle</mat-icon>
-            <span>Disconnect</span>
-          </button>
-          <button
             (click)="buttonClick('CONTROL', {item})"
             mat-raised-button
             color="primary"
-            class="example-icon">
-            <mat-icon>account_circle</mat-icon>
-            <span>CONTROL</span>
+            class="example-icon  no-icon">
+            <mat-icon>back_hand</mat-icon>
+            <span>Control</span>
           </button>
         }
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns;"
-    ></tr>
+    <ng-container matColumnDef="disconnect">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let item">
+        @if (!item.isOpen) {<div class="example-button-container">
+          <button
+            mat-mini-fab disabled>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        } @else {
+          <div class="example-button-container">
+            <button
+              (click)="buttonClick('DISCONNECT_USB_DEVICE', {item})"
+              mat-mini-fab color="warn" aria-label="Example icon button with a home icon">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row  *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 }

@@ -3,26 +3,11 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{ message }}</span>
-  <!-- <button mat-icon-button>
-    <mat-icon>mic_none</mat-icon>
-  </button>
-  <button mat-icon-button>
-    <mat-icon>safety_check</mat-icon>
-  </button> -->
   <span class="example-spacer"></span>
-  <!-- <button mat-icon-button>
-    <mat-icon>location_on</mat-icon>
-  </button> -->
-  <button mat-icon-button>
-    <mat-icon>email</mat-icon>
-  </button>
-  <!-- <button mat-icon-button>
-    <mat-icon>search</mat-icon>
-  </button> -->
   <button mat-icon-button [matMenuTriggerFor]="setting" class="example-icon favorite-icon">
     <mat-icon>settings</mat-icon>
   </button>
-  <account-menu (emitter)="emitter.emit($event)"></account-menu>
+  <account-menu (emitter)="emitter.emit($event)" [user]="(authorizedUser)"></account-menu>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="buttonClick('cable')">
       <mat-icon>cable</mat-icon>
@@ -47,7 +32,5 @@
       <mat-icon>security</mat-icon>
       <span>Dark mode</span>
     </button>
-
   </mat-menu>
-
 </mat-toolbar>

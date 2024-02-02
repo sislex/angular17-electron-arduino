@@ -29,7 +29,5 @@ export const initialState: AboutState = {
 
 export const aboutReducer = createReducer(
     initialState,
-    // on(AboutActions.setData, (state, {titleAbout}) => ({ ...state, titleAbout })),
-    // on(AboutActions.setData, (state, {aboutList}) => ({ ...state, aboutList })),
 );
 

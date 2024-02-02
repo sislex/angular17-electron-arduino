@@ -1,12 +1,6 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-
-export interface ICommand {
-  num: number;
-  name: string;
-  event: string;
-  prop: string;
-}
+import { ICommands } from '../../../../../app/src/lib/+state/commands-list/commands-list.reducer';
 
 @Component({
   selector: 'commands-list',
@@ -16,12 +10,10 @@ export interface ICommand {
   styleUrl: './commands-list.component.scss'
 })
 export class CommandsListComponent {
-  @Input() commandsList: ICommand[]=[];
-  prop: string = '';
-
+  @Input() commandsList: ICommands[]| null = [];
   @Output() emitter = new EventEmitter() 
 
-  displayedColumns: string[] = ['num', 'name', 'event', 'prop', 'but'];
+  displayedColumns: string[] = ['number', 'name', 'event', 'button'];
 
   openDialog(data: string) {
     const message = {

@@ -1,22 +1,38 @@
-:host {
-  display: block;
+.demo-table {
   width: 100%;
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+.mat-column-name {
+  width:  25%;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
 
-    h3 {
-      flex: 0 0 auto;
-      margin: 0;
-    }
+  font-size: 15px;
+}
 
-    button {
-      flex: 0 0 48px;
-      margin: 0;
-    }
-  }
+.head {
+  text-align: center;
+}
 
+.mat-column-type {
+  padding-left: 16px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.mat-column-actions {
+  text-align: center;
+  font-size: 15px;
+}
+
+.mat-column-disconnect {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.no-icon {
+  width: 200px;
+  height: 30px;
 }

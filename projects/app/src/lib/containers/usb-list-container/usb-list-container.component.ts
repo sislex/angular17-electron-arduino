@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class UsbListContainerComponent {
   @Output() emitter = new EventEmitter();
+  
   getUsbList$ = this.store.pipe(select(getUsbList));
 
   constructor(

@@ -6,8 +6,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
   selector: 'light',
   standalone: true,
   imports: [MatIconModule, MatGridListModule],
-  templateUrl: './ligth.component.html',
-  styleUrls: ['./ligth.component.scss'],
+  templateUrl: './light.component.html',
+  styleUrls: ['./light.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightComponent {

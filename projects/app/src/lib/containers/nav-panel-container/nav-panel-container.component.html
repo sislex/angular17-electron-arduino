@@ -1,1 +1,1 @@
-<nav (emitter)="events($event)" ></nav>
+<nav (emitter)="events($event)" [authorizedUser]="(user$|async)"></nav>
