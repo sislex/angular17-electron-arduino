@@ -30,7 +30,6 @@ export class UsbListComponent {
     this.emitter.emit({
       event: 'UsbListContainerComponent:BUTTON_CLICKED',
       data: {message, note},
-      
     });
   }
 }

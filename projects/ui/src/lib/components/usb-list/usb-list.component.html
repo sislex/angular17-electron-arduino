@@ -28,14 +28,24 @@
             <span>Connect</span>
           </button>
         } @else {
-          <button
-            (click)="buttonClick('CONTROL', {item})"
-            mat-raised-button
-            color="primary"
-            class="example-icon  no-icon">
-            <mat-icon>back_hand</mat-icon>
-            <span>Control</span>
-          </button>
+              @if (item.type==='blink') {
+              <button
+              (click)="buttonClick('CONTROL', {item})"
+              mat-raised-button
+              color="primary"
+              class="example-icon  no-icon">
+              <mat-icon>back_hand</mat-icon>
+              <span>Control</span>
+            </button>
+            } @else {
+              <button
+                mat-raised-button
+                disabled
+                class="example-icon  no-icon">
+                <mat-icon class="loader">rotate_right</mat-icon>
+                <span>Connected</span>
+              </button>
+            }         
         }
       </td>
     </ng-container>

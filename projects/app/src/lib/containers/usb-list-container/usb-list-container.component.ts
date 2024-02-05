@@ -49,6 +49,7 @@ export class UsbListContainerComponent {
       const timestamp = now.getTime();
       const name =  $event.data.note.item.name;
       this.store.dispatch(sendMessage({message: {event: 'DISCONNECT_USB_DEVICE', data: {name, timestamp}}}));
+      
     } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONTROL') {
       this.router.navigate(['control', 'blink', $event.data.note.item.name]);
       setTimeout(() => { // lazy load
