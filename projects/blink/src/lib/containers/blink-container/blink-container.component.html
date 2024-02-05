@@ -1,10 +1,5 @@
-<page-layout>
-  <blink-nav-panel-container  toplBar></blink-nav-panel-container>
-  <div body>
-    @if ((mode$|async)==='three'){
-    <light-three> (emitter)="events($event)"></light-three>
-  } @else if ((mode$|async)==='two') {
-    <light-two> (emitter)="events($event)"></light-two>
+@if ((mode$|async)==='three'){
+  <blink-three-container></blink-three-container>
+} @else if ((mode$|async)==='two') {
+<blink-two-container></blink-two-container>
 }
-  </div>
-</page-layout>

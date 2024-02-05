@@ -1,34 +1,43 @@
-<mat-grid-list  cols="2" rowHeight="2:1">
-
-    @if (light===true) { 
-        <mat-grid-tile>
-            <img src="./assets/images/blink/on.png">
-        </mat-grid-tile>
-    } @else if (light===false){
-        <mat-grid-tile>
-        <img src="./assets/images/blink/off.png">
-    </mat-grid-tile>
+<div class="body">
+@if (led==='ON') {
+    <img src="./assets/images/blink/on.png">
+} @else if (led==='OFF') {
+    <img src="./assets/images/blink/off.png">
+} @else if (led==='BLINK') {
+    <img src="./assets/images/blink/blink.png"> 
 }
-    <mat-grid-tile>
-        <img src="./assets/images/blink/blink.png">
-    </mat-grid-tile>
-
-    @if (light===false) {
-    <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="buttonClick('ON')" >
-            Light ON
-        </button>
-    </mat-grid-tile>
-} @else if (light===true){
-    <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="buttonClick('OFF')">
-            Light OFF
-        </button>
-    </mat-grid-tile>
+<div class="butt">
+@if (led==='ON') {
+<button mat-raised-button disabled (click)="buttonClick('ON')" >
+    Light ON
+</button>
+<button mat-raised-button color="primary" (click)="buttonClick('OFF')">
+    Light OFF
+</button> 
+<button mat-raised-button color="primary" (click)="buttonClick('BLINK')">
+    Blink
+</button>
+} @else if (led==='OFF') {
+    <button mat-raised-button color="primary" (click)="buttonClick('ON')" >
+        Light ON
+    </button>
+    <button mat-raised-button disabled (click)="buttonClick('OFF')">
+        Light OFF
+    </button> 
+    <button mat-raised-button color="primary" (click)="buttonClick('BLINK')">
+        Blink
+    </button>
+} @else if (led==='BLINK') {
+    <button mat-raised-button color="primary" (click)="buttonClick('ON')" >
+        Light ON
+    </button>
+    <button mat-raised-button color="primary" (click)="buttonClick('OFF')">
+        Light OFF
+    </button> 
+    <button mat-raised-button disabled (click)="buttonClick('BLINK')">
+        Blink
+    </button>
 }
-    <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="buttonClick('BLINK')">
-            Blink
-        </button>
-    </mat-grid-tile>
-</mat-grid-list>
+</div>
+</div>
+

@@ -12,12 +12,12 @@ import { MatButtonModule } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightThreeComponent {
-  @Input() light = false;
+  @Input() led = 'OFF';
   @Output() emitter = new EventEmitter()
 
   buttonClick(data: string) {
     const message = {
-      event: 'LightComponent:BUTTON_CLICKED',
+      event: 'LightThreeComponent:BUTTON_CLICKED',
       data,
     };
     this.emitter.emit(message);
