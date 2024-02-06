@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     AsyncPipe,
     UsbListComponent,
     DevicePageLayoutComponent,
-    MatIconModule
+    MatIconModule,
   ]
 })
 export class UsbListContainerComponent {

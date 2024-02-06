@@ -4,8 +4,6 @@ import {resetUserFromLocalStorageAndState} from '../../../../../app/src/lib/+sta
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
 import { setMode } from '../../+state/blink-mode/blink-mode.actions';
-
-
 @Component({
   selector: 'blink-nav-panel-container',
   standalone: true,

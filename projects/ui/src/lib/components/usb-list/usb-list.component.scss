@@ -6,7 +6,6 @@
   width:  25%;
   border-right: 1px solid currentColor;
   padding-right: 24px;
-
   font-size: 15px;
 }
 
@@ -35,4 +34,13 @@
 .no-icon {
   width: 200px;
   height: 30px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  animation: spin 2s linear infinite;
 }

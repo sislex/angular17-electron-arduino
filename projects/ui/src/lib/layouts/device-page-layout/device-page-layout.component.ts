@@ -11,5 +11,5 @@ import { PageLayoutComponent } from '../page-layout/page-layout.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DevicePageLayoutComponent {
-  @Input() title: string='';
+  @Input() title: string = '';
 }

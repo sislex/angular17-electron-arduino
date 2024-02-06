@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { CommandsListComponent } from '../../../../../ui/src/lib/components/commands-list/commands-list.component';
 import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
@@ -18,7 +18,7 @@ import { CommandsListState } from '../../+state/commands-list/commands-list.redu
 
 export class CommandsListContainerComponent {
   commands$ = this.store$.select(getCommandsList);
-
-  constructor(private store$: Store<CommandsListState>,
-  ) {}
+  
+  constructor(private store$: Store<CommandsListState>) {
+  }
 }

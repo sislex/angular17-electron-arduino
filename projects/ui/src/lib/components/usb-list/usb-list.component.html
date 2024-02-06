@@ -28,14 +28,24 @@
             <span>Connect</span>
           </button>
         } @else {
-          <button
-            (click)="buttonClick('CONTROL', {item})"
-            mat-raised-button
-            color="primary"
-            class="example-icon  no-icon">
-            <mat-icon>back_hand</mat-icon>
-            <span>Control</span>
-          </button>
+              @if (item.type==='blink') {
+              <button
+              (click)="buttonClick('CONTROL', {item})"
+              mat-raised-button
+              color="primary"
+              class="example-icon  no-icon">
+              <mat-icon>back_hand</mat-icon>
+              <span>Control</span>
+            </button>
+            } @else {
+              <button
+                mat-raised-button
+                disabled
+                class="example-icon  no-icon">
+                <mat-icon class="loader">rotate_right</mat-icon>
+                <span>Connected</span>
+              </button>
+            }         
         }
       </td>
     </ng-container>
@@ -43,7 +53,8 @@
     <ng-container matColumnDef="disconnect">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let item">
-        @if (!item.isOpen) {<div class="example-button-container">
+        @if (!item.isOpen) {
+          <div class="example-button-container">
           <button
             mat-mini-fab disabled>
             <mat-icon>close</mat-icon>
@@ -53,7 +64,9 @@
           <div class="example-button-container">
             <button
               (click)="buttonClick('DISCONNECT_USB_DEVICE', {item})"
-              mat-mini-fab color="warn" aria-label="Example icon button with a home icon">
+              mat-mini-fab 
+              color="warn" 
+              aria-label="Example icon button with a home icon">
               <mat-icon>close</mat-icon>
             </button>
           </div>
@@ -61,7 +74,7 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row  *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 }

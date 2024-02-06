@@ -22,7 +22,7 @@ export class CommandsListComponent {
   openDialog(data: string) {
     const message = {
       event: 'CommandListComponent:UseCommand', 
-      data
+      data,
     };
     this.emitter.emit(message);
   }

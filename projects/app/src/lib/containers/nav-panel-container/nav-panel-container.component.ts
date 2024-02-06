@@ -20,18 +20,14 @@ export class NavPanelContainerComponent {
 
   user$ = this.store$.select(nameUserLogin);
 
-
   constructor(
     private readonly store: Store,
     private router: Router,
-    private store$: Store<AccountState>,
-  ) {
+    private store$: Store) {
   }
 
-  
-
   events($event: any) {
-    console.log($event);
+    // console.log($event);
     if ($event.event === 'NavPanelComponent:BUTTON_CLICKED' && $event.data === 'Sign out') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
     } else  if ($event.event === 'NavComponent:BUTTON_CLICKED' && $event.data === 'cable') {

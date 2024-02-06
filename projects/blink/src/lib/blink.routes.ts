@@ -1,8 +1,8 @@
-  import {Routes} from '@angular/router';
-  import {provideState} from '@ngrx/store';
-  import {provideEffects} from '@ngrx/effects';
-  import {BLINK_CONFIG_FEATURE_KEY, blinkConfigReducer} from './+state/blink-config/blink-config.reducer';
-  import {BlinkConfigEffects} from './+state/blink-config/blink-config.effects';
+import {Routes} from '@angular/router';
+import {provideState} from '@ngrx/store';
+import {provideEffects} from '@ngrx/effects';
+import {BLINK_CONFIG_FEATURE_KEY, blinkConfigReducer} from './+state/blink-config/blink-config.reducer';
+import {BlinkConfigEffects} from './+state/blink-config/blink-config.effects';
 import { BlinkAboutContainerComponent } from './containers/blink-about-container/blink-about-container.component';
 import { BlinkMessagesContainerComponent } from './containers/blink-message-container/blink-message-container.component';
 import { BLINK_ABOUT_FEATURE_KEY, blinkAboutReducer } from './+state/blink-about/blink-about.reducer';
@@ -24,10 +24,6 @@ import { BlinkContainerComponent } from './containers/blink-container/blink-cont
         ]),
       ],
       children: [
-        // {
-        //   path: 'aboutDevice',
-        //   component: BlinkDeviceAboutContainerComponent,
-        // },
         {
           path: 'commandsList',
           component: BlinkCommandsListContainer,
