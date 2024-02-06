@@ -4,7 +4,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 
 
-
 @Component({
   selector: 'about',
   standalone: true,
@@ -18,3 +17,4 @@ export class AboutComponent {
   @Input() about: any[] | null = [] ;
   @Input() title:string = '';
 }
+  

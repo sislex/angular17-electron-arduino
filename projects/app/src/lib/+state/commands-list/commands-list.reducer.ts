@@ -9,7 +9,7 @@ export interface ICommands {
 }
 
 export interface CommandsListState {
-    commands: ICommands[];
+    commandsList: ICommands[];
 }
 
 export interface CommandsListPartialState {

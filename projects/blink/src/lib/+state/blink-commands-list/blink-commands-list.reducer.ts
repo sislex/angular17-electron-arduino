@@ -1,6 +1,6 @@
 import { createReducer } from '@ngrx/store';
 
-export const BLINK_COMMANDS_LIST_FEATURE_KEY = 'blink commands';
+export const BLINK_COMMANDS_LIST_FEATURE_KEY = 'blink/commandsList';
 
 export interface IBlinkCommands {
     num: number;

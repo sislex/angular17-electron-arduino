@@ -4,7 +4,6 @@ import { BlinkNavPanelContainerComponent } from '../blink-nav-panel-container/bl
 import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
 import { getBlinkCommandsList } from '../../+state/blink-commands-list/blink-commands-list.selectors';
 import { Store } from '@ngrx/store';
-import { BlinkCommandsListState } from '../../+state/blink-commands-list/blink-commands-list.reducer';
 import { AsyncPipe } from '@angular/common';
 
 
@@ -18,8 +17,6 @@ import { AsyncPipe } from '@angular/common';
 export class BlinkCommandsListContainer {
   commands$ = this.store$.select(getBlinkCommandsList);
 
-  constructor(private store$: Store<BlinkCommandsListState>,
-  ) {}
-
-  
+  constructor(private store$: Store) {
+  }
 }
