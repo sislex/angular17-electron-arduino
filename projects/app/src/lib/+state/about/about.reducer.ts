@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-// import * as AboutActions from './about.actions';
 
 export const ABOUT_FEATURE_KEY = 'about';
 
