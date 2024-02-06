@@ -1,6 +1,6 @@
 import { createReducer } from '@ngrx/store';
 
-export const COMMANDS_LIST_FEATURE_KEY = 'general commands';
+export const COMMANDS_LIST_FEATURE_KEY = 'commandsList';
 
 export interface ICommands {
     num: number;
@@ -17,7 +17,7 @@ export interface CommandsListPartialState {
 }
 
 export const initialState: CommandsListState = {
-    commands: [ {num: 1, name: 'nam1', event: 'ev1'}, 
+    commandsList: [ {num: 1, name: 'nam1', event: 'ev1'}, 
     {num: 2, name: 'nam2', event: 'ev2'}]
 };
 
