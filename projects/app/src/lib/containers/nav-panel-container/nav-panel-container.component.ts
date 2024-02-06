@@ -20,15 +20,12 @@ export class NavPanelContainerComponent {
 
   user$ = this.store$.select(nameUserLogin);
 
-
   constructor(
     private readonly store: Store,
     private router: Router,
     private store$: Store<AccountState>,
   ) {
   }
-
-  
 
   events($event: any) {
     console.log($event);
