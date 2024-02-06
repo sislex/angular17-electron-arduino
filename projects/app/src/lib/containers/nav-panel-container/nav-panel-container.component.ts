@@ -23,8 +23,7 @@ export class NavPanelContainerComponent {
   constructor(
     private readonly store: Store,
     private router: Router,
-    private store$: Store<AccountState>,
-  ) {
+    private store$: Store) {
   }
 
   events($event: any) {
