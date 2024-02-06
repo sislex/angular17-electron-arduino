@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as BlinkModeActions from './blink-mode.actions';
 
-export const BLINK_MODE_FEATURE_KEY = 'blinkMode';
+export const BLINK_MODE_FEATURE_KEY = 'blink/mode';
 
 export interface BlinkModeState {
     mode: string;

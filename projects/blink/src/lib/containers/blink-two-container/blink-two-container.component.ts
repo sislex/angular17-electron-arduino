@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-config.actions';
 import {RouterOutlet} from '@angular/router';
 import { BlinkAboutContainerComponent } from '../blink-about-container/blink-about-container.component';
-import { LightTwoComponent } from '../../../../../ui/src/lib/components/light-two-button/light.component';
+import { LightTwoComponent } from '../../../../../ui/src/lib/components/light-two-button/light-two-button.component';
 import { getMode } from '../../+state/blink-mode/blink-mode.selectors';
 import { BlinkModeState } from '../../+state/blink-mode/blink-mode.reducer';
 import { AsyncPipe } from '@angular/common';

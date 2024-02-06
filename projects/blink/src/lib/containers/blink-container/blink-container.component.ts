@@ -31,8 +31,8 @@ export class BlinkContainerComponent implements OnInit {
   constructor(
     private readonly store: Store,
     private route: ActivatedRoute,
-    private store$: Store<BlinkModeState>){
-  }
+    private store$: Store<BlinkModeState>,
+    ){}
 
   ngOnInit() {
     const deviceName: string = this.route.snapshot.paramMap.get('deviceName') ?? 'emptyDeviceName';

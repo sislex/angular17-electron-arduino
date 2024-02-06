@@ -23,7 +23,6 @@ export class MainContainerComponent {
 
   constructor(
     private readonly store: Store,
-    private store$: Store<BlinkModeState>
-  ) {
-  }
+    private store$: Store<BlinkModeState>,
+  ) {}
 }
