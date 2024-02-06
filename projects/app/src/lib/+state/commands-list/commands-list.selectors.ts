@@ -5,5 +5,5 @@ export const selectFeature = createFeatureSelector<CommandsListState>(COMMANDS_L
 
 export const getCommandsList = createSelector(
     selectFeature,
-    (state: CommandsListState) => state.commands
+    (state: CommandsListState) => state.commandsList
 );
