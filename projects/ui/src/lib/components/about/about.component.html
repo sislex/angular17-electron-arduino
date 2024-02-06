@@ -1,0 +1,11 @@
+<h3>Info about {{title}}</h3>
+<mat-list>
+  @for (item of about; track item.id) {  
+  <mat-list-item>
+    <span matListItemTitle>{{item.name}}</span> 
+    <span matListItemLine>{{item.description}}</span> 
+  </mat-list-item> <br>
+} @empty {
+  Empty list of information
+}
+</mat-list>

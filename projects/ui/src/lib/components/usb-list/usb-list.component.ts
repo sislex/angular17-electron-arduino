@@ -4,6 +4,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import { DevicePageLayoutComponent } from '../../layouts/device-page-layout/device-page-layout.component';
 
 @Component({
   selector: 'usb-list',
@@ -13,7 +14,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatCardModule,
     MatIconModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    DevicePageLayoutComponent
   ],
   styleUrls: ['./usb-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +24,7 @@ export class UsbListComponent {
   @Input() usbList: IUsb[] | null = [];
   @Output() emitter = new EventEmitter();
 
-  displayedColumns: string[] = ['name', 'type', 'actions',];
+  displayedColumns: string[] = ['name', 'type', 'actions', 'disconnect'];
 
   buttonClick(message: string, note: any = {}) {
     this.emitter.emit({
@@ -30,11 +32,4 @@ export class UsbListComponent {
       data: {message, note},
     });
   }
-
-  // buttonClicked(user: IUser) {
-  //   this.emitter.emit({
-  //     event: 'UsbListContainerComponent:BUTTON_CLICKED',
-  //     data: {user},
-  //   });
-  // }
 }

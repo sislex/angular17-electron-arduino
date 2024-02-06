@@ -7,3 +7,8 @@ export const isUserLogin = createSelector(
   selectFeature,
   (state: AccountState) => !!state.id,
 );
+
+export const nameUserLogin = createSelector(
+  selectFeature,
+  (state: AccountState) => state.name,
+);

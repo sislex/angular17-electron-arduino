@@ -2,7 +2,8 @@
     <mat-icon>account_circle</mat-icon>
 </button>
 <mat-menu #account="matMenu">
-    <user-list [users]="[{id: 1, name: 'User1', role: 'admin'}, {id: 2, name: 'User2', role: 'admin'}]" (emitter)="emitter.emit($event)"></user-list>
+    <h2>{{user}}</h2>
+    <hr>
     <button mat-menu-item (click)="buttonClicked('Sign out')">
     <mat-icon>logout</mat-icon>
     <span>Sign out</span>

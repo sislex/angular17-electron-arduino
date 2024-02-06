@@ -1,1 +1,10 @@
-<usb-list [usbList]="getUsbList$ | async" (emitter)="events($event)"></usb-list>
+<device-page-layout title="USB Ports">
+    <div buttonPanel class="button">
+        <button mat-icon-button (click)="buttonClick('GET_USB_DEVICES')">
+            <mat-icon>sync</mat-icon>
+        </button>
+    </div>
+    <div body>
+        <usb-list [usbList]="getUsbList$ | async" (emitter)="events($event)"></usb-list>
+    </div>
+</device-page-layout>

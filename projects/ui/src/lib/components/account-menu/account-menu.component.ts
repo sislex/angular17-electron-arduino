@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@angular/core';
 import { UserListComponent } from '../user-list/user-list.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AccountMenuComponent {
   @Output() emitter = new EventEmitter();
-
+  @Input() user: string | null = '';
   buttonClicked(note: string) {
     this.emitter.emit({
       event: 'NavPanelComponent:BUTTON_CLICKED',

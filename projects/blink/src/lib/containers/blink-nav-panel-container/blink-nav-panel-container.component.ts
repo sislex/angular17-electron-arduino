@@ -3,7 +3,6 @@ import {NavDeviceComponent} from '../../../../../ui/src/lib/components/nav-devic
 import {resetUserFromLocalStorageAndState} from '../../../../../app/src/lib/+state/account/account.actions';
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
-
 @Component({
   selector: 'blink-nav-panel-container',
   standalone: true,
@@ -24,7 +23,14 @@ export class BlinkNavPanelContainerComponent {
     if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'control') {
       this.store.dispatch(resetUserFromLocalStorageAndState());
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'cable') {
-
-    }
-  }
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDWidget') {
+      this.router.navigate(['control/blink/:deviceName/aboutDevWidget']);
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'controlDevice') {
+      this.router.navigate(['control/blink/:deviceName']);
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'logDevice') {
+      this.router.navigate(['control/blink/:deviceName/logDevice']);
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'commandsList') {
+      this.router.navigate(['control/blink/:deviceName/commandsList']);
+    } 
+  } 
 }

@@ -47,6 +47,7 @@ export class UsbEffects {
           usb = {
             ...usb,
             isOpen: false,
+            type: '',
           };
         }
         return usb;

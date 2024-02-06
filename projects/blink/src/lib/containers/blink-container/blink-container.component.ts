@@ -1,9 +1,11 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {LightComponent, PageLayoutComponent} from '../../../../../ui/src/public-api';
 import {BlinkNavPanelContainerComponent} from '../blink-nav-panel-container/blink-nav-panel-container.component';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {ActivatedRoute} from '@angular/router';
 import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-config.actions';
+import {RouterOutlet} from '@angular/router';
+import { BlinkAboutContainerComponent } from '../blink-about-container/blink-about-container.component';
 
 @Component({
   selector: 'lib-blink-container',
@@ -12,6 +14,8 @@ import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-c
     PageLayoutComponent,
     BlinkNavPanelContainerComponent,
     LightComponent,
+    RouterOutlet,
+    BlinkAboutContainerComponent,
   ],
   templateUrl: './blink-container.component.html',
   styles: ``,
@@ -43,6 +47,6 @@ export class BlinkContainerComponent implements OnInit {
           },
         },
       }}));
-    }
+    } 
   }
 }

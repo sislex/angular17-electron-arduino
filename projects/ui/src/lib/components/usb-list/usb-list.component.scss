@@ -1,22 +1,46 @@
-:host {
-  display: block;
+.demo-table {
   width: 100%;
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+.mat-column-name {
+  width:  25%;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  font-size: 15px;
+}
 
-    h3 {
-      flex: 0 0 auto;
-      margin: 0;
-    }
+.head {
+  text-align: center;
+}
 
-    button {
-      flex: 0 0 48px;
-      margin: 0;
-    }
-  }
+.mat-column-type {
+  padding-left: 16px;
+  text-align: center;
+  font-size: 15px;
+}
 
+.mat-column-actions {
+  text-align: center;
+  font-size: 15px;
+}
+
+.mat-column-disconnect {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.no-icon {
+  width: 200px;
+  height: 30px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  animation: spin 2s linear infinite;
 }
