@@ -1,6 +1,5 @@
-<page-layout>
-  <blink-nav-panel-container toplBar></blink-nav-panel-container>
-  <div body>
-    <light  (emitter)="events($event)"></light>
-  </div>
-</page-layout>
+@if ((mode$|async)==='three'){
+  <blink-three-container></blink-three-container>
+} @else if ((mode$|async)==='two') {
+<blink-two-container></blink-two-container>
+}

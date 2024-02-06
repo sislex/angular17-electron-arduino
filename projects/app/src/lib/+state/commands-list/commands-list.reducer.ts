@@ -3,7 +3,6 @@ import { createReducer } from '@ngrx/store';
 export const COMMANDS_LIST_FEATURE_KEY = 'commandsList';
 
 export interface ICommands {
-    num: number;
     name: string;
     event: string;
 }
@@ -17,8 +16,8 @@ export interface CommandsListPartialState {
 }
 
 export const initialState: CommandsListState = {
-    commandsList: [ {num: 1, name: 'nam1', event: 'ev1'}, 
-    {num: 2, name: 'nam2', event: 'ev2'}]
+    commandsList: [{name: 'Connect to device', event: '{"event":"CONNECT_USB_DEVICE","data":{"name":"COM1","timestamp":1706869676852}}'}, 
+    {name: 'Disconnect to device', event: '{"event":"DISCONNECT_USB_DEVICE","data":{"name":"COM1","timestamp":1706869677595}}'}]
 };
 
 export const commandsReducer = createReducer(

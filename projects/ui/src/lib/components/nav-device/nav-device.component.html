@@ -11,17 +11,17 @@
     </button>
     <button mat-icon-button>
         <mat-icon>location_searching</mat-icon>
-    </button>
-    <span class="example-spacer"></span>
-    <button mat-icon-button>
+    </button>-->
+    <span class="example-spacer"></span> 
+    <!-- <button mat-icon-button>
         <mat-icon>signal_cellular_alt</mat-icon>
     </button>
     <button mat-icon-button>
         <mat-icon>battery_charging_full</mat-icon>
-    </button>
+    </button> -->
     <button mat-icon-button [matMenuTriggerFor]="setting" class="example-icon favorite-icon">
     <mat-icon>settings</mat-icon>
-    </button> -->
+    </button> 
     <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="buttonClick('controlDevice')">
         <mat-icon>back_hand</mat-icon>
@@ -45,14 +45,12 @@
     </button>
 </mat-menu>
 
-    <!-- <mat-menu #setting="matMenu">
-        <button mat-menu-item (click)="buttonClick('security')">
-            <mat-icon>security</mat-icon>
-            <span>Security mode</span>
-        </button>
-        <button mat-menu-item (click)="buttonClick('auto')">
-            <mat-icon>do_not_touch</mat-icon>
-            <span>Automatic mode</span>
-        </button>
-    </mat-menu> -->
+<mat-menu #setting="matMenu">
+    <button mat-menu-item (click)="buttonClick('two')">
+        <span>Two Button</span>
+    </button>
+    <button mat-menu-item (click)="buttonClick('three')">
+        <span>Three Button</span>
+    </button>
+</mat-menu>
 </mat-toolbar>

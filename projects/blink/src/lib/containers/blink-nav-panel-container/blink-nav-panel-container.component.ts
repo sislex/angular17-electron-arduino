@@ -3,6 +3,7 @@ import {NavDeviceComponent} from '../../../../../ui/src/lib/components/nav-devic
 import {resetUserFromLocalStorageAndState} from '../../../../../app/src/lib/+state/account/account.actions';
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
+import { setMode } from '../../+state/blink-mode/blink-mode.actions';
 @Component({
   selector: 'blink-nav-panel-container',
   standalone: true,
@@ -15,8 +16,7 @@ export class BlinkNavPanelContainerComponent {
   constructor(
     private readonly store: Store,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   events($event: any) {
     console.log($event);
@@ -31,6 +31,10 @@ export class BlinkNavPanelContainerComponent {
       this.router.navigate(['control/blink/:deviceName/logDevice']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'commandsList') {
       this.router.navigate(['control/blink/:deviceName/commandsList']);
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'two') {
+      this.store.dispatch(setMode({mode: 'two'}));
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'three') {
+      this.store.dispatch(setMode({mode: 'three'}));
     } 
   } 
 }
