@@ -26,4 +26,8 @@ export class CommandsListComponent {
     };
     this.emitter.emit(message);
   }
+
+  buttonClick(eventy: any) {
+    this.emitter.emit(eventy);
+  }
 }
