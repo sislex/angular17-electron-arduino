@@ -4,7 +4,8 @@ export const COMMANDS_LIST_FEATURE_KEY = 'commandsList';
 
 export interface ICommands {
     name: string;
-    event: string;
+    description: string;
+    event: any;
 }
 
 export interface CommandsListState {
@@ -16,8 +17,16 @@ export interface CommandsListPartialState {
 }
 
 export const initialState: CommandsListState = {
-    commandsList: [{name: 'Connect to device', event: '{"event":"CONNECT_USB_DEVICE","data":{"name":"COM1","timestamp":1706869676852}}'}, 
-    {name: 'Disconnect to device', event: '{"event":"DISCONNECT_USB_DEVICE","data":{"name":"COM1","timestamp":1706869677595}}'}]
+    commandsList: [{
+        name: 'Connect to device', 
+        description: '{"event":"CONNECT_USB_DEVICE","data":{"name":"COM123","timestamp":000}}',
+        event: {event:"CONNECT_USB_DEVICE",data:{name:"COM123",timestamp:111}}
+    }, 
+    {
+        name: 'Disconnect to device', 
+        description: '{"event":"DISCONNECT_USB_DEVICE","data":{"name":"COM123","timestamp":000}}',
+        event: {event:"DISCONNECT_USB_DEVICE",data:{name:"COM123",timestamp:111}}
+    }]
 };
 
 export const commandsReducer = createReducer(

@@ -19,11 +19,7 @@ export class CommandsListComponent {
 
   displayedColumns: string[] = ['number', 'name', 'event', 'button'];
 
-  openDialog(data: string) {
-    const message = {
-      event: 'CommandListComponent:UseCommand', 
-      data,
-    };
-    this.emitter.emit(message);
+  buttonClick(eventy: any) {
+    this.emitter.emit(eventy);
   }
 }
