@@ -5,8 +5,9 @@ class Info {
     const String type;
   public:
     String mode;
+    String led;
 
-    Info(const String& t = "blink", const String& m = "off") : type(t), mode(m) {}
+    Info(const String& t = "blink", const String& m = "off", const String& l = "off") : type(t), mode(m), led(l) {}
 
     String getType() const {
         return type;
@@ -16,6 +17,7 @@ class Info {
         StaticJsonDocument<512> doc;
         doc["type"] = type;
         doc["mode"] = mode;
+        doc["led"] = led;
 
         String output;
         serializeJson(doc, output);
@@ -39,7 +41,7 @@ class Info {
     }
 };
 
-Info info("blink", "on");
+Info info("blink", "OFF", "OFF");
 
 const int ledPin = 13;
 String inputString = "";         // строка для хранения входящих данных
@@ -64,10 +66,25 @@ void loop() {
       const char* command = doc["data"]["command"];
 
       if (strcmp(event, "LED") == 0) {
-        if (strcmp(command, "ON") == 0) {
+       info.mode = command;
+        if (info.mode.equals("ON")) {
           digitalWrite(ledPin, HIGH);
-        } else if (strcmp(command, "OFF") == 0) {
+
+          info.led = "ON";
+
+          String json = info.getJSONMessage("DEVICE_INFO", timestamp);
+          Serial.println(json);
+        } else if (info.mode.equals("OFF")) {
           digitalWrite(ledPin, LOW);
+
+           info.led = "OFF";
+
+          String json = info.getJSONMessage("DEVICE_INFO", timestamp);
+          Serial.println(json);
+        } else if (info.mode.equals("BLINK")) {
+          digitalWrite(ledPin, LOW);
+          String json = info.getJSONMessage("DEVICE_INFO", timestamp);
+          Serial.println(json);
         }
       } else if (strcmp(event, "GET_INFO") == 0) {
         String json = info.getJSONMessage("DEVICE_INFO", timestamp);
