@@ -12,9 +12,11 @@ export interface BlinkCommandsListPartialState {
 }
 
 export const initialState: BlinkCommandsListState = {
-    commands: [ {name: 'ON Indicator', description: '{"event":"LED","data":{"command":"ON"}}', event: '{"event":"LED","data":{"command":"ON"}}'}, 
-    {name: 'OFF Indicator', description: '{"event":"LED","data":{"command":"OFF"}}', event: '{"event":"LED","data":{"command":"OFF"}}'},
-    {name: 'BLINK Indicator', description: '{"event":"LED","data":{"command":"BLINK"}}', event: '{"event":"LED","data":{"command":"BLINK"}}'}]
+    commands: [
+    {name: 'ON Indicator', description:'{event:"LED",data:{command:"ON"}}', event: {event:"LED",data:{command:"ON"}}}, 
+    {name: 'OFF Indicator', description:'{event:"LED",data:{command:"OFF"}}', event: {event:"LED","data":{command:"OFF"}}},
+    {name: 'BLINK Indicator', description:'{event:"LED",data:{command:"BLINK"}}', event: {event:"LED","data":{command:"BLINK"}}}
+    ]
 };
 
 export const blinkCommandsReducer = createReducer(
