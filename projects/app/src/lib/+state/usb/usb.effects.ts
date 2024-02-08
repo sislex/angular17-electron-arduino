@@ -69,21 +69,19 @@ export class UsbEffects {
 
       if (message.event === 'DEVICE_IS_READY') {
         this.store.dispatch(usbDeviceGetInfo({ deviceName }));
-      } else if (message.type) {
+      } else  if (message.event === 'DEVICE_INFO') {
         const newUsbList = usbList.map((usb) => {
           if (usb.name === deviceName) {
             usb = {
               ...usb,
-              type: message.type,
+              type: message.data.type,
               infoFields: [],
             };
           }
           return usb;
         });
-
         this.store.dispatch(setUsbList({ usbList: newUsbList }));
       }
-
 
     })
   ), {dispatch: false});
