@@ -5,6 +5,8 @@ import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/dev
 import { getBlinkCommandsList } from '../../+state/blink-commands-list/blink-commands-list.selectors';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
+import { blinkSendMessage } from '../../+state/blink-config/blink-config.actions';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -15,8 +17,22 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './blink-commands-list-container.component.scss'
 })
 export class BlinkCommandsListContainer {
+
   commands$ = this.store$.select(getBlinkCommandsList);
 
-  constructor(private store$: Store) {
+  constructor(
+    private store$: Store,
+    private route: ActivatedRoute,
+    private readonly store: Store,
+    ) {}
+
+  buttonClick($event: any) {
+    // console.log($event);
+    this.store.dispatch(blinkSendMessage({message: {
+      event: 'TO_DEVICE',
+      data: {
+        message: $event
+      },
+    }}));
   }
 }

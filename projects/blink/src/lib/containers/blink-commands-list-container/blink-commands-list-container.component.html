@@ -1,6 +1,6 @@
 <device-page-layout title="Commands list">
   <blink-nav-panel-container toplBar></blink-nav-panel-container>
   <div body>
-    <commands-list [commandsList]="commands$|async"></commands-list>
+    <commands-list [commandsList]="commands$|async" (emitter)="buttonClick($event)"></commands-list>
   </div>
 </device-page-layout>
