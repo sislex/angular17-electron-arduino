@@ -2,6 +2,7 @@ const { getSerialPortList, setupSerialPort} = require('./serialport');
 const {sendMessage} = require('./messagesWeb');
 
 const port = {};
+const messageBuffers = {};
 
 async  function messagesHandlerFromWeb(json, note) {
   // console.log(json);
@@ -29,15 +30,23 @@ async  function messagesHandlerFromWeb(json, note) {
       }));
 
       port[data.name].on('data', (message) => {
-        sendMessage(note.win, note.channelName, JSON.stringify({
-          event: 'FROM_USB_DEVICE',
-          data: {
-            timestamp: (new Date()).getTime(),
-            deviceName: data.name,
-            message:  message.toString()
-          },
-        }));
+        if (!messageBuffers[data.name]) {
+          messageBuffers[data.name] = '';
+        }
+        messageBuffers[data.name] += message.toString();
 
+        if (messageBuffers[data.name].endsWith('\n')) {
+          sendMessage(note.win, note.channelName, JSON.stringify({
+            event: 'FROM_USB_DEVICE',
+            data: {
+              timestamp: (new Date()).getTime().toString(),
+              deviceName: data.name,
+              message: messageBuffers[data.name].trim() // Удаляем символ новой строки из сообщения
+            },
+          }));
+
+          messageBuffers[data.name] = ''; // Очищаем буфер для данного устройства
+        }
       });
     } catch (error) {
       console.error(error);

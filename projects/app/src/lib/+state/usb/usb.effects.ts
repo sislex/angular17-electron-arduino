@@ -134,7 +134,7 @@ export class UsbEffects {
         ofType(usbDeviceGetInfo),
         tap(({deviceName}) => {
           const now = new Date();
-          const timestamp = now.getTime();
+          const timestamp = now.getTime().toString();
           this.store.dispatch(sendMessage({
             message: {
               event: 'TO_DEVICE',
