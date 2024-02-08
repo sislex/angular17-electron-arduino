@@ -4,7 +4,8 @@ import { CommandsListComponent } from '../../../../../ui/src/lib/components/comm
 import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
 import { getCommandsList } from '../../+state/commands-list/commands-list.selectors';
 import { Store } from '@ngrx/store';
-import { CommandsListState } from '../../+state/commands-list/commands-list.reducer';
+import { ActivatedRoute } from '@angular/router';
+import { sendMessage } from '../../+state/messages/messages.actions';
 
 
 @Component({
@@ -19,6 +20,16 @@ import { CommandsListState } from '../../+state/commands-list/commands-list.redu
 export class CommandsListContainerComponent {
   commands$ = this.store$.select(getCommandsList);
   
-  constructor(private store$: Store<CommandsListState>) {
+  constructor(
+    private store$: Store,
+    private route: ActivatedRoute,
+    private readonly store: Store,
+    ) {}
+
+  buttonClick($event: any) {
+    // console.log($event);
+    this.store.dispatch(sendMessage({
+      message: $event
+    }));
   }
 }
