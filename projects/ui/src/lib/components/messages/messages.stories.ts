@@ -1,14 +1,17 @@
 import {componentWrapperDecorator, Meta, moduleMetadata, StoryObj} from '@storybook/angular';
-import {MessagesComponent} from './messages.component';
-import { MatGridListModule } from '@angular/material/grid-list';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {CommonModule} from '@angular/common';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table';
+import { MessagesComponent } from './messages.component';
 
 const meta: Meta<MessagesComponent> = {
-  title: 'UI Components/MessagesContainerComponent',
+  title: 'UI Components/MessagesComponent',
   component: MessagesComponent,
   decorators: [
     moduleMetadata({
-      imports: [MatGridListModule],
+      imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule, MatTableModule],
     }),
     componentWrapperDecorator(
       (story) => `<div>${story}</div>`
@@ -16,13 +19,8 @@ const meta: Meta<MessagesComponent> = {
   ],
   render: (args: MessagesComponent) => ({
     props: {
-      ...args, 
+      ...args,
     },
-    template: `
-        <logs [stateLog]="stateLog"></logs>
-`,
-// или <logs [stateLog]="args.stateLog"></logs>
-// <logs ${argsToTemplate(args)}"></logs> - такая конструкция у меня не работает, выдает ошибку вроде неизвестно что такое argsToTemplate
   }),
 };
 
@@ -31,15 +29,10 @@ type Story = StoryObj<MessagesComponent>;
 
 export const Primary: Story = {
   args: {
-  //   stateLog: [
-  //   {direction: true, message: {event: 'first log', data:'asdq'}, timestamp: '11.11.11'}, 
-  //   {direction: false, message: {event: 'second log', data:'asdq'}, timestamp: '11.11.11'}, 
-  //   {direction: true, message: {event: 'third log', data:'asdq'}, timestamp: '11.11.11'},
-  // ]
-    },
+    stateLog: [
+          {direction: 'from', message: "{event: 'first log', data:'asdq'}", timestamp: '11.11.11'}, 
+          {direction: 'to', message: "{event: 'second log', data:'asdq'}", timestamp: '11.11.11'}, 
+          {direction: 'from', message: "{event: 'third log', data:'asdq'}", timestamp: '11.11.11'},
+      ]
+  },
 };
-
-
-
-
-
