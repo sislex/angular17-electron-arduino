@@ -26,7 +26,7 @@ export class BlinkNavPanelContainerComponent {
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDWidget') {
       this.router.navigate(['control/blink/:deviceName/aboutDevWidget']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'controlDevice') {
-      this.router.navigate(['control/blink/**']);
+      this.router.navigate(['control/blink/:deviceName']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'logDevice') {
       this.router.navigate(['control/blink/:deviceName/logDevice']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'commandsList') {
