@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightTwoComponent {
+  @Input() mode: string | null = 'OFF';
   @Input() led = 'OFF';
   @Output() emitter = new EventEmitter()
 

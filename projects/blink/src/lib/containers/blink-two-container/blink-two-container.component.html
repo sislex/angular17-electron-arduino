@@ -1,6 +1,6 @@
 <page-layout>
   <blink-nav-panel-container toplBar></blink-nav-panel-container>
   <div body>
-    <light-two (emitter)="events($event)"></light-two>
+    <light-two [mode]="getMode$ | async" (emitter)="events($event)"></light-two>
   </div>
 </page-layout>

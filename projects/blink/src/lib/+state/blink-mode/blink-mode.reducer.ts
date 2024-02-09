@@ -12,7 +12,7 @@ export interface AboutPartialState {
 }
 
 export const initialState: BlinkModeState = {
-    mode: 'three'
+    mode: 'two'
 };
 
 export const blinkModeReducer = createReducer(

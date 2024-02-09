@@ -7,6 +7,9 @@ import { BlinkAboutContainerComponent } from '../blink-about-container/blink-abo
 import { LightTwoComponent } from '../../../../../ui/src/lib/components/light-two-button/light-two-button.component';
 import { AsyncPipe } from '@angular/common';
 import {sendMessageToDevice} from '../../+state/blink-messages/blink-messages.actions';
+import {getMode} from '../../+state/blink-config/blink-config.selectors';
+import {BlinkConfigPartialState} from '../../+state/blink-config/blink-config.reducer';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'blink-two-container',
@@ -24,8 +27,9 @@ import {sendMessageToDevice} from '../../+state/blink-messages/blink-messages.ac
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlinkTwoContainerComponent {
+  getMode$: Observable<string | null> = this.store.select(getMode);
 
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store<BlinkConfigPartialState>) {}
 
   events($event: any) {
     // console.log($event);
