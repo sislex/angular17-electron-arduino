@@ -3,7 +3,6 @@ import {Actions, concatLatestFrom, createEffect, ofType} from '@ngrx/effects';
 import { tap, withLatestFrom} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {
-  messageFromUSBDevice,
   setClosePort,
   setOpenPort,
   setUsbList,
@@ -11,7 +10,7 @@ import {
   usbDevicePortIsOpen, usbDevices
 } from './usb.actions';
 import {getUsbList} from './usb.selectors';
-import {sendMessage} from '../messages/messages.actions';
+import {messageFromDevice, sendMessage} from '../messages/messages.actions';
 import {IUsb} from './usb.reducer';
 
 @Injectable()
@@ -58,23 +57,23 @@ export class UsbEffects {
   ), {dispatch: false});
 
   messageFromUSBDevice$ = createEffect(() => this.actions$.pipe(
-    ofType(messageFromUSBDevice),
+    ofType(messageFromDevice),
     withLatestFrom(
       this.store.select(getUsbList),
     ),
-    tap(([{data}, usbList]) => {
-      const deviceName = data.deviceName;
-      const message = JSON.parse(data.message);
-      console.log(message);
+    tap(([{message}, usbList]) => {
+      const deviceName = message.data.deviceName;
+      const deviceMessage = JSON.parse(message.data.message);
+      console.log(deviceMessage);
 
-      if (message.event === 'DEVICE_IS_READY') {
+      if (deviceMessage.event === 'DEVICE_IS_READY') {
         this.store.dispatch(usbDeviceGetInfo({ deviceName }));
-      } else  if (message.event === 'DEVICE_INFO') {
+      } else  if (deviceMessage.event === 'DEVICE_INFO') {
         const newUsbList = usbList.map((usb) => {
           if (usb.name === deviceName) {
             usb = {
               ...usb,
-              type: message.data.type,
+              type: deviceMessage.data.type,
               infoFields: [],
             };
           }

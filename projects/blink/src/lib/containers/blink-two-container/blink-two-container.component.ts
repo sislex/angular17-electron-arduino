@@ -1,13 +1,11 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {PageLayoutComponent} from '../../../../../ui/src/public-api';
 import {BlinkNavPanelContainerComponent} from '../blink-nav-panel-container/blink-nav-panel-container.component';
-import {select, Store} from '@ngrx/store';
-import {ActivatedRoute} from '@angular/router';
-import {blinkSendMessage, setDeviceName} from '../../+state/blink-config/blink-config.actions';
+import {Store} from '@ngrx/store';
+import {blinkSendMessage} from '../../+state/blink-config/blink-config.actions';
 import {RouterOutlet} from '@angular/router';
 import { BlinkAboutContainerComponent } from '../blink-about-container/blink-about-container.component';
 import { LightTwoComponent } from '../../../../../ui/src/lib/components/light-two-button/light-two-button.component';
-import { BlinkModeState } from '../../+state/blink-mode/blink-mode.reducer';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -25,18 +23,9 @@ import { AsyncPipe } from '@angular/common';
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlinkTwoContainerComponent implements OnInit {
+export class BlinkTwoContainerComponent {
 
-  constructor(
-    private readonly store: Store,
-    private route: ActivatedRoute,
-    private store$: Store<BlinkModeState>){
-  }
-
-  ngOnInit() {
-    const deviceName: string = this.route.snapshot.paramMap.get('deviceName') ?? 'emptyDeviceName';
-    this.store.dispatch(setDeviceName({deviceName}));
-  }
+  constructor(private readonly store: Store) {}
 
   events($event: any) {
     // console.log($event);
@@ -52,7 +41,7 @@ export class BlinkTwoContainerComponent implements OnInit {
           },
         },
       }}));
-    } 
+    }
   }
 }
 

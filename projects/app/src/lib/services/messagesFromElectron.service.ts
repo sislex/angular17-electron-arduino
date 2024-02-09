@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {IMessage} from '../+state/messages/messages.reducer';
-import {messageFromUSBDevice, setClosePort, usbDevicePortIsOpen, usbDevices} from '../+state/usb/usb.actions';
+import {setClosePort, usbDevicePortIsOpen, usbDevices} from '../+state/usb/usb.actions';
+import {messageFromDevice} from '../+state/messages/messages.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class MessagesFromElectronService {
     } else if (message.event === 'USB_DEVICES_PORT_IS_CLOSED') {
       this.store.dispatch(setClosePort({ name: message.data.name }));
     } else if (message.event === 'FROM_USB_DEVICE') {
-      this.store.dispatch(messageFromUSBDevice({ data: message.data }));
+      this.store.dispatch(messageFromDevice({ message }));
     }
   }
 }

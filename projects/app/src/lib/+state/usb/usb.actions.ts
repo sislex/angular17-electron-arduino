@@ -16,11 +16,6 @@ export const setClosePort = createAction(
   props<{ name: string }>()
 );
 
-export const messageFromUSBDevice = createAction(
-  '[Usb] messageFromUSBDevice',
-  props<{ data: any }>()
-);
-
 export const setSelectedUsb = createAction(
   '[Usb] setSelectedUsb',
   props<{ selectedUsb: string }>()

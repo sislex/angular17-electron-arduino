@@ -21,3 +21,8 @@ export const sendMessage = createAction(
   props<{ message: IMessage }>()
 );
 
+export const messageFromDevice = createAction(
+  '[Messages] messageFromDevice',
+  props<{ message: IMessage }>()
+);
+

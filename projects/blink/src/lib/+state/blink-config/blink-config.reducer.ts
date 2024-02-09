@@ -1,7 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
 
-import * as BlinkConfigActions from './blink-config.actions';
-
 export const BLINK_CONFIG_FEATURE_KEY = 'blink/config';
 
 export interface BlinkConfigState {
@@ -20,6 +18,5 @@ export const initialState: BlinkConfigState = {
 
 export const blinkConfigReducer = createReducer(
   initialState,
-  on(BlinkConfigActions.setDeviceName, (state, {deviceName}) => ({ ...state, deviceName })),
 );
 
