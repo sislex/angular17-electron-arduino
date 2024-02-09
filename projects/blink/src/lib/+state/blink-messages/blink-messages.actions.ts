@@ -11,4 +11,9 @@ export const sendMessageToDevice = createAction(
   props<{ message: IMessage }>()
 );
 
+export const messageForWidget = createAction(
+  `[blinkMessages] messageForWidget`,
+  props<{ message: IMessage }>()
+);
+
 

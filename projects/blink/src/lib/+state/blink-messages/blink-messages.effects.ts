@@ -3,7 +3,7 @@ import {createEffect, Actions, ofType, concatLatestFrom} from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {messageFromDevice, sendMessage} from '../../../../../app/src/lib/+state/messages/messages.actions';
 import {tap} from 'rxjs';
-import {sendMessageToDevice} from './blink-messages.actions';
+import {messageForWidget, sendMessageToDevice} from './blink-messages.actions';
 import {getDeviceName} from './blink-messages.selectors';
 import {BlinkMessagesPartialState} from './blink-messages.reducer';
 import {MessagesPartialState} from '../../../../../app/src/lib/+state/messages/messages.reducer';
@@ -16,7 +16,12 @@ export class BlinkMessagesEffects {
         ofType(messageFromDevice),
         concatLatestFrom(() => this.store.select(getDeviceName)),
         tap(([{message}, deviceName]) => {
-          console.log('messageFromDevice', message, deviceName);
+          if (deviceName === message.data.deviceName) {
+            const messageObj = JSON.parse(message.data.message);
+            this.store.dispatch(messageForWidget({
+              message: messageObj,
+            }));
+          }
         })
       ),
     {

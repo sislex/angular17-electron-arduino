@@ -64,7 +64,6 @@ export class UsbEffects {
     tap(([{message}, usbList]) => {
       const deviceName = message.data.deviceName;
       const deviceMessage = JSON.parse(message.data.message);
-      console.log(deviceMessage);
 
       if (deviceMessage.event === 'DEVICE_IS_READY') {
         this.store.dispatch(usbDeviceGetInfo({ deviceName }));
@@ -88,11 +87,9 @@ export class UsbEffects {
             }
             return usb;
           });
-          console.log(newUsbList);
           this.store.dispatch(setUsbList({ usbList: newUsbList }));
         }
       }
-
     })
   ), {dispatch: false});
 

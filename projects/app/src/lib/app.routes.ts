@@ -22,7 +22,7 @@ export const routes: Routes = [
     component: AboutContainerComponent,
   },
   {
-    path: 'control/blink/:deviceName',
+    path: 'widget/blink',
     loadChildren: () =>
       import('../../../blink/src/lib/blink.routes').then(
         (m) => m.blinkRoutes

@@ -50,10 +50,8 @@ export class UsbListContainerComponent {
       const name =  $event.data.note.item.name;
       this.store.dispatch(sendMessage({message: {event: 'DISCONNECT_USB_DEVICE', data: {name, timestamp}}}));
     } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONTROL') {
-      this.router.navigate(['control', 'blink', $event.data.note.item.name]);
-      setTimeout(() => { // lazy load
-        this.store.dispatch(setSelectedUsb({selectedUsb: $event.data.note.item.name}));
-      }, 100);
+      this.store.dispatch(setSelectedUsb({selectedUsb: $event.data.note.item.name}));
+      this.router.navigate(['widget', 'blink']);
     }
   }
 }
