@@ -9,7 +9,7 @@ export interface IBlinkMessagesState {
     logList: ILog[];
 }
 
-export interface MessagesPartialState {
+export interface BlinkMessagesPartialState {
     readonly [BLINK_MESSAGES_FEATURE_KEY]: IBlinkMessagesState;
 }
 

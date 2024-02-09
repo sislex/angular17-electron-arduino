@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { Store } from '@ngrx/store';
-import { addLogList, addLogListForTable} from '../../../../../app/src/lib/+state/messages/messages.selectors';
+import { addLogList} from '../../../../../app/src/lib/+state/messages/messages.selectors';
 import { AsyncPipe } from '@angular/common';
 import { MessagesComponent } from '../../../../../ui/src/lib/components/messages/messages.component';
 import { MessagesState } from '../../../../../app/src/lib/+state/messages/messages.reducer';
 import { BlinkNavPanelContainerComponent } from '../blink-nav-panel-container/blink-nav-panel-container.component';
-import { getDeviceName } from '../../+state/blink-config/blink-config.selectors';
 import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
+import {getDeviceName} from '../../+state/blink-messages/blink-messages.selectors';
 
 
 @Component({
