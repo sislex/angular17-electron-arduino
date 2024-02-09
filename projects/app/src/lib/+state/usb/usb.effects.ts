@@ -69,17 +69,28 @@ export class UsbEffects {
       if (deviceMessage.event === 'DEVICE_IS_READY') {
         this.store.dispatch(usbDeviceGetInfo({ deviceName }));
       } else  if (deviceMessage.event === 'DEVICE_INFO') {
-        const newUsbList = usbList.map((usb) => {
-          if (usb.name === deviceName) {
-            usb = {
-              ...usb,
-              type: deviceMessage.data.type,
-              infoFields: [],
-            };
-          }
-          return usb;
-        });
-        this.store.dispatch(setUsbList({ usbList: newUsbList }));
+        const device = usbList.find((usb) => usb.name === deviceName);
+        if (
+          device &&
+          device.name === deviceName &&
+          (
+            !device.isOpen ||
+            (device.isOpen && deviceMessage.data.type !== device.type)
+          )
+        ) {
+          const newUsbList = usbList.map((usb) => {
+            if (usb.name === deviceName) {
+              usb = {
+                ...usb,
+                type: deviceMessage.data.type,
+                infoFields: [],
+              };
+            }
+            return usb;
+          });
+          console.log(newUsbList);
+          this.store.dispatch(setUsbList({ usbList: newUsbList }));
+        }
       }
 
     })

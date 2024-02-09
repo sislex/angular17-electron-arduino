@@ -5,7 +5,6 @@ import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/dev
 import { getBlinkCommandsList } from '../../+state/blink-commands-list/blink-commands-list.selectors';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import {sendMessageToDevice} from '../../+state/blink-messages/blink-messages.actions';
 
 
