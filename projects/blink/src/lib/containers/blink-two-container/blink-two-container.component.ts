@@ -7,7 +7,7 @@ import { BlinkAboutContainerComponent } from '../blink-about-container/blink-abo
 import { LightTwoComponent } from '../../../../../ui/src/lib/components/light-two-button/light-two-button.component';
 import { AsyncPipe } from '@angular/common';
 import {sendMessageToDevice} from '../../+state/blink-messages/blink-messages.actions';
-import {getMode} from '../../+state/blink-config/blink-config.selectors';
+import {getLed, getMode} from '../../+state/blink-config/blink-config.selectors';
 import {BlinkConfigPartialState} from '../../+state/blink-config/blink-config.reducer';
 import {Observable} from 'rxjs';
 
@@ -28,6 +28,7 @@ import {Observable} from 'rxjs';
 })
 export class BlinkTwoContainerComponent {
   getMode$: Observable<string | null> = this.store.select(getMode);
+  getLed$: Observable<string | null> = this.store.select(getLed);
 
   constructor(private readonly store: Store<BlinkConfigPartialState>) {}
 

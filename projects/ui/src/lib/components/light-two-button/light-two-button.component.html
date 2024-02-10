@@ -1,20 +1,17 @@
-<div class="body">
-  @if (mode === 'ON') {
-    <img src="./assets/images/blink/on.png">
-  } @else if (mode === 'OFF') {
-    <img src="./assets/images/blink/off.png">
-  } @else if (mode === 'BLINK') {
-    <img src="./assets/images/blink/blink.png">
-  }
-  <div class="butt">
-    <button mat-raised-button [disabled]="mode === 'ON'" color="primary" (click)="buttonClick('ON')" >
-      Light ON
-    </button>
-    <button mat-raised-button [disabled]="mode === 'OFF'" color="primary" (click)="buttonClick('OFF')">
-      Light OFF
-    </button>
-    <button mat-raised-button [disabled]="mode === 'BLINK'"  color="primary" (click)="buttonClick('BLINK')">
-      Blink
-    </button>
+@if (!!mode && !!led) {
+  <div class="body">
+    <img [src]="getImagePath(led)" alt="">
+
+    <div class="butt">
+      <button mat-raised-button [disabled]="mode === 'ON'" color="primary" (click)="buttonClick('ON')" >
+        Light ON
+      </button>
+      <button mat-raised-button [disabled]="mode === 'OFF'" color="primary" (click)="buttonClick('OFF')">
+        Light OFF
+      </button>
+      <button mat-raised-button [disabled]="mode === 'BLINK'"  color="primary" (click)="buttonClick('BLINK')">
+        Blink
+      </button>
+    </div>
   </div>
-</div>
+}

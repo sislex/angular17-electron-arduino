@@ -13,8 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class LightTwoComponent {
   @Input() mode: string | null = 'OFF';
-  @Input() led = 'OFF';
-  @Output() emitter = new EventEmitter()
+  @Input() led: string | null = 'OFF';
+  @Output() emitter = new EventEmitter();
+
+  getImagePath(mode: string): string {
+    return `./assets/images/blink/${mode}.png`;
+  }
 
   buttonClick(data: string) {
     const message = {
