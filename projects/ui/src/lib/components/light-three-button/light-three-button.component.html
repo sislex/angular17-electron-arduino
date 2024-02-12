@@ -1,25 +1,25 @@
 <mat-grid-list  cols="3" rowHeight="2:1">
     <mat-grid-tile>
-        <img src="./assets/images/blink/on.png">
+        <img src="./assets/images/blink/ON.png">
     </mat-grid-tile>
     <mat-grid-tile>
-        <img src="./assets/images/blink/off.png">
+        <img src="./assets/images/blink/OFF.png">
     </mat-grid-tile>
     <mat-grid-tile>
-        <img src="./assets/images/blink/blink.png">
+        <img src="./assets/images/blink/BLINK.png">
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="buttonClick('ON')" >
+        <button mat-raised-button [disabled]="mode === 'ON'" color="primary" (click)="buttonClick('ON')" >
             Light ON
         </button>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="buttonClick('OFF')">
+        <button mat-raised-button [disabled]="mode === 'OFF'" color="primary" (click)="buttonClick('OFF')">
             Light OFF
         </button>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color="primary" (click)="buttonClick('BLINK')">
+        <button mat-raised-button [disabled]="mode === 'BLINK'" color="primary" (click)="buttonClick('BLINK')">
             Blink
         </button>
     </mat-grid-tile>
