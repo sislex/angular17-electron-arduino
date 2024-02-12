@@ -21,16 +21,16 @@ export class BlinkNavPanelContainerComponent {
   events($event: any) {
     console.log($event);
     if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'control') {
-      this.store.dispatch(resetUserFromLocalStorageAndState());
+      this.store.dispatch(resetUserFromLocalStorageAndState()); // DELETE?
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'cable') {
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'aboutDWidget') {
-      this.router.navigate(['control/blink/:deviceName/aboutDevWidget']);
+      this.router.navigate(['widget/blink/aboutDevWidget']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'controlDevice') {
-      this.router.navigate(['control/blink/:deviceName']);
+      this.router.navigate(['widget/blink/']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'logDevice') {
-      this.router.navigate(['control/blink/:deviceName/logDevice']);
+      this.router.navigate(['widget/blink/logDevice']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'commandsList') {
-      this.router.navigate(['control/blink/:deviceName/commandsList']);
+      this.router.navigate(['widget/blink/commandsList']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'two') {
       this.store.dispatch(setMode({mode: 'two'}));
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'three') {
