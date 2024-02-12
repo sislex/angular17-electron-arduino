@@ -4,9 +4,9 @@ import {PageLayoutComponent} from '../../../../../ui/src/lib/layouts/page-layout
 import {getUsbList} from '../../+state/usb/usb.selectors';
 import {NavPanelContainerComponent} from '../nav-panel-container/nav-panel-container.component';
 import {RouterOutlet} from '@angular/router';
-import { BlinkModeState } from '../../../../../blink/src/lib/+state/blink-mode/blink-mode.reducer';
+import { BlinkSkinState } from '../../../../../blink/src/lib/+state/blink-skin/blink-skin.reducer';
 import { AsyncPipe } from '@angular/common';
-import { getMode } from '../../../../../blink/src/lib/+state/blink-mode/blink-mode.selectors';
+import { getSkin } from '../../../../../blink/src/lib/+state/blink-skin/blink-skin.selectors';
 
 @Component({
   imports: [PageLayoutComponent, NavPanelContainerComponent, RouterOutlet, AsyncPipe],
@@ -19,10 +19,10 @@ import { getMode } from '../../../../../blink/src/lib/+state/blink-mode/blink-mo
 export class MainContainerComponent {
   getUsbList$ = this.store.pipe(select(getUsbList));
 
-  mode$ = this.store$.select(getMode);
+  skin$ = this.store$.select(getSkin);
 
   constructor(
     private readonly store: Store,
-    private store$: Store<BlinkModeState>,
+    private store$: Store<BlinkSkinState>,
   ) {}
 }

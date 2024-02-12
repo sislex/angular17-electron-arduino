@@ -3,7 +3,7 @@ import {NavDeviceComponent} from '../../../../../ui/src/lib/components/nav-devic
 import {resetUserFromLocalStorageAndState} from '../../../../../app/src/lib/+state/account/account.actions';
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
-import { setMode } from '../../+state/blink-mode/blink-mode.actions';
+import { setSkin } from '../../+state/blink-skin/blink-skin.actions';
 @Component({
   selector: 'blink-nav-panel-container',
   standalone: true,
@@ -32,9 +32,9 @@ export class BlinkNavPanelContainerComponent {
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'commandsList') {
       this.router.navigate(['widget/blink/commandsList']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'two') {
-      this.store.dispatch(setMode({mode: 'two'}));
+      this.store.dispatch(setSkin({skin: 'two'}));
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data === 'three') {
-      this.store.dispatch(setMode({mode: 'three'}));
+      this.store.dispatch(setSkin({skin: 'three'}));
     } 
   } 
 }
