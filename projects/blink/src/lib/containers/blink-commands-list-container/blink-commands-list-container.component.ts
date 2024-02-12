@@ -27,10 +27,8 @@ export class BlinkCommandsListContainer {
   buttonClick($event: any) {
     // console.log($event);
     this.store.dispatch(sendMessageToDevice({message: {
-      event: 'TO_DEVICE',
-      data: {
-        message: $event
-      },
+      event: "LED",
+      data: $event
     }}));
   }
 }
