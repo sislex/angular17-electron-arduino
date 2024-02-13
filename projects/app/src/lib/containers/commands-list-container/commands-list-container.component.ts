@@ -26,10 +26,10 @@ export class CommandsListContainerComponent {
     private readonly store: Store,
     ) {}
 
-  buttonClick($event: any) {
-    // console.log($event);
-    this.store.dispatch(sendMessage({
-      message: $event
-    }));
+    events($event: any) {
+      console.log($event);
+      if ($event.event === 'CommandsListComponent:buttonClick') {
+      this.store.dispatch(sendMessage({ message: $event.data }));
+      }
   }
-}
+  }
