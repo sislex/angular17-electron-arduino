@@ -1,6 +1,5 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {MESSAGES_FEATURE_KEY, MessagesState} from './messages.reducer';
-import * as UsbReducer from '../usb/usb.reducer';
 
 export const selectFeature = createFeatureSelector<MessagesState>(MESSAGES_FEATURE_KEY);
 

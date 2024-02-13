@@ -3,7 +3,7 @@ import {createEffect, Actions, ofType, concatLatestFrom} from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {messageFromDevice, sendMessage} from '../../../../../app/src/lib/+state/messages/messages.actions';
 import {tap} from 'rxjs';
-import {messageForWidget, sendMessageToDevice} from './blink-messages.actions';
+import {messageForWidget, sendMessageToDevice, setBlinkLog} from './blink-messages.actions';
 import {getDeviceName} from './blink-messages.selectors';
 import {BlinkMessagesPartialState} from './blink-messages.reducer';
 import {MessagesPartialState} from '../../../../../app/src/lib/+state/messages/messages.reducer';
@@ -20,6 +20,27 @@ export class BlinkMessagesEffects {
             const messageObj = JSON.parse(message.data.message);
             this.store.dispatch(messageForWidget({
               message: messageObj,
+            }));
+          }
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
+  sendMessageFromDevice$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(messageForWidget),
+        tap(({message}) => {
+          if (message.event === 'DEVICE_INFO') {
+            
+            this.store.dispatch(setBlinkLog({
+              log: {
+                timestamp: new Date().toISOString(),
+                direction: 'from',
+                message
+              }
             }));
           }
         })
@@ -54,6 +75,14 @@ export class BlinkMessagesEffects {
                 deviceName,
                 message: messageWithTimestamp,
               },
+            }
+          }));
+          
+          this.store.dispatch(setBlinkLog({
+            log: {
+              timestamp: new Date().toISOString(),
+              direction: 'to',
+              message: messageWithTimestamp,
             }
           }));
         })

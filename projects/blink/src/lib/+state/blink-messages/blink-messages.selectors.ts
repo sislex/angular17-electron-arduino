@@ -8,3 +8,13 @@ export const getDeviceName = createSelector(
     (state: IBlinkMessagesState) => state.deviceName
 );
 
+export const addLogList = createSelector(
+    selectFeature, (state: IBlinkMessagesState) => state.logList
+  );
+
+export const addLogListForTable = createSelector(
+  addLogList,
+  (logList) => logList.map(item => {
+    return {...item, message: JSON.stringify(item.message)};
+  }),
+);
