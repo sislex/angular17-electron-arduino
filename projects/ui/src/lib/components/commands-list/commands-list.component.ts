@@ -19,7 +19,11 @@ export class CommandsListComponent {
 
   displayedColumns: string[] = ['number', 'name', 'event', 'button'];
 
-  buttonClick(eventy: any) {
-    this.emitter.emit(eventy);
+  buttonClick(data: any) {
+    const message = {
+      event: 'CommandsListComponent:buttonClick',
+      data,
+    };
+    this.emitter.emit(message);
   }
 }

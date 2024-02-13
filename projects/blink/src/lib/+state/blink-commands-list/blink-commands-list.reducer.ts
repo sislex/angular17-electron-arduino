@@ -13,9 +13,9 @@ export interface BlinkCommandsListPartialState {
 
 export const initialState: BlinkCommandsListState = {
     commands: [
-    {name: 'ON Indicator', description:'{command:"ON"}', event: {command:"ON"}}, 
-    {name: 'OFF Indicator', description:'{command:"OFF"}', event: {command:"OFF"}},
-    {name: 'BLINK Indicator', description:'{command:"BLINK"}', event: {command:"BLINK"}}
+    {name: 'ON Indicator', description:'{command:"ON"}', message: {event:"LED",data:{"command":"ON","timestamp":"1707740012056"}}}, 
+    {name: 'OFF Indicator', description:'{command:"OFF"}', message: {event:"LED",data:{"command":"OFF","timestamp":"1707740012056"}}},
+    {name: 'BLINK Indicator', description:'{command:"BLINK"}', message: {event:"LED",data:{"command":"BLINK","timestamp":"1707740012056"}}}
     ]
 };
 

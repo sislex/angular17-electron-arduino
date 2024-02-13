@@ -24,11 +24,10 @@ export class BlinkCommandsListContainer {
     private readonly store: Store,
     ) {}
 
-  buttonClick($event: any) {
-    // console.log($event);
-    this.store.dispatch(sendMessageToDevice({message: {
-      event: "LED",
-      data: $event
-    }}));
+    events($event: any) {
+      console.log($event);
+      if ($event.event === 'CommandsListComponent:buttonClick') {
+      this.store.dispatch(sendMessageToDevice({ message: $event.data }));
+      }
   }
 }
