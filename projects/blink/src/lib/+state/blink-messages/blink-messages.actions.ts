@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IBlinkLog, IBlinkMessage } from './blink-messages.reducer';
 
-
 export const setDeviceName = createAction(
   `[blinkMessages] setDeviceName`,
   props<{ deviceName: string }>()

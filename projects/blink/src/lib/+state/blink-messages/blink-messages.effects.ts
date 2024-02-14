@@ -34,7 +34,6 @@ export class BlinkMessagesEffects {
         ofType(messageForWidget),
         tap(({message}) => {
           if (message.event === 'DEVICE_INFO') {
-            
             this.store.dispatch(setBlinkLog({
               log: {
                 timestamp: new Date().toISOString(),
