@@ -29,6 +29,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'widget/tripod',
+    loadChildren: () =>
+      import('../../../tripod/src/lib/tripod.routes').then(
+        (m) => m.tripodRoutes
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'usb-list',
   },

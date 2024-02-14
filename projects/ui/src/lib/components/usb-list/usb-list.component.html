@@ -28,7 +28,7 @@
             <span>Connect</span>
           </button>
         } @else {
-              @if (item.type==='blink') {
+              @if (item.type !== '') {
               <button
               (click)="buttonClick('CONTROL', {item})"
               mat-raised-button

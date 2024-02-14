@@ -1,0 +1,6 @@
+<page-layout>
+  <nav-panel-container toplBar></nav-panel-container>
+  <div body>
+    <light-two [mode]="getMode$ | async" [led]="getLed$ | async" (emitter)="events($event)"></light-two>
+  </div>
+</page-layout>

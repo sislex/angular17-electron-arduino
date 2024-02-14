@@ -1,0 +1,6 @@
+<device-page-layout title="Device logs">
+    <nav-panel-container toplBar></nav-panel-container>
+    <div body>
+        <messages [stateLog]="(logListBlink$ |async)!"></messages>
+    </div>
+</device-page-layout>

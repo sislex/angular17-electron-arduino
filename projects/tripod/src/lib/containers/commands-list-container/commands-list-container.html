@@ -1,0 +1,6 @@
+<device-page-layout title="Commands list">
+  <nav-panel-container toplBar></nav-panel-container>
+  <div body>
+    <commands-list [commandsList]="commands$|async" (emitter)="events($event)"></commands-list>
+  </div>
+</device-page-layout>
