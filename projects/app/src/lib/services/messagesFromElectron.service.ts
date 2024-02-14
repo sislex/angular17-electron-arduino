@@ -21,7 +21,7 @@ export class MessagesFromElectronService {
     } else if (message.event === 'USB_DEVICES_PORT_IS_OPEN') {
       this.store.dispatch(usbDevicePortIsOpen({data: message.data}));
     } else if (message.event === 'USB_DEVICES_PORT_IS_CLOSED') {
-      this.store.dispatch(setClosePort({ name: message.data.name }));
+      this.store.dispatch(setClosePort({ deviceName: message.data.deviceName }));
     } else if (message.event === 'FROM_USB_DEVICE') {
       this.store.dispatch(messageFromDevice({ message }));
     }

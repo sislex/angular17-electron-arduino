@@ -21,9 +21,9 @@ export class UsbEffects {
     withLatestFrom(
       this.store.select(getUsbList),
     ),
-    tap(([{name}, usbList]) => {
+    tap(([{deviceName}, usbList]) => {
       const newUsbList = usbList.map((usb) => {
-        if (usb.name === name) {
+        if (usb.deviceName === deviceName) {
           usb = {
             ...usb,
             isOpen: true,
@@ -40,9 +40,9 @@ export class UsbEffects {
     withLatestFrom(
       this.store.select(getUsbList),
     ),
-    tap(([{name}, usbList]) => {
+    tap(([{deviceName}, usbList]) => {
       const newUsbList = usbList.map((usb) => {
-        if (usb.name === name) {
+        if (usb.deviceName === deviceName) {
           usb = {
             ...usb,
             isOpen: false,
@@ -68,17 +68,17 @@ export class UsbEffects {
       if (deviceMessage.event === 'DEVICE_IS_READY') {
         this.store.dispatch(usbDeviceGetInfo({ deviceName }));
       } else  if (deviceMessage.event === 'DEVICE_INFO') {
-        const device = usbList.find((usb) => usb.name === deviceName);
+        const device = usbList.find((usb) => usb.deviceName === deviceName);
         if (
           device &&
-          device.name === deviceName &&
+          device.deviceName === deviceName &&
           (
             !device.isOpen ||
             (device.isOpen && deviceMessage.data.type !== device.type)
           )
         ) {
           const newUsbList = usbList.map((usb) => {
-            if (usb.name === deviceName) {
+            if (usb.deviceName === deviceName) {
               usb = {
                 ...usb,
                 type: deviceMessage.data.type,
@@ -98,11 +98,11 @@ export class UsbEffects {
         ofType(usbDevices),
         concatLatestFrom(() => this.store.select(getUsbList)),
         tap(([{data}, usbList]) => {
-          let usbListNew: IUsb[] = data.map((usb: any) => ({name: usb.path, type: ''}));
+          let usbListNew: IUsb[] = data.map((usb: any) => ({deviceName: usb.path, type: ''}));
           if (usbList.length > 0) {
             usbListNew = data.map((usb: any) => {
-              let newUsb = {name: usb.path, type: ''};
-              const foundUsb = usbList.find(item => item.name === newUsb.name);
+              let newUsb = {deviceName: usb.path, type: ''};
+              const foundUsb = usbList.find(item => item.deviceName === newUsb.deviceName);
               if (foundUsb) {
                 newUsb = foundUsb;
               }
@@ -123,7 +123,7 @@ export class UsbEffects {
       this.actions$.pipe(
         ofType(usbDevicePortIsOpen),
         tap(({data}) => {
-          this.store.dispatch(setOpenPort({ name: data.name }));
+          this.store.dispatch(setOpenPort({ deviceName: data.deviceName }));
           // setTimeout(() => {
           //   this.store.dispatch(usbDeviceGetInfo({ deviceName: data.name }));
           // }, 2000);
