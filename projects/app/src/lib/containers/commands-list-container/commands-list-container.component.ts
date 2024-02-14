@@ -27,9 +27,9 @@ export class CommandsListContainerComponent {
     ) {}
 
     events($event: any) {
-      console.log($event);
+      // console.log($event);
       if ($event.event === 'CommandsListComponent:buttonClick') {
-      this.store.dispatch(sendMessage({ message: $event.data }));
+        this.store.dispatch(sendMessage({ message: $event.data }));
       }
   }
   }
