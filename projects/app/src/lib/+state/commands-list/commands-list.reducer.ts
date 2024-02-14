@@ -5,7 +5,7 @@ export const COMMANDS_LIST_FEATURE_KEY = 'commandsList';
 export interface ICommands {
     name: string;
     description: string;
-    event: any;
+    message: any;
 }
 
 export interface CommandsListState {
@@ -20,12 +20,12 @@ export const initialState: CommandsListState = {
     commandsList: [{
         name: 'Connect to device', 
         description: '{"event":"CONNECT_USB_DEVICE","data":{"name":"COM123","timestamp":000}}',
-        event: {event:"CONNECT_USB_DEVICE",data:{name:"COM123",timestamp:111}}
+        message: {event:"CONNECT_USB_DEVICE",data:{name:"COM123",timestamp:111}}
     }, 
     {
         name: 'Disconnect to device', 
         description: '{"event":"DISCONNECT_USB_DEVICE","data":{"name":"COM123","timestamp":000}}',
-        event: {event:"DISCONNECT_USB_DEVICE",data:{name:"COM123",timestamp:111}}
+        message: {event:"DISCONNECT_USB_DEVICE",data:{name:"COM123",timestamp:111}}
     }]
 };
 
