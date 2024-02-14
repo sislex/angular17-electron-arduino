@@ -1,0 +1,6 @@
+<page-layout>
+  <blink-nav-panel-container toplBar></blink-nav-panel-container>
+  <div body>
+    <light-three [mode]="getMode$ | async" [led]="getLed$ | async" (emitter)="events($event)"></light-three>
+  </div>
+</page-layout>
