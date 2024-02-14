@@ -1,0 +1,6 @@
+<device-page-layout title="About">
+    <nav-panel-container toplBar></nav-panel-container>
+    <div body>
+        <about [title]="(titles$ |async)!" [about]="abouts$ | async"></about>
+    </div>
+</device-page-layout>

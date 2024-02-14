@@ -40,7 +40,7 @@ class Info {
     }
 };
 
-Info info("blink", "OFF", "OFF");
+Info info("tripod", "OFF", "OFF");
 
 const int ledPin = 13;
 String inputString = "";         // строка для хранения входящих данных
