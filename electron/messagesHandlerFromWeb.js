@@ -24,7 +24,6 @@ async  function messagesHandlerFromWeb(json, note) {
         event: 'USB_DEVICES_PORT_IS_OPEN',
         data: {
           deviceName: data.deviceName,
-          // port: JSON.stringify(port[data.name]), // too long string
           responseFor: data.timestamp,
         }
       }));

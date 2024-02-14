@@ -124,9 +124,6 @@ export class UsbEffects {
         ofType(usbDevicePortIsOpen),
         tap(({data}) => {
           this.store.dispatch(setOpenPort({ deviceName: data.deviceName }));
-          // setTimeout(() => {
-          //   this.store.dispatch(usbDeviceGetInfo({ deviceName: data.name }));
-          // }, 2000);
         })
       ),
     {
