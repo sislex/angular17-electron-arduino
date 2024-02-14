@@ -14,38 +14,37 @@ async  function messagesHandlerFromWeb(json, note) {
       sendMessage(note.win, note.channelName, JSON.stringify({ event: 'USB_DEVICES', data: ports }));
     });
   } else if (event === 'CONNECT_USB_DEVICE') {
-    if (port[data.name]) {
-      port[data.name].close();
-      delete port[data.name];
+    if (port[data.deviceName]) {
+      port[data.deviceName].close();
+      delete port[data.deviceName];
     }
     try {
-      port[data.name] = await setupSerialPort(data.name);
+      port[data.deviceName] = await setupSerialPort(data.deviceName);
       sendMessage(note.win, note.channelName, JSON.stringify({
         event: 'USB_DEVICES_PORT_IS_OPEN',
         data: {
-          name: data.name,
-          // port: JSON.stringify(port[data.name]), // too long string
+          deviceName: data.deviceName,
           responseFor: data.timestamp,
         }
       }));
 
-      port[data.name].on('data', (message) => {
-        if (!messageBuffers[data.name]) {
-          messageBuffers[data.name] = '';
+      port[data.deviceName].on('data', (message) => {
+        if (!messageBuffers[data.deviceName]) {
+          messageBuffers[data.deviceName] = '';
         }
-        messageBuffers[data.name] += message.toString();
+        messageBuffers[data.deviceName] += message.toString();
 
-        if (messageBuffers[data.name].endsWith('\n')) {
+        if (messageBuffers[data.deviceName].endsWith('\n')) {
           sendMessage(note.win, note.channelName, JSON.stringify({
             event: 'FROM_USB_DEVICE',
             data: {
               timestamp: (new Date()).getTime().toString(),
-              deviceName: data.name,
-              message: messageBuffers[data.name].trim() // Удаляем символ новой строки из сообщения
+              deviceName: data.deviceName,
+              message: messageBuffers[data.deviceName].trim() // Удаляем символ новой строки из сообщения
             },
           }));
 
-          messageBuffers[data.name] = ''; // Очищаем буфер для данного устройства
+          messageBuffers[data.deviceName] = ''; // Очищаем буфер для данного устройства
         }
       });
     } catch (error) {
@@ -53,21 +52,21 @@ async  function messagesHandlerFromWeb(json, note) {
       sendMessage(note.win, note.channelName, JSON.stringify({
         event: 'CONNECT_USB_DEVICE_ERROR',
         data: {
-          name: data.name,
+          deviceName: data.deviceName,
           error,
           responseFor: data.timestamp,
         }
       }));
     }
   } else if (event === 'DISCONNECT_USB_DEVICE') {
-    if (port[data.name]) {
+    if (port[data.deviceName]) {
       try {
-        port[data.name].close();
-        delete port[data.name];
+        port[data.deviceName].close();
+        delete port[data.deviceName];
         sendMessage(note.win, note.channelName, JSON.stringify({
           event: 'USB_DEVICES_PORT_IS_CLOSED',
           data: {
-            name: data.name,
+            deviceName: data.deviceName,
             responseFor: data.timestamp,
           }
         }));
@@ -76,7 +75,7 @@ async  function messagesHandlerFromWeb(json, note) {
         sendMessage(note.win, note.channelName, JSON.stringify({
           event: 'DISCONNECT_USB_DEVICE_ERROR',
           data: {
-            name: data.name,
+            deviceName: data.deviceName,
             error,
             responseFor: data.timestamp,
           }

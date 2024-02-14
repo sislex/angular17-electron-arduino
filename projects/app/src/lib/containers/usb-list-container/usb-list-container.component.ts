@@ -42,15 +42,15 @@ export class UsbListContainerComponent {
     if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONNECT_USB_DEVICE') {
       const now = new Date();
       const timestamp = now.getTime().toString();
-      const name =  $event.data.note.item.name;
-      this.store.dispatch(sendMessage({message: {event: 'CONNECT_USB_DEVICE', data: {name, timestamp}}}));
+      const deviceName =  $event.data.note.item.deviceName;
+      this.store.dispatch(sendMessage({message: {event: 'CONNECT_USB_DEVICE', data: {deviceName, timestamp}}}));
     } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'DISCONNECT_USB_DEVICE') {
       const now = new Date();
       const timestamp = now.getTime().toString();
-      const name =  $event.data.note.item.name;
-      this.store.dispatch(sendMessage({message: {event: 'DISCONNECT_USB_DEVICE', data: {name, timestamp}}}));
+      const deviceName =  $event.data.note.item.deviceName;
+      this.store.dispatch(sendMessage({message: {event: 'DISCONNECT_USB_DEVICE', data: {deviceName, timestamp}}}));
     } else if ($event.event === 'UsbListContainerComponent:BUTTON_CLICKED' && $event.data.message === 'CONTROL') {
-      this.store.dispatch(setSelectedUsb({selectedUsb: $event.data.note.item.name}));
+      this.store.dispatch(setSelectedUsb({selectedUsb: $event.data.note.item.deviceName}));
       this.router.navigate(['widget', 'blink']);
     }
   }

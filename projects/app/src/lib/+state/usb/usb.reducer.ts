@@ -6,7 +6,7 @@ import {setSelectedUsb} from './usb.actions';
 export const USB_FEATURE_KEY = 'usb';
 
 export interface IUsb {
-  name: string;
+  deviceName: string;
   type: string;
   isOpen?: boolean;
   infoFields?: any;

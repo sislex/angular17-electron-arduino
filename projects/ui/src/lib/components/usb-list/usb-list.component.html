@@ -2,9 +2,9 @@
   <table mat-table [dataSource]="usbList" class="mat-elevation-z8 demo-table">
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th class="head" mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let item">{{item.name}}</td>
+    <ng-container matColumnDef="deviceName">
+      <th class="head" mat-header-cell *matHeaderCellDef>Device name</th>
+      <td mat-cell *matCellDef="let item">{{item.deviceName}}</td>
     </ng-container>
 
     <!-- Type Column -->

@@ -8,12 +8,12 @@ export const setUsbList = createAction(
 
 export const setOpenPort = createAction(
   '[Usb] setOpenPort',
-  props<{ name: string }>()
+  props<{ deviceName: string }>()
 );
 
 export const setClosePort = createAction(
   '[Usb] setClosePort',
-  props<{ name: string }>()
+  props<{ deviceName: string }>()
 );
 
 export const setSelectedUsb = createAction(
@@ -23,7 +23,7 @@ export const setSelectedUsb = createAction(
 
 export const usbDevicePortIsOpen = createAction(
   '[Usb] usbDevicePortIsOpen',
-  props<{ data: {name: string, responseFor: number} }>()
+  props<{ data: {deviceName: string, responseFor: number} }>()
 );
 
 export const usbDeviceGetInfo = createAction(
