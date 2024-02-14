@@ -2,22 +2,22 @@ import { createAction, props } from '@ngrx/store';
 import { ILog, IMessage } from './messages.reducer';
 
 export const setDeviceName = createAction(
-  `[blinkMessages] setDeviceName`,
+  `[deviceMessages] setDeviceName`,
   props<{ deviceName: string }>()
 );
 
 export const sendMessageToDevice = createAction(
-  `[blinkMessages] sendMessageToDevice`,
+  `[deviceMessages] sendMessageToDevice`,
   props<{ message: IMessage }>()
 );
 
 export const setLog = createAction(
-  '[blinkMessages] setLog',
+  '[deviceMessages] setLog',
   props<{ log: ILog }>()
 );
 
 export const messageForWidget = createAction(
-  `[blinkMessages] messageForWidget`,
+  `[deviceMessages] messageForWidget`,
   props<{ message: IMessage }>()
 );
 

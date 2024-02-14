@@ -62,5 +62,4 @@ export class ConfigEffects {
     private store: Store<ConfigPartialState>,
     private actions$: Actions,
   ) {}
-
 }

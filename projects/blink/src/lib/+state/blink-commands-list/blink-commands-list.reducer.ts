@@ -13,9 +13,21 @@ export interface BlinkCommandsListPartialState {
 
 export const initialState: BlinkCommandsListState = {
     commands: [
-    {name: 'ON Indicator', description:'{event:"LED",data:{"command":"ON","timestamp":"1707740012056"}}', message: {event:"LED",data:{"command":"ON","timestamp":"1707740012056"}}}, 
-    {name: 'OFF Indicator', description:'{event:"LED",data:{"command":"OFF","timestamp":"1707740012056"}}', message: {event:"LED",data:{"command":"OFF","timestamp":"1707740012056"}}},
-    {name: 'BLINK Indicator', description:'{event:"LED",data:{"command":"BLINK","timestamp":"1707740012056"}}', message: {event:"LED",data:{"command":"BLINK","timestamp":"1707740012056"}}}
+    {
+        name: 'ON Indicator', 
+        description:'{event:"LED",data:{"command":"ON","timestamp":"1707740012056"}}', 
+        message: {event:"LED",data:{"command":"ON","timestamp":"1707740012056"}}
+    }, 
+    {
+        name: 'OFF Indicator', 
+        description:'{event:"LED",data:{"command":"OFF","timestamp":"1707740012056"}}', 
+        message: {event:"LED",data:{"command":"OFF","timestamp":"1707740012056"}}
+    },
+    {
+        name: 'BLINK Indicator', 
+        description:'{event:"LED",data:{"command":"BLINK","timestamp":"1707740012056"}}', 
+        message: {event:"LED",data:{"command":"BLINK","timestamp":"1707740012056"}}
+    }
     ]
 };
 
