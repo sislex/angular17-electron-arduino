@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-
 import * as MessagesActions from './messages.actions';
 
 export const MESSAGES_FEATURE_KEY = 'messages';
@@ -32,6 +31,6 @@ export const initialState: MessagesState = {
 export const messagesReducer = createReducer(
   initialState,
   on(MessagesActions.setChannelName, (state, {channelName}) => ({ ...state, channelName })),
-  on(MessagesActions.setLog, (state, {log}) => ({ ...state, logList: [...state.logList, log] })),
+  on(MessagesActions.setLog, (state, {log}) => ({ ...state, logList: [log, ...state.logList] })),
 );
 

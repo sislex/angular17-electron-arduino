@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {IMessage} from '../../../../../app/src/lib/+state/messages/messages.reducer';
+import { IBlinkLog, IBlinkMessage } from './blink-messages.reducer';
 
 export const setDeviceName = createAction(
   `[blinkMessages] setDeviceName`,
@@ -8,12 +8,17 @@ export const setDeviceName = createAction(
 
 export const sendMessageToDevice = createAction(
   `[blinkMessages] sendMessageToDevice`,
-  props<{ message: IMessage }>()
+  props<{ message: IBlinkMessage }>()
+);
+
+export const setBlinkLog = createAction(
+  '[blinkMessages] setLog',
+  props<{ log: IBlinkLog }>()
 );
 
 export const messageForWidget = createAction(
   `[blinkMessages] messageForWidget`,
-  props<{ message: IMessage }>()
+  props<{ message: IBlinkMessage }>()
 );
 
 
