@@ -29,12 +29,24 @@ async  function messagesHandlerFromWeb(json, note) {
       }));
 
       port[data.deviceName].on('data', (message) => {
+        console.log('');
+        console.log(message);
+        console.log(message.toString().trim());
+        console.log(message.toString().length);
+        console.log('');
         if (!messageBuffers[data.deviceName]) {
           messageBuffers[data.deviceName] = '';
         }
-        messageBuffers[data.deviceName] += message.toString();
 
-        if (messageBuffers[data.deviceName].endsWith('\n')) {
+        const messageStr = message.toString()
+          .replace(/\n/g, '')
+          .replace(/\r/g, '')
+          .replace(/\x03/g, '');
+        messageBuffers[data.deviceName] += messageStr;
+        
+        if (message.toString().endsWith('\r\n')) {
+          console.log(111111111);
+          console.log(messageBuffers[data.deviceName].trim());
           sendMessage(note.win, note.channelName, JSON.stringify({
             event: 'FROM_USB_DEVICE',
             data: {
