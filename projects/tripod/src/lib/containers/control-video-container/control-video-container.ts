@@ -25,8 +25,6 @@ import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlVideoContainer {
-  // getMode$: Observable<string | null> = this.store.select(getMode);
-  // getLed$: Observable<string | null> = this.store.select(getLed);
 
   constructor(private readonly store: Store<ConfigPartialState>) {}
 

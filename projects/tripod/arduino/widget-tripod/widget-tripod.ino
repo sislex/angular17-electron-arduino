@@ -135,13 +135,13 @@ void events(const String message) {
 
     if (strcmp(event, "MOVE") == 0) {
       const int steps1 = doc["data"]["steps1"];
-      const int s2 = doc["data"]["steps2"];
+      const int steps2 = doc["data"]["steps2"];
       if (steps1 != 0) {
         info.steps1 += steps1;
         sendDeviceInfo(timestamp);
       } 
-      if (s2 != 0) {
-        info.steps2 += s2;
+      if (steps2 != 0) {
+        info.steps2 += steps2;
         sendDeviceInfo(timestamp);
       } 
     } else if (strcmp(event, "GET_INFO") == 0) {
