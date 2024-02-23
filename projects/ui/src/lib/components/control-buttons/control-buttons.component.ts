@@ -15,7 +15,7 @@ export class ControlButtonsComponent {
 
   buttonClick(data: string) {
     const message = {
-      event: 'ControlButtonsComponent:buttonClick',
+      event: 'ControlButtonsComponent:BUTTON_CLICKED',
       data,
     };
     this.emitter.emit(message);

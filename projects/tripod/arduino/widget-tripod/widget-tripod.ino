@@ -1,59 +1,76 @@
 #include <ArduinoJson.h>
 
+#define M1_ENABLE_PIN 2
+#define M1_STEP_PIN 3
+#define M1_DIR_PIN 4
+
+#define M2_ENABLE_PIN 5
+#define M2_STEP_PIN 6
+#define M2_DIR_PIN 7
+
 class Info {
   private:
     const String type;
   public:
-    String mode;
-    String led;
+    int steps1;
+    int steps2;
 
-    Info(const String& t = "tripod", const String& m = "off", const String& l = "off") : type(t), mode(m), led(l) {}
+    Info(
+      const String& t = "tripod",
+      int s1 = 0,
+      int s2 = 0
+      ) : type(t), steps1(s1), steps2(s2) {}
 
     String getType() const {
         return type;
     }
 
     String getJSON() const {
-        StaticJsonDocument<512> doc;
+        StaticJsonDocument<1024> doc;
         doc["type"] = type;
-        doc["mode"] = mode;
-        doc["led"] = led;
+        doc["s1"] = steps1;
+        doc["s2"] = steps2;
 
         String output;
         serializeJson(doc, output);
         return output;
     }
 
-    String getJSONMessage(const String& event = "DEVICE_INFO", const String& timestamp = "") const {
-        StaticJsonDocument<512> doc;
+    String getJSONMessage(const String& event = "D_INFO", const String& timestamp = "") const {
+        StaticJsonDocument<1024> doc;
         String data = getJSON();
 
         doc["event"] = event;
-        doc["responseFor"] = timestamp;
+        doc["for"] = timestamp;
         doc["data"] = serialized(data); // Use serialized to avoid escaping the double quotes in the JSON string
 
         String output;
         serializeJson(doc, output);
-        output += '\n';
 
         return output;
     }
 };
 
-Info info("tripod", "OFF", "OFF");
+Info info("tripod", 0, 0);
 
-const int ledPin = 13;
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
 unsigned long previousMillis = 0;
-const long interval = 1000;
+const long interval = 5;
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
+  pinMode(M1_STEP_PIN, OUTPUT);
+  pinMode(M1_DIR_PIN, OUTPUT);
+  pinMode(M1_ENABLE_PIN, OUTPUT);
+
+  pinMode(M2_STEP_PIN, OUTPUT);
+  pinMode(M2_DIR_PIN, OUTPUT);
+  pinMode(M2_ENABLE_PIN, OUTPUT);
+
   Serial.begin(9600);
   inputString.reserve(200);      // резервируем место для входной строки
 
-  const char* deviceIsReady = "{\"event\":\"DEVICE_IS_READY\"}\n";
+  const char* deviceIsReady = "{\"event\":\"DEVICE_IS_READY\"}";
   Serial.println(deviceIsReady);
 }
 
@@ -66,8 +83,34 @@ void loop() {
     stringComplete = false;
   }
 
-  if (info.mode.equals("BLINK")) {
-    toggleLED();
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    if (info.steps1 > 0) {
+      digitalWrite(M1_DIR_PIN, HIGH);
+      digitalWrite(M1_STEP_PIN, HIGH);
+      digitalWrite(M1_STEP_PIN, LOW);
+      digitalWrite(M1_DIR_PIN, LOW);
+      info.steps1--;
+    } else if (info.steps1 < 0) {
+      digitalWrite(M1_DIR_PIN, LOW);
+      digitalWrite(M1_STEP_PIN, LOW);
+      digitalWrite(M1_STEP_PIN, HIGH);
+      digitalWrite(M1_DIR_PIN, LOW);
+      info.steps1++;
+    }
+
+    if (info.steps2 > 0) {
+      digitalWrite(M2_DIR_PIN, HIGH);
+      digitalWrite(M2_STEP_PIN, HIGH);
+      digitalWrite(M2_STEP_PIN, LOW);
+      info.steps2--;
+    } else if (info.steps2 < 0) {
+      digitalWrite(M2_DIR_PIN, LOW);
+      digitalWrite(M2_STEP_PIN, LOW);
+      digitalWrite(M2_STEP_PIN, HIGH);
+      info.steps2++;
+    }
   }
 }
 
@@ -89,19 +132,18 @@ void events(const String message) {
   if (!error) {
     const char* event = doc["event"];
     const char* timestamp = doc["data"]["timestamp"];
-    const char* command = doc["data"]["command"];
 
-    if (strcmp(event, "LED") == 0) {
-      info.mode = command;
-      if (info.mode.equals("ON")) {
-        info.led = "ON";
-        digitalWrite(ledPin, info.led.equals("ON") ? HIGH : LOW);
+    if (strcmp(event, "MOVE") == 0) {
+      const int steps1 = doc["data"]["steps1"];
+      const int steps2 = doc["data"]["steps2"];
+      if (steps1 != 0) {
+        info.steps1 += steps1;
         sendDeviceInfo(timestamp);
-      } else if (info.mode.equals("OFF")) {
-        info.led = "OFF";
-        digitalWrite(ledPin, info.led.equals("ON") ? HIGH : LOW);
+      } 
+      if (steps2 != 0) {
+        info.steps2 += steps2;
         sendDeviceInfo(timestamp);
-      }
+      } 
     } else if (strcmp(event, "GET_INFO") == 0) {
       sendDeviceInfo(timestamp);
     }
@@ -112,15 +154,4 @@ void events(const String message) {
 void sendDeviceInfo(const String& timestamp) {
   String json = info.getJSONMessage("DEVICE_INFO", timestamp);
   Serial.println(json);
-}
-
-
-void toggleLED() {
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    info.led = info.led.equals("ON") ? "OFF" : "ON";
-    digitalWrite(ledPin, info.led.equals("ON") ? HIGH : LOW);
-    sendDeviceInfo("0");
-  }
 }
