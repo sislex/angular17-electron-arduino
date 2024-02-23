@@ -1,0 +1,10 @@
+<div>{{message}}</div>
+<div>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        @for (button of buttons; track button) {
+            <mat-button-toggle (click)="buttonClick(button)" [disabled]="button.selected">
+                {{button.text}}
+            </mat-button-toggle>
+        }
+    </mat-button-toggle-group>
+</div>

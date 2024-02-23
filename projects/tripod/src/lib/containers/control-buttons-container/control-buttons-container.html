@@ -1,6 +1,8 @@
 <page-layout>
   <nav-panel-container toplBar></nav-panel-container>
   <div body>
+    <steps-button [buttons]="(steps$|async)!" [message]="'Steps'" (emitter)="events($event, 'steps')"></steps-button>
+    <steps-button [buttons]="(delay$|async)!" [message]="'Delay'" (emitter)="events($event, 'delay')"></steps-button>
     <control-buttons (emitter)="events($event)"></control-buttons>
   </div>
 </page-layout>
