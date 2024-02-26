@@ -28,7 +28,6 @@ import { sendDirection, setActiveDelay, setActiveStep } from '../../+state/skins
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlButtonsContainer {
-  
   steps$ = this.store$.select(getSteps);
   delay$ = this.store$.select(getDelay);
 
@@ -49,11 +48,9 @@ export class ControlButtonsContainer {
           data: {del: $event.data.data}
         },
       }));
-
       this.store.dispatch(setActiveDelay({
         delay: $event.data
       }));
-
     } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED') {
       this.store.dispatch(sendDirection({
       direction: $event.data

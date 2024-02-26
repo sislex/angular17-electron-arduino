@@ -1,20 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IMoveSkin } from './move-view-skin.reducer';
 
-// export const getSkinFromLocalStorage = createAction('[Skin] getSkinFromLocalStorage');
-// export const resetSkinFromLocalStorageAndState = createAction('[Skin] resetSkinFromLocalStorageAndState');
-// export const resetSkin = createAction('[Skin] resetSkin');
-
-// export const setAndSaveSkin = createAction(
-//   '[Skin] setAndSaveSkin',
-//   props<{ skin: string }>()
-// );
-
-// export const setSkin = createAction(
-//   '[Skin] setSkin',
-//   props<{ skin: string }>()
-// );
-
 export const setSteps = createAction(
   '[Skin] setSteps',
   props<{ stepsList: IMoveSkin[] }>()

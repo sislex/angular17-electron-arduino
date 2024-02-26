@@ -59,7 +59,6 @@ Info info("tripod", 0, 0, 1);
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
 unsigned long previousMillis = 0;
-// long interval = 5;
 
 void setup() {
   pinMode(M1_STEP_PIN, OUTPUT);
@@ -155,7 +154,6 @@ void events(const String message) {
     } 
   }
 }
-
 
 void sendDeviceInfo(const String& timestamp) {
   String json = info.getJSONMessage("DEVICE_INFO", timestamp);
