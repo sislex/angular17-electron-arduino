@@ -1,6 +1,5 @@
-import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-
 
 @Component({
   selector: 'control-buttons',
@@ -19,5 +18,6 @@ export class ControlButtonsComponent {
       data,
     };
     this.emitter.emit(message);
+    console.log(message)
   }
 }
