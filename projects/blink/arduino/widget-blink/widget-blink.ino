@@ -24,7 +24,7 @@ class Info {
         return output;
     }
 
-    String getJSONMessage(const String& event = "DEVICE_INFO", const String& timestamp = "") const {
+    String getJSONMessage(const String& event = "INFO", const String& timestamp = "") const {
         StaticJsonDocument<512> doc;
         String data = getJSON();
 
@@ -108,12 +108,10 @@ void events(const String message) {
   }
 }
 
-
 void sendDeviceInfo(const String& timestamp) {
-  String json = info.getJSONMessage("DEVICE_INFO", timestamp);
+  String json = info.getJSONMessage("INFO", timestamp);
   Serial.println(json);
 }
-
 
 void toggleLED() {
   unsigned long currentMillis = millis();
