@@ -14,12 +14,14 @@ class Info {
   public:
     int steps1;
     int steps2;
+    int del;
 
     Info(
       const String& t = "tripod",
       int s1 = 0,
-      int s2 = 0
-      ) : type(t), steps1(s1), steps2(s2) {}
+      int s2 = 0,
+      int d = 1
+      ) : type(t), steps1(s1), steps2(s2), del(d) {}
 
     String getType() const {
         return type;
@@ -30,6 +32,7 @@ class Info {
         doc["type"] = type;
         doc["s1"] = steps1;
         doc["s2"] = steps2;
+        doc["d"] = del;
 
         String output;
         serializeJson(doc, output);
@@ -51,12 +54,11 @@ class Info {
     }
 };
 
-Info info("tripod", 0, 0);
+Info info("tripod", 0, 0, 1);
 
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
 unsigned long previousMillis = 0;
-const long interval = 5;
 
 void setup() {
   pinMode(M1_STEP_PIN, OUTPUT);
@@ -84,7 +86,7 @@ void loop() {
   }
 
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
+  if (currentMillis - previousMillis >= info.del) {
     previousMillis = currentMillis;
     if (info.steps1 > 0) {
       digitalWrite(M1_DIR_PIN, HIGH);
@@ -133,23 +135,25 @@ void events(const String message) {
     const char* event = doc["event"];
     const char* timestamp = doc["data"]["timestamp"];
 
-    if (strcmp(event, "MOVE") == 0) {
+    if (strcmp(event, "SET") == 0) {
       const int steps1 = doc["data"]["steps1"];
       const int steps2 = doc["data"]["steps2"];
       if (steps1 != 0) {
         info.steps1 += steps1;
         sendDeviceInfo(timestamp);
-      } 
+      }
       if (steps2 != 0) {
         info.steps2 += steps2;
         sendDeviceInfo(timestamp);
       } 
+    } else if (strcmp(event, "DELAY") == 0) {
+      info.del = doc["data"]["del"];
+      sendDeviceInfo(timestamp);
     } else if (strcmp(event, "GET_INFO") == 0) {
       sendDeviceInfo(timestamp);
-    }
+    } 
   }
 }
-
 
 void sendDeviceInfo(const String& timestamp) {
   String json = info.getJSONMessage("DEVICE_INFO", timestamp);
