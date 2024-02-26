@@ -12,9 +12,9 @@ class Info {
   private:
     const String type;
   public:
-    int steps1;
-    int steps2;
-    int del;
+    int steps1; // steps for engine 1
+    int steps2; // steps for engine 2
+    int del; // delay
 
     Info(
       const String& t = "tripod",
@@ -39,7 +39,7 @@ class Info {
         return output;
     }
 
-    String getJSONMessage(const String& event = "D_INFO", const String& timestamp = "") const {
+    String getJSONMessage(const String& event = "D_INFO", const String& timestamp = "") const { //DEVICE_INFO to INFO !!!
         StaticJsonDocument<1024> doc;
         String data = getJSON();
 
@@ -77,42 +77,17 @@ void setup() {
 }
 
 void loop() {
+  getMessagesFromSerial();
+  move();
+}
+
+void getMessagesFromSerial() {
   eventSerial();
 
   if (stringComplete) {
     events(inputString);
     inputString = "";
     stringComplete = false;
-  }
-
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= info.del) {
-    previousMillis = currentMillis;
-    if (info.steps1 > 0) {
-      digitalWrite(M1_DIR_PIN, HIGH);
-      digitalWrite(M1_STEP_PIN, HIGH);
-      digitalWrite(M1_STEP_PIN, LOW);
-      digitalWrite(M1_DIR_PIN, LOW);
-      info.steps1--;
-    } else if (info.steps1 < 0) {
-      digitalWrite(M1_DIR_PIN, LOW);
-      digitalWrite(M1_STEP_PIN, LOW);
-      digitalWrite(M1_STEP_PIN, HIGH);
-      digitalWrite(M1_DIR_PIN, LOW);
-      info.steps1++;
-    }
-
-    if (info.steps2 > 0) {
-      digitalWrite(M2_DIR_PIN, HIGH);
-      digitalWrite(M2_STEP_PIN, HIGH);
-      digitalWrite(M2_STEP_PIN, LOW);
-      info.steps2--;
-    } else if (info.steps2 < 0) {
-      digitalWrite(M2_DIR_PIN, LOW);
-      digitalWrite(M2_STEP_PIN, LOW);
-      digitalWrite(M2_STEP_PIN, HIGH);
-      info.steps2++;
-    }
   }
 }
 
@@ -145,17 +120,53 @@ void events(const String message) {
       if (steps2 != 0) {
         info.steps2 += steps2;
         sendDeviceInfo(timestamp);
-      } 
+      }
     } else if (strcmp(event, "DELAY") == 0) {
       info.del = doc["data"]["del"];
       sendDeviceInfo(timestamp);
     } else if (strcmp(event, "GET_INFO") == 0) {
       sendDeviceInfo(timestamp);
-    } 
+    }
   }
 }
 
 void sendDeviceInfo(const String& timestamp) {
-  String json = info.getJSONMessage("DEVICE_INFO", timestamp);
+  String json = info.getJSONMessage("DEVICE_INFO", timestamp); // DEVICE_INFO to INFO !!!
   Serial.println(json);
+}
+
+void move() {
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= info.del) {
+    previousMillis = currentMillis;
+    if (info.steps1 != 0) {
+      int dir = HIGH;
+      if (info.steps1 > 0) {
+        info.steps1--;
+      } else {
+        dir = LOW;
+        info.steps1++;
+      }
+
+      moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
+    }
+
+    if (info.steps2 != 0) {
+      int dir = HIGH;
+      if (info.steps2 > 0) {
+        info.steps2--;
+      } else {
+        dir = LOW;
+        info.steps2++;
+      }
+
+      moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
+    }
+  }
+}
+
+void moveEngineToOneStep(int stepPin, int dirPin, int dir) {
+  digitalWrite(dirPin, dir);
+  digitalWrite(stepPin, HIGH);
+  digitalWrite(stepPin, LOW);
 }
