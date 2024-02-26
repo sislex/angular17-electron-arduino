@@ -1,6 +1,5 @@
-import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-
 
 @Component({
   selector: 'control-buttons',
@@ -19,5 +18,24 @@ export class ControlButtonsComponent {
       data,
     };
     this.emitter.emit(message);
+    console.log(message)
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    switch (event.key) {
+      case 'ArrowUp':
+        this.buttonClick('UP');
+        break;
+      case 'ArrowDown':
+        this.buttonClick('DOWN');
+        break;
+      case 'ArrowLeft':
+        this.buttonClick('LEFT');
+        break;
+      case 'ArrowRight':
+        this.buttonClick('RIGHT');
+        break;
+    }
   }
 }
