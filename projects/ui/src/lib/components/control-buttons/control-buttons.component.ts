@@ -20,22 +20,4 @@ export class ControlButtonsComponent {
     this.emitter.emit(message);
     console.log(message)
   }
-
-  @HostListener('window:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
-    switch (event.key) {
-      case 'ArrowUp':
-        this.buttonClick('UP');
-        break;
-      case 'ArrowDown':
-        this.buttonClick('DOWN');
-        break;
-      case 'ArrowLeft':
-        this.buttonClick('LEFT');
-        break;
-      case 'ArrowRight':
-        this.buttonClick('RIGHT');
-        break;
-    }
-  }
 }
