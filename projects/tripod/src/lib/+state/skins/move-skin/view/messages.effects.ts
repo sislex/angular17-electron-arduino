@@ -59,19 +59,19 @@ export class SetButtonEffects {
           let data;
           if (direction === 'RIGHT') {
             data = {
-              steps1: steps,
+              s1: steps,
             };
           } else if (direction === 'LEFT') {
             data = {
-              steps1: -steps,
+              s1: -steps,
             };
           } else if (direction === 'UP') {
             data = {
-              steps2: steps,
+              s2: steps,
             };
           } else if (direction === 'DOWN') {
             data = {
-              steps2: -steps,
+              s2: -steps,
             };
           }
           this.store.dispatch(sendMessageToDevice({

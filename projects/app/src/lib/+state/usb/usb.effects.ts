@@ -67,7 +67,7 @@ export class UsbEffects {
 
       if (deviceMessage.event === 'DEVICE_IS_READY') {
         this.store.dispatch(usbDeviceGetInfo({ deviceName }));
-      } else  if (deviceMessage.event === 'DEVICE_INFO') {
+      } else  if (deviceMessage.event === 'INFO') {
         const device = usbList.find((usb) => usb.deviceName === deviceName);
         if (
           device &&

@@ -44,8 +44,8 @@ export class ControlButtonsContainer {
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay') {
       this.store.dispatch(sendMessageToDevice({
         message: {
-          event: 'DELAY',
-          data: {del: $event.data.data}
+          event: 'SET',
+          data: {d: $event.data.data}
         },
       }));
       this.store.dispatch(setActiveDelay({

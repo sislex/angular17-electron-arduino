@@ -12,16 +12,16 @@ class Info {
   private:
     const String type;
   public:
-    int steps1; // steps for engine 1
-    int steps2; // steps for engine 2
-    int del; // delay
+    int s1; // steps for engine 1
+    int s2; // steps for engine 2
+    int d; // delay
 
     Info(
       const String& t = "tripod",
       int s1 = 0,
       int s2 = 0,
       int d = 1
-      ) : type(t), steps1(s1), steps2(s2), del(d) {}
+      ) : type(t), s1(s1), s2(s2), d(d) {}
 
     String getType() const {
         return type;
@@ -30,16 +30,16 @@ class Info {
     String getJSON() const {
         StaticJsonDocument<1024> doc;
         doc["type"] = type;
-        doc["s1"] = steps1;
-        doc["s2"] = steps2;
-        doc["d"] = del;
+        doc["s1"] = s1;
+        doc["s2"] = s2;
+        doc["d"] = d;
 
         String output;
         serializeJson(doc, output);
         return output;
     }
 
-    String getJSONMessage(const String& event = "D_INFO", const String& timestamp = "") const { //DEVICE_INFO to INFO !!!
+    String getJSONMessage(const String& event = "INFO", const String& timestamp = "") const {
         StaticJsonDocument<1024> doc;
         String data = getJSON();
 
@@ -111,18 +111,23 @@ void events(const String message) {
     const char* timestamp = doc["data"]["timestamp"];
 
     if (strcmp(event, "SET") == 0) {
-      const int steps1 = doc["data"]["steps1"];
-      const int steps2 = doc["data"]["steps2"];
-      if (steps1 != 0) {
-        info.steps1 += steps1;
+      const int s1 = doc["data"]["s1"];
+      const int s2 = doc["data"]["s2"];
+      const int d = doc["data"]["d"];
+      if (s1 != 0) {
+        info.s1 += s1;
         sendDeviceInfo(timestamp);
       }
-      if (steps2 != 0) {
-        info.steps2 += steps2;
+      if (s2 != 0) {
+        info.s2 += s2;
         sendDeviceInfo(timestamp);
       }
-    } else if (strcmp(event, "DELAY") == 0) {
-      info.del = doc["data"]["del"];
+      if (d != 0) {
+      info.d = doc["data"]["d"];
+      sendDeviceInfo(timestamp);
+      }
+    } else if (strcmp(event, "SET") == 0) {
+      info.d = doc["data"]["d"];
       sendDeviceInfo(timestamp);
     } else if (strcmp(event, "GET_INFO") == 0) {
       sendDeviceInfo(timestamp);
@@ -131,33 +136,33 @@ void events(const String message) {
 }
 
 void sendDeviceInfo(const String& timestamp) {
-  String json = info.getJSONMessage("DEVICE_INFO", timestamp); // DEVICE_INFO to INFO !!!
+  String json = info.getJSONMessage("INFO", timestamp);
   Serial.println(json);
 }
 
 void move() {
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= info.del) {
+  if (currentMillis - previousMillis >= info.d) {
     previousMillis = currentMillis;
-    if (info.steps1 != 0) {
+    if (info.s1 != 0) {
       int dir = HIGH;
-      if (info.steps1 > 0) {
-        info.steps1--;
+      if (info.s1 > 0) {
+        info.s1--;
       } else {
         dir = LOW;
-        info.steps1++;
+        info.s1++;
       }
 
       moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
     }
 
-    if (info.steps2 != 0) {
+    if (info.s2 != 0) {
       int dir = HIGH;
-      if (info.steps2 > 0) {
-        info.steps2--;
+      if (info.s2 > 0) {
+        info.s2--;
       } else {
         dir = LOW;
-        info.steps2++;
+        info.s2++;
       }
 
       moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
