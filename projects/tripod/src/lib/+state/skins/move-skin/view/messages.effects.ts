@@ -54,32 +54,58 @@ export class SetButtonEffects {
       this.actions$.pipe(
         ofType( sendDirection ),
         concatLatestFrom(() => this.store.select( getSteps )),
-        tap(([{direction}, stepsList]) => {
+        tap(([{direction, m}, stepsList]) => {
           const steps = stepsList.find(item => item.selected)?.data;
           let data;
-          if (direction === 'RIGHT') {
-            data = {
-              s1: steps,
-            };
-          } else if (direction === 'LEFT') {
-            data = {
-              s1: -steps,
-            };
-          } else if (direction === 'UP') {
-            data = {
-              s2: steps,
-            };
-          } else if (direction === 'DOWN') {
-            data = {
-              s2: -steps,
-            };
+          if (m === 1) {
+            if (direction === 'RIGHT') {
+              data = {
+                s1: steps,
+              };
+            } else if (direction === 'LEFT') {
+              data = {
+                s1: -steps,
+              };
+            } else if (direction === 'UP') {
+              data = {
+                s2: steps,
+              };
+            } else if (direction === 'DOWN') {
+              data = {
+                s2: -steps,
+              };
+            }
+            this.store.dispatch(sendMessageToDevice({
+              message: {
+                event: 'SET',
+                data: {...data, m}
+              },
+            }));
+          } else if (m === 2) {
+            if (direction === 'RIGHT') {
+              data = {
+                s1: 1,
+              };
+            } else if (direction === 'LEFT') {
+              data = {
+                s1: -1,
+              };
+            } else if (direction === 'UP') {
+              data = {
+                s2: 1,
+              };
+            } else if (direction === 'DOWN') {
+              data = {
+                s2: -1,
+              };
+            }
+            this.store.dispatch(sendMessageToDevice({
+              message: {
+                event: 'SET',
+                data: {...data, m}
+              },
+            }));
           }
-          this.store.dispatch(sendMessageToDevice({
-            message: {
-              event: 'SET',
-              data,
-            },
-          }));
         })
       ),
     {

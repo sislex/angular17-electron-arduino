@@ -1,18 +1,26 @@
 <div>
-    <button mat-menu-item (click)="buttonClick('UP')" >
+    <button mat-menu-item 
+    (mousedown)="buttonHold('UP', 'mousedown')" 
+    (mouseup)="buttonHold('UP', 'mouseup')">
         <mat-icon>expand_less</mat-icon>
     </button>
 </div>
 <div>
-    <button mat-menu-item (click)="buttonClick('LEFT')">
+    <button mat-menu-item 
+    (mousedown)="buttonHold('LEFT', 'mousedown')" 
+    (mouseup)="buttonHold('LEFT', 'mouseup')">
         <mat-icon>navigate_before</mat-icon>
     </button>
-    <button mat-menu-item (click)="buttonClick('RIGHT')">
-        <mat-icon>navigate_next</mat-icon>
+    <button mat-menu-item 
+    (mousedown)="buttonHold('RIGHT', 'mousedown')" 
+    (mouseup)="buttonHold('RIGHT', 'mouseup')">
+        <mat-icon>navigate_next</mat-icon> 
     </button>
 </div>
 <div>
-    <button mat-menu-item (click)="buttonClick('DOWN')">
+    <button mat-menu-item 
+    (mousedown)="buttonHold('DOWN', 'mousedown')" 
+    (mouseup)="buttonHold('DOWN', 'mouseup')">
         <mat-icon>expand_more</mat-icon>
     </button>
 </div>

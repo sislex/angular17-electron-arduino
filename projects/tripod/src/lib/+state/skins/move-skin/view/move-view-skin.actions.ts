@@ -23,5 +23,5 @@ export const setActiveDelay = createAction(
 
 export const sendDirection = createAction(
   '[Skin] sendDirection',
-  props<{ direction: string }>()
+  props<{ direction: string, m: any }>()
 );
