@@ -118,47 +118,35 @@ void events(const String message) {
       const int d = doc["data"]["d"];
       info.m = doc["data"]["m"];
 
-    // if (info.s1 == s1 && info.m == 2) {
-    //     info.s1 = 0;
-    //     sendDeviceInfo(timestamp);
-    //     return;
-    //   }
-    
-    // if (info.s2 == s2 && info.m == 2) {
-    //     info.s2 = 0;
-    //     sendDeviceInfo(timestamp);
-    //     return;
-    //   }
-
       if (info.m == 1) { //mode 1
         if (s1 != 0) {
           info.s1 += s1;
-          sendDeviceInfo(timestamp);
+          // sendDeviceInfo(timestamp);
         }
         if (s2 != 0) {
           info.s2 += s2;
-          sendDeviceInfo(timestamp);
+          // sendDeviceInfo(timestamp);
         }
       }
 
       if (info.m == 2) { //mode 2
         if (s1 != 0 && info.s1 == s1) {
           info.s1 = 0;
-          sendDeviceInfo(timestamp);
+          // sendDeviceInfo(timestamp);
           return;
         }
         if (s2 != 0 && info.s2 == s2) {
           info.s2 = 0;
-          sendDeviceInfo(timestamp);
+          // sendDeviceInfo(timestamp);
           return;
         }
         if (s1 != 0) {
           info.s1 = s1;
-          sendDeviceInfo(timestamp);
+          // sendDeviceInfo(timestamp);
         }
         if (s2 != 0) {
           info.s2 = s2;
-          sendDeviceInfo(timestamp);
+          // sendDeviceInfo(timestamp);
         }
       }
 

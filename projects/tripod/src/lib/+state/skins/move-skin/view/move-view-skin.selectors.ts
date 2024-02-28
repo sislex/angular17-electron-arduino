@@ -12,3 +12,26 @@ export const getDelay = createSelector(
     selectFeature,
     (state: MoveViewSkinState) => state.delay
 );
+
+export const getDelayModify = createSelector(
+    selectFeature, 
+    (state: MoveViewSkinState) => {
+        let result = state.delay;
+        if (state.isShift) {
+            result = state.delay.map((item, key) => {
+                return {
+                    ...item,
+                    selected: (key === state.delay.length - 1) ? true : false,
+                };
+            });
+        } else if (state.isCtrl) {
+            result = state.delay.map((item, key) => {
+                return {
+                    ...item,
+                    selected: (key === 0) ? true : false,
+                };
+            });
+        }
+        return result;
+    }
+);

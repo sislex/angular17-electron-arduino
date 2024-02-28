@@ -25,3 +25,14 @@ export const sendDirection = createAction(
   '[Skin] sendDirection',
   props<{ direction: string, m: any }>()
 );
+
+export const setShift = createAction(
+  '[Skin] setShift',
+  props<{ isShift: boolean}>()
+);
+
+export const setCtrl = createAction(
+  '[Skin] setCtrl',
+  props<{ isCtrl: boolean}>()
+);
+

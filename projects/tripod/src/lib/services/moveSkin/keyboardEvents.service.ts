@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import { sendMessageToDevice } from '../../+state/messages/messages.actions';
-import { sendDirection } from '../../+state/skins/move-skin/view/move-view-skin.actions';
+import { sendDirection, setCtrl, setShift } from '../../+state/skins/move-skin/view/move-view-skin.actions';
 
 @Injectable()
 export class SkinMoveKeyboardEventsService {
 
-  private isAltDown = false;
+  private isCtrlDown = false;
   private isShiftDown = false;
   private isArrowLeftDown = false;
   private isArrowRightDown = false;
@@ -20,20 +20,28 @@ export class SkinMoveKeyboardEventsService {
 
   events(message: any, note: any) {
     // console.log('message', message);
-    if (message.key === 'Alt' && note === 'down' && !this.isAltDown) {
-      this.isAltDown = true;
-      this.event ({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 100 } });
-    } else if (message.key === 'Alt' && note === 'up') {
-      this.isAltDown = false;
-      this.event ({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 50 } });
+    if (message.key === 'Control' && note === 'down' && !this.isCtrlDown) {
+      this.isCtrlDown = true;
+      this.store.dispatch(setCtrl({
+        isCtrl: true
+      }));
+    } else if (message.key === 'Control' && note === 'up') {
+      this.isCtrlDown = false;
+      this.store.dispatch(setCtrl({
+        isCtrl: false
+      }));
     }
 
     else if (message.key === 'Shift' && note === 'down' && !this.isShiftDown) {
       this.isShiftDown = true;
-      this.event ({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 1 } });
+      this.store.dispatch(setShift({
+        isShift: true
+      }));
     } else if (message.key === 'Shift' && note === 'up') {
       this.isShiftDown = false;
-      this.event ({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 50 } });
+      this.store.dispatch(setShift({
+        isShift: false
+      }));
     }
 
     else if (message.key === 'ArrowLeft' && note === 'down' && !this.isArrowLeftDown) {
