@@ -23,5 +23,16 @@ export const setActiveDelay = createAction(
 
 export const sendDirection = createAction(
   '[Skin] sendDirection',
-  props<{ direction: string }>()
+  props<{ direction: string, m: number }>()
 );
+
+export const setShift = createAction(
+  '[Skin] setShift',
+  props<{ isShift: boolean}>()
+);
+
+export const setCtrl = createAction(
+  '[Skin] setCtrl',
+  props<{ isCtrl: boolean}>()
+);
+

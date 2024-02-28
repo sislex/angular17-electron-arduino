@@ -15,13 +15,15 @@ class Info {
     int s1; // steps for engine 1
     int s2; // steps for engine 2
     int d; // delay
+    int m; // mode (mode = 1 - by 1 steps, mode = 2 by specified quantity)
 
     Info(
       const String& t = "tripod",
       int s1 = 0,
       int s2 = 0,
-      int d = 1
-      ) : type(t), s1(s1), s2(s2), d(d) {}
+      int d = 1,
+      int m = 2
+      ) : type(t), s1(s1), s2(s2), d(d), m(m) {}
 
     String getType() const {
         return type;
@@ -114,21 +116,44 @@ void events(const String message) {
       const int s1 = doc["data"]["s1"];
       const int s2 = doc["data"]["s2"];
       const int d = doc["data"]["d"];
-      if (s1 != 0) {
-        info.s1 += s1;
-        sendDeviceInfo(timestamp);
+      info.m = doc["data"]["m"];
+
+      if (info.m == 1) { //mode 1
+        if (s1 != 0) {
+          info.s1 += s1;
+          // sendDeviceInfo(timestamp);
+        }
+        if (s2 != 0) {
+          info.s2 += s2;
+          // sendDeviceInfo(timestamp);
+        }
       }
-      if (s2 != 0) {
-        info.s2 += s2;
-        sendDeviceInfo(timestamp);
+
+      if (info.m == 2) { //mode 2
+        if (s1 != 0 && info.s1 == s1) {
+          info.s1 = 0;
+          // sendDeviceInfo(timestamp);
+          return;
+        }
+        if (s2 != 0 && info.s2 == s2) {
+          info.s2 = 0;
+          // sendDeviceInfo(timestamp);
+          return;
+        }
+        if (s1 != 0) {
+          info.s1 = s1;
+          // sendDeviceInfo(timestamp);
+        }
+        if (s2 != 0) {
+          info.s2 = s2;
+          // sendDeviceInfo(timestamp);
+        }
       }
+
       if (d != 0) {
       info.d = doc["data"]["d"];
       sendDeviceInfo(timestamp);
       }
-    } else if (strcmp(event, "SET") == 0) {
-      info.d = doc["data"]["d"];
-      sendDeviceInfo(timestamp);
     } else if (strcmp(event, "GET_INFO") == 0) {
       sendDeviceInfo(timestamp);
     }
@@ -141,31 +166,55 @@ void sendDeviceInfo(const String& timestamp) {
 }
 
 void move() {
+
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= info.d) {
-    previousMillis = currentMillis;
-    if (info.s1 != 0) {
-      int dir = HIGH;
-      if (info.s1 > 0) {
-        info.s1--;
-      } else {
-        dir = LOW;
-        info.s1++;
+  if (info.m == 1) {
+    if (currentMillis - previousMillis >= info.d) {
+      previousMillis = currentMillis;
+      if (info.s1 != 0) {
+        int dir = HIGH;
+        if (info.s1 > 0) {
+          info.s1--;
+        } else {
+          dir = LOW;
+          info.s1++;
+        }
+
+        moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
       }
 
-      moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
+      if (info.s2 != 0) {
+        int dir = HIGH;
+        if (info.s2 > 0) {
+          info.s2--;
+        } else {
+          dir = LOW;
+          info.s2++;
+        }
+
+        moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
+      }
     }
+  } else if (info.m == 2) {
+    if (currentMillis - previousMillis >= info.d) {
+      previousMillis = currentMillis;
+      if (info.s1 != 0) {
+        int dir = HIGH;
+        if (info.s1 < 0) {
+          dir = LOW;       
+        }
 
-    if (info.s2 != 0) {
-      int dir = HIGH;
-      if (info.s2 > 0) {
-        info.s2--;
-      } else {
-        dir = LOW;
-        info.s2++;
+        moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
+      }  
+
+      if (info.s2 != 0) {
+        int dir = HIGH;
+        if (info.s2 < 0) {
+          dir = LOW;       
+        }
+
+        moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
       }
-
-      moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
     }
   }
 }

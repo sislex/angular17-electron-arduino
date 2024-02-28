@@ -8,7 +8,7 @@ import { ControlButtonsComponent } from '../../../../../ui/src/lib/components/co
 import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
 import { StepsButtonComponent } from '../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import { MoveViewSkinState } from '../../+state/skins/move-skin/view/move-view-skin.reducer';
-import { getDelay, getSteps } from '../../+state/skins/move-skin/view/move-view-skin.selectors';
+import { getDelay, getDelayModify, getSteps } from '../../+state/skins/move-skin/view/move-view-skin.selectors';
 import { sendDirection, setActiveDelay, setActiveStep } from '../../+state/skins/move-skin/view/move-view-skin.actions';
 import {SkinMoveKeyboardEventsService} from '../../services/moveSkin/keyboardEvents.service';
 
@@ -29,20 +29,23 @@ import {SkinMoveKeyboardEventsService} from '../../services/moveSkin/keyboardEve
   providers: [SkinMoveKeyboardEventsService],
 })
 export class ControlButtonsContainer {
-  private isShiftDown = false;
-  private isSpaceDown = false;
 
   steps$ = this.store.select(getSteps);
-  delay$ = this.store.select(getDelay);
+  delayModify$ = this.store.select(getDelayModify);
+
+  private timerId: any;
+  private isLongPress: boolean = false;
 
   constructor(
     private readonly store: Store<MoveViewSkinState>,
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
     ) {}
 
-  handleKeyboardEvent(event: KeyboardEvent) {
-    this.skinMoveKeyboardEventsService.events(event);
+  handleKeyboardEvent(event: KeyboardEvent, note: string) {
+    this.skinMoveKeyboardEventsService.events(event, note);
   }
+  
+
 
   events($event: any, note: string = '') {
     if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'steps') {
@@ -59,50 +62,30 @@ export class ControlButtonsContainer {
       this.store.dispatch(setActiveDelay({
         delay: $event.data
       }));
-    } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED') {
-      this.store.dispatch(sendDirection({
-      direction: $event.data
-      }));
+    } 
+    
+    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown') {
+      this.timerId = setTimeout(() => {
+        this.isLongPress = true;
+        this.store.dispatch(sendDirection({
+          direction: $event.data,
+          m: 2
+        }));
+      }, 170);
+    } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup') {
+      clearTimeout(this.timerId);
+      if (!this.isLongPress) {
+        this.store.dispatch(sendDirection({
+          direction: $event.data,
+          m: 1
+        }));
+      } else {      
+        this.store.dispatch(sendDirection({
+        direction: $event.data,
+        m: 2
+        }));
+      }
+      this.isLongPress = false;
     }
   }
-
-  // @HostListener('window:keydown', ['$event'])
-  // handleKeyDown(event: KeyboardEvent) {
-  //   if (event.key === 'Shift' && !this.isShiftDown) {
-  //     this.isShiftDown = true;
-  //     this.events({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 1 } }, 'delay');
-  //   } else if (event.key === ' ' && !this.isSpaceDown) {
-  //     this.isSpaceDown = true;
-  //     this.events({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 100 } }, 'delay');
-  //   }
-  // }
-  //
-  // @HostListener('window:keyup', ['$event'])
-  // handleKeyUp(event: KeyboardEvent) {
-  //   if (event.key === 'Shift') {
-  //     this.isShiftDown = false;
-  //     this.events({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 50 } }, 'delay');
-  //   } else if (event.key === ' ') {
-  //     this.isSpaceDown = false;
-  //     this.events({ event: 'SetButtonsComponent:BUTTON_CLICKED', data: { data: 50 } }, 'delay');
-  //   }
-  // }
-
-  // @HostListener('window:keydown', ['$event'])
-  // handleKeyboardEvent(event: KeyboardEvent) {
-  //   switch (event.key) {
-  //     case 'ArrowUp':
-  //       this.buttonClick('UP');
-  //       break;
-  //     case 'ArrowDown':
-  //       this.buttonClick('DOWN');
-  //       break;
-  //     case 'ArrowLeft':
-  //       this.buttonClick('LEFT');
-  //       break;
-  //     case 'ArrowRight':
-  //       this.buttonClick('RIGHT');
-  //       break;
-  //   }
-  // }
 }

@@ -12,12 +12,13 @@ import { MatIconModule } from '@angular/material/icon';
 export class ControlButtonsComponent {
   @Output() emitter = new EventEmitter()
 
-  buttonClick(data: string) {
+  buttonHold(data: string, note: any) {
     const message = {
       event: 'ControlButtonsComponent:BUTTON_CLICKED',
       data,
+      note,
     };
     this.emitter.emit(message);
-    console.log(message)
   }
 }
+

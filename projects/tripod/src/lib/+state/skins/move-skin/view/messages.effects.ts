@@ -54,32 +54,35 @@ export class SetButtonEffects {
       this.actions$.pipe(
         ofType( sendDirection ),
         concatLatestFrom(() => this.store.select( getSteps )),
-        tap(([{direction}, stepsList]) => {
+        tap(([{direction, m}, stepsList]) => {
           const steps = stepsList.find(item => item.selected)?.data;
           let data;
-          if (direction === 'RIGHT') {
-            data = {
-              s1: steps,
-            };
-          } else if (direction === 'LEFT') {
-            data = {
-              s1: -steps,
-            };
-          } else if (direction === 'UP') {
-            data = {
-              s2: steps,
-            };
-          } else if (direction === 'DOWN') {
-            data = {
-              s2: -steps,
-            };
-          }
-          this.store.dispatch(sendMessageToDevice({
-            message: {
-              event: 'SET',
-              data,
-            },
-          }));
+            if (direction === 'RIGHT') {
+              data = {
+              s1: m === 1 ? steps : 1,
+              };
+            }
+            if (direction === 'LEFT') {
+              data = {
+              s1: m === 1 ? -steps : -1,
+              };
+            }
+            if (direction === 'UP') {
+              data = {
+              s2: m === 1 ? -steps : 1,
+              };
+            } 
+            if (direction === 'DOWN') {
+              data = {
+              s2: m === 1 ? -steps : -1,
+              };
+            }
+            this.store.dispatch(sendMessageToDevice({
+              message: {
+                event: 'SET',
+                data: {...data, m}
+              },
+            }));
         })
       ),
     {
