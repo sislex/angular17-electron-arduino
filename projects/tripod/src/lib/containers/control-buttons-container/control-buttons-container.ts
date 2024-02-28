@@ -41,7 +41,7 @@ export class ControlButtonsContainer {
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
     ) {}
 
-  handleKeyboardEvent(event: KeyboardEvent, note: any) {
+  handleKeyboardEvent(event: KeyboardEvent, note: string) {
     this.skinMoveKeyboardEventsService.events(event, note);
   }
   
@@ -71,24 +71,19 @@ export class ControlButtonsContainer {
           direction: $event.data,
           m: 2
         }));
-        console.log('Зажал', $event)
       }, 170);
-    }
-
-    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup') {
-      clearTimeout(this.timerId); // Скидываем таймер
+    } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup') {
+      clearTimeout(this.timerId);
       if (!this.isLongPress) {
         this.store.dispatch(sendDirection({
           direction: $event.data,
           m: 1
         }));
-        console.log('Кликнул', $event)
       } else {      
         this.store.dispatch(sendDirection({
         direction: $event.data,
         m: 2
         }));
-        console.log('Отпустил', $event)
       }
       this.isLongPress = false;
     }

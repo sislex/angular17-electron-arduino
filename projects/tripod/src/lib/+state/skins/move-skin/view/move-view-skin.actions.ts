@@ -23,7 +23,7 @@ export const setActiveDelay = createAction(
 
 export const sendDirection = createAction(
   '[Skin] sendDirection',
-  props<{ direction: string, m: any }>()
+  props<{ direction: string, m: number }>()
 );
 
 export const setShift = createAction(

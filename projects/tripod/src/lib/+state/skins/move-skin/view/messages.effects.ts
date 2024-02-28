@@ -57,22 +57,24 @@ export class SetButtonEffects {
         tap(([{direction, m}, stepsList]) => {
           const steps = stepsList.find(item => item.selected)?.data;
           let data;
-          if (m === 1) {
             if (direction === 'RIGHT') {
               data = {
-                s1: steps,
+              s1: m === 1 ? steps : 1,
               };
-            } else if (direction === 'LEFT') {
+            }
+            if (direction === 'LEFT') {
               data = {
-                s1: -steps,
+              s1: m === 1 ? -steps : -1,
               };
-            } else if (direction === 'UP') {
+            }
+            if (direction === 'UP') {
               data = {
-                s2: steps,
+              s2: m === 1 ? -steps : 1,
               };
-            } else if (direction === 'DOWN') {
+            } 
+            if (direction === 'DOWN') {
               data = {
-                s2: -steps,
+              s2: m === 1 ? -steps : -1,
               };
             }
             this.store.dispatch(sendMessageToDevice({
@@ -81,31 +83,6 @@ export class SetButtonEffects {
                 data: {...data, m}
               },
             }));
-          } else if (m === 2) {
-            if (direction === 'RIGHT') {
-              data = {
-                s1: 1,
-              };
-            } else if (direction === 'LEFT') {
-              data = {
-                s1: -1,
-              };
-            } else if (direction === 'UP') {
-              data = {
-                s2: 1,
-              };
-            } else if (direction === 'DOWN') {
-              data = {
-                s2: -1,
-              };
-            }
-            this.store.dispatch(sendMessageToDevice({
-              message: {
-                event: 'SET',
-                data: {...data, m}
-              },
-            }));
-          }
         })
       ),
     {

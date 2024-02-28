@@ -50,14 +50,12 @@ export class SkinMoveKeyboardEventsService {
         direction: 'LEFT',
         m: 2
       }));
-      console.log('НАЖАЛИ l')
     } else if (message.key === 'ArrowLeft' && note === 'up') {
       this.isArrowLeftDown = false;
       this.store.dispatch(sendDirection({
         direction: 'LEFT',
         m: 2
       }));
-      console.log('ОТПУСТИЛИ l')
     }
     
     else if (message.key === 'ArrowRight' && note === 'down' && !this.isArrowRightDown) {
@@ -66,14 +64,12 @@ export class SkinMoveKeyboardEventsService {
         direction: 'RIGHT',
         m: 2
       }));
-      console.log('НАЖАЛИ r')
     } else if (message.key === 'ArrowRight' && note === 'up') {
       this.isArrowRightDown = false;
       this.store.dispatch(sendDirection({
         direction: 'RIGHT',
         m: 2
       }));
-      console.log('ОТПУСТИЛИ r')
     }
 
     else if (message.key === 'ArrowUp' && note === 'down' && !this.isArrowUpDown) {
@@ -82,14 +78,12 @@ export class SkinMoveKeyboardEventsService {
         direction: 'UP',
         m: 2
       }));
-      console.log('НАЖАЛИ u')
     } else if (message.key === 'ArrowUp' && note === 'up') {
       this.isArrowUpDown = false;
       this.store.dispatch(sendDirection({
         direction: 'UP',
         m: 2
       }));
-      console.log('ОТПУСТИЛИ u')
     }
 
     else if (message.key === 'ArrowDown' && note === 'down' && !this.isArrowDownDown) {
@@ -98,14 +92,12 @@ export class SkinMoveKeyboardEventsService {
         direction: 'DOWN',
         m: 2
       }));
-      console.log('НАЖАЛИ d')
     } else if (message.key === 'ArrowDown' && note === 'up') {
       this.isArrowDownDown = false;
       this.store.dispatch(sendDirection({
         direction: 'DOWN',
         m: 2
       }));
-      console.log('ОТПУСТИЛИ d')
     }
   };
 
