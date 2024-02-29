@@ -105,7 +105,7 @@ void eventSerial() {
 }
 
 int getSteps(const int currentSteps, const int newSteps, const int mode) {
-  int steps = 0;
+  int steps = currentSteps;
   if (newSteps != 0) {
     if (mode == 1) {
       steps += newSteps;
