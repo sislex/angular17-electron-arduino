@@ -128,66 +128,13 @@ void sendDeviceInfo(const String& timestamp) {
   Serial.println(json);
 }
 
-void move() {
-  unsigned long currentMillis = millis();
-  if (info.m == 1) {
-    if (currentMillis - previousMillis >= info.d) {
-      previousMillis = currentMillis;
-      if (info.s1 != 0) {
-        int dir = HIGH;
-        if (info.s1 > 0) {
-          info.s1--;
-        } else {
-          dir = LOW;
-          info.s1++;
-        }
-
-        moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
-      }
-
-      if (info.s2 != 0) {
-        int dir = HIGH;
-        if (info.s2 > 0) {
-          info.s2--;
-        } else {
-          dir = LOW;
-          info.s2++;
-        }
-
-        moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
-      }
-    }
-  } else if (info.m == 2) {
-    if (currentMillis - previousMillis >= info.d) {
-      previousMillis = currentMillis;
-      if (info.s1 != 0) {
-        int dir = HIGH;
-        if (info.s1 < 0) {
-          dir = LOW;
-        }
-
-        moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
-      }
-
-      if (info.s2 != 0) {
-        int dir = HIGH;
-        if (info.s2 < 0) {
-          dir = LOW;
-        }
-
-        moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
-      }
-    }
-  }
-}
-
 void moveEngineToOneStep(int stepPin, int dirPin, int dir) {
   digitalWrite(dirPin, dir);
   digitalWrite(stepPin, HIGH);
   digitalWrite(stepPin, LOW);
 }
 
-void move2() {
+void move() {
   const bool isMoveNeeded = info.s1 != 0 || info.s2 != 0;
   if (isMoveNeeded) {
     unsigned long currentMillis = millis();
@@ -201,7 +148,7 @@ void move2() {
           }
         } else if (info.s1 < 0)  {
           dir = LOW;
-          if (info.m == 2) {
+          if (info.m == 1) {
             info.s1++;
           }
         }
@@ -217,7 +164,7 @@ void move2() {
           }
         } else if (info.s2 < 0) {
           dir = LOW;
-          if (info.m == 2) {
+          if (info.m == 1) {
             info.s2++;
           }
         }
