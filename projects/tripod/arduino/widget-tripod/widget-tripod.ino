@@ -134,43 +134,36 @@ void moveEngineToOneStep(int stepPin, int dirPin, int dir) {
   digitalWrite(stepPin, LOW);
 }
 
+int getStepsAndMoveEngine(const int currentSteps, const int mode, const int stepPin, const int dirPin) {
+  int steps = currentSteps;
+  if (currentSteps != 0) {
+   int dir = HIGH;
+    if (currentSteps > 0) {
+       if (mode == 1) {
+         steps--;
+       }
+     } else if (currentSteps < 0)  {
+       dir = LOW;
+       if (mode == 1) {
+         steps++;
+       }
+     }
+
+     moveEngineToOneStep(stepPin, dirPin, dir);
+  }
+
+  return steps;
+}
+
 void move() {
   const bool isMoveNeeded = info.s1 != 0 || info.s2 != 0;
   if (isMoveNeeded) {
     unsigned long currentMillis = millis();
     if (currentMillis - previousMillis >= info.d) {
       previousMillis = currentMillis;
-      if (info.s1 != 0) {
-        int dir = HIGH;
-        if (info.s1 > 0) {
-          if (info.m == 1) {
-            info.s1--;
-          }
-        } else if (info.s1 < 0)  {
-          dir = LOW;
-          if (info.m == 1) {
-            info.s1++;
-          }
-        }
 
-        moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
-      }
-
-      if (info.s2 != 0) {
-        int dir = HIGH;
-        if (info.s2 > 0) {
-          if (info.m == 1) {
-            info.s2--;
-          }
-        } else if (info.s2 < 0) {
-          dir = LOW;
-          if (info.m == 1) {
-            info.s2++;
-          }
-        }
-
-        moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
-      }
+      info.s1 = getStepsAndMoveEngine(info.s1, info.m, M1_STEP_PIN, M1_DIR_PIN);
+      info.s2 = getStepsAndMoveEngine(info.s2, info.m, M2_STEP_PIN, M2_DIR_PIN);
     }
   }
 }
