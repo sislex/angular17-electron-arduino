@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { PageLayoutComponent } from '../../../../../ui/src/public-api';
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
@@ -8,8 +8,13 @@ import { ControlButtonsComponent } from '../../../../../ui/src/lib/components/co
 import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
 import { StepsButtonComponent } from '../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import { MoveViewSkinState } from '../../+state/skins/move-skin/view/move-view-skin.reducer';
-import { getDelay, getDelayModify, getSteps } from '../../+state/skins/move-skin/view/move-view-skin.selectors';
-import { sendDirection, setActiveDelay, setActiveStep } from '../../+state/skins/move-skin/view/move-view-skin.actions';
+import { getDelayModify, getSteps } from '../../+state/skins/move-skin/view/move-view-skin.selectors';
+import {
+  initSkin,
+  sendDirection,
+  setActiveDelay,
+  setActiveStep
+} from '../../+state/skins/move-skin/view/move-view-skin.actions';
 import {SkinMoveKeyboardEventsService} from '../../services/moveSkin/keyboardEvents.service';
 
 @Component({
@@ -28,7 +33,7 @@ import {SkinMoveKeyboardEventsService} from '../../services/moveSkin/keyboardEve
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SkinMoveKeyboardEventsService],
 })
-export class ControlButtonsContainer {
+export class ControlButtonsContainer implements OnInit {
 
   steps$ = this.store.select(getSteps);
   delayModify$ = this.store.select(getDelayModify);
@@ -41,11 +46,13 @@ export class ControlButtonsContainer {
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
     ) {}
 
+  ngOnInit() {
+    this.store.dispatch(initSkin());
+  }
+
   handleKeyboardEvent(event: KeyboardEvent, note: string) {
     this.skinMoveKeyboardEventsService.events(event, note);
   }
-  
-
 
   events($event: any, note: string = '') {
     if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'steps') {
@@ -62,8 +69,8 @@ export class ControlButtonsContainer {
       this.store.dispatch(setActiveDelay({
         delay: $event.data
       }));
-    } 
-    
+    }
+
     else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown') {
       this.timerId = setTimeout(() => {
         this.isLongPress = true;
@@ -79,7 +86,7 @@ export class ControlButtonsContainer {
           direction: $event.data,
           m: 1
         }));
-      } else {      
+      } else {
         this.store.dispatch(sendDirection({
         direction: $event.data,
         m: 2

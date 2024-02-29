@@ -1,6 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { IMoveSkin } from './move-view-skin.reducer';
 
+export const initSkin = createAction('[Skin] initSkin');
+
 export const setSteps = createAction(
   '[Skin] setSteps',
   props<{ stepsList: IMoveSkin[] }>()

@@ -3,7 +3,7 @@ import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { MoveViewSkinState } from './move-view-skin.reducer';
-import { sendDirection, setActiveDelay, setActiveStep, setDelay, setSteps } from './move-view-skin.actions';
+import {initSkin, sendDirection, setActiveDelay, setActiveStep, setDelay, setSteps} from './move-view-skin.actions';
 import { getDelay, getSteps } from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
 
@@ -17,7 +17,7 @@ export class SetButtonEffects {
         concatLatestFrom(() => this.store.select( getSteps )),
         tap(([{steps}, stepsList]) => {
           const newsStepsList = stepsList.map(item => ({
-            ...item, 
+            ...item,
             selected: item === steps
           }));
           this.store.dispatch(setSteps({
@@ -37,7 +37,7 @@ export class SetButtonEffects {
         tap(([{delay}, delayList]) => {
           let data;
           const newsDelayList = delayList.map(item => ({
-            ...item, 
+            ...item,
             selected: item === delay
           }));
           this.store.dispatch(setDelay({
@@ -69,20 +69,41 @@ export class SetButtonEffects {
             }
             if (direction === 'UP') {
               data = {
-              s2: m === 1 ? -steps : 1,
+              s2: m === 1 ? steps : 1,
               };
-            } 
+            }
             if (direction === 'DOWN') {
               data = {
               s2: m === 1 ? -steps : -1,
               };
             }
+
             this.store.dispatch(sendMessageToDevice({
               message: {
                 event: 'SET',
                 data: {...data, m}
               },
             }));
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
+  initSkin$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( initSkin ),
+        concatLatestFrom(() => this.store.select( getDelay )),
+        tap(([, delayList]) => {
+          const d = delayList.find(item => item.selected)?.data;
+
+          this.store.dispatch(sendMessageToDevice({
+            message: {
+              event: 'SET',
+              data: {d}
+            },
+          }));
         })
       ),
     {

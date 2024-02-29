@@ -104,60 +104,23 @@ void eventSerial() {
   }
 }
 
-void events(const String message) {
-  StaticJsonDocument<200> doc;
-  DeserializationError error = deserializeJson(doc, message);
-
-  if (!error) {
-    const char* event = doc["event"];
-    const char* timestamp = doc["data"]["timestamp"];
-
-    if (strcmp(event, "SET") == 0) {
-      const int s1 = doc["data"]["s1"];
-      const int s2 = doc["data"]["s2"];
-      const int d = doc["data"]["d"];
-      info.m = doc["data"]["m"];
-
-      if (info.m == 1) { //mode 1
-        if (s1 != 0) {
-          info.s1 += s1;
-          // sendDeviceInfo(timestamp);
-        }
-        if (s2 != 0) {
-          info.s2 += s2;
-          // sendDeviceInfo(timestamp);
-        }
-      }
-
-      if (info.m == 2) { //mode 2
-        if (s1 != 0 && info.s1 == s1) {
-          info.s1 = 0;
-          // sendDeviceInfo(timestamp);
-          return;
-        }
-        if (s2 != 0 && info.s2 == s2) {
-          info.s2 = 0;
-          // sendDeviceInfo(timestamp);
-          return;
-        }
-        if (s1 != 0) {
-          info.s1 = s1;
-          // sendDeviceInfo(timestamp);
-        }
-        if (s2 != 0) {
-          info.s2 = s2;
-          // sendDeviceInfo(timestamp);
-        }
-      }
-
-      if (d != 0) {
-      info.d = doc["data"]["d"];
-      sendDeviceInfo(timestamp);
-      }
-    } else if (strcmp(event, "GET_INFO") == 0) {
-      sendDeviceInfo(timestamp);
+int getSteps(const int currentSteps, const int newSteps, const int mode) {
+  int steps = 0;
+  if (newSteps != 0) {
+    if (mode == 1) {
+      steps += newSteps;
+    } else {
+     if (mode == 2) {
+       if (currentSteps == newSteps) { // stop engine
+        steps = 0;
+       } else {
+        steps = newSteps;
+       }
+     }
     }
   }
+
+  return steps;
 }
 
 void sendDeviceInfo(const String& timestamp) {
@@ -166,7 +129,6 @@ void sendDeviceInfo(const String& timestamp) {
 }
 
 void move() {
-
   unsigned long currentMillis = millis();
   if (info.m == 1) {
     if (currentMillis - previousMillis >= info.d) {
@@ -201,16 +163,16 @@ void move() {
       if (info.s1 != 0) {
         int dir = HIGH;
         if (info.s1 < 0) {
-          dir = LOW;       
+          dir = LOW;
         }
 
         moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
-      }  
+      }
 
       if (info.s2 != 0) {
         int dir = HIGH;
         if (info.s2 < 0) {
-          dir = LOW;       
+          dir = LOW;
         }
 
         moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
@@ -223,4 +185,76 @@ void moveEngineToOneStep(int stepPin, int dirPin, int dir) {
   digitalWrite(dirPin, dir);
   digitalWrite(stepPin, HIGH);
   digitalWrite(stepPin, LOW);
+}
+
+void move2() {
+  const bool isMoveNeeded = info.s1 != 0 || info.s2 != 0;
+  if (isMoveNeeded) {
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= info.d) {
+      previousMillis = currentMillis;
+      if (info.s1 != 0) {
+        int dir = HIGH;
+        if (info.s1 > 0) {
+          if (info.m == 1) {
+            info.s1--;
+          }
+        } else if (info.s1 < 0)  {
+          dir = LOW;
+          if (info.m == 2) {
+            info.s1++;
+          }
+        }
+
+        moveEngineToOneStep(M1_STEP_PIN, M1_DIR_PIN, dir);
+      }
+
+      if (info.s2 != 0) {
+        int dir = HIGH;
+        if (info.s2 > 0) {
+          if (info.m == 1) {
+            info.s2--;
+          }
+        } else if (info.s2 < 0) {
+          dir = LOW;
+          if (info.m == 2) {
+            info.s2++;
+          }
+        }
+
+        moveEngineToOneStep(M2_STEP_PIN, M2_DIR_PIN, dir);
+      }
+    }
+  }
+}
+
+void events(const String message) {
+  StaticJsonDocument<200> doc;
+  DeserializationError error = deserializeJson(doc, message);
+
+  if (!error) {
+    const char* event = doc["event"];
+    const char* timestamp = doc["data"]["timestamp"];
+
+    if (strcmp(event, "SET") == 0) {
+      const int s1 = doc["data"]["s1"];
+      const int s2 = doc["data"]["s2"];
+      const int d = doc["data"]["d"];
+      const int m = doc["data"]["m"];
+
+      if (m != 0) {
+        info.m = m;
+      }
+
+       if (d != 0) {
+        info.d = d;
+      }
+
+      info.s1 = getSteps(info.s1, s1, info.m);
+      info.s2 = getSteps(info.s2, s2, info.m);
+
+    } else if (strcmp(event, "GET_INFO") == 0) {
+      sendDeviceInfo(timestamp);
+    }
+  }
 }
