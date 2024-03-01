@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import { PageLayoutComponent } from '../../../../../ui/src/public-api';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {H100LayoutComponent, PageLayoutComponent} from '../../../../../ui/src/public-api';
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
@@ -27,16 +27,19 @@ import {SkinMoveKeyboardEventsService} from '../../services/moveSkin/keyboardEve
     RouterOutlet,
     AsyncPipe,
     StepsButtonComponent,
+    H100LayoutComponent,
   ],
   templateUrl: './control-buttons-container.html',
-  styles: ``,
+  styleUrl: './control-buttons-container.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SkinMoveKeyboardEventsService],
 })
-export class ControlButtonsContainer implements OnInit {
+export class ControlButtonsContainer implements OnInit, AfterViewInit {
 
   steps$ = this.store.select(getSteps);
   delayModify$ = this.store.select(getDelayModify);
+
+  @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
   private timerId: any;
   private isLongPress: boolean = false;
@@ -50,16 +53,22 @@ export class ControlButtonsContainer implements OnInit {
     this.store.dispatch(initSkin());
   }
 
+  ngAfterViewInit(): void {
+    this.keyboardEventsArea.nativeElement.focus();
+  }
+
   handleKeyboardEvent(event: KeyboardEvent, note: string) {
     this.skinMoveKeyboardEventsService.events(event, note);
   }
 
   events($event: any, note: string = '') {
     if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'steps') {
+      this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(setActiveStep({
         steps: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay') {
+      this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(sendMessageToDevice({
         message: {
           event: 'SET',

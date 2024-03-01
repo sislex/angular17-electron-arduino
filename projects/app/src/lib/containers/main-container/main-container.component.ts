@@ -7,9 +7,10 @@ import {RouterOutlet} from '@angular/router';
 import { BlinkSkinState } from '../../../../../blink/src/lib/+state/blink-skin/blink-skin.reducer';
 import { AsyncPipe } from '@angular/common';
 import { getSkin } from '../../../../../blink/src/lib/+state/blink-skin/blink-skin.selectors';
+import {H100LayoutComponent} from '../../../../../ui/src/lib/layouts/h100-layout/h100-layout.component';
 
 @Component({
-  imports: [PageLayoutComponent, NavPanelContainerComponent, RouterOutlet, AsyncPipe],
+  imports: [PageLayoutComponent, NavPanelContainerComponent, RouterOutlet, AsyncPipe, H100LayoutComponent],
   selector: 'main-container',
   standalone: true,
   templateUrl: './main-container.component.html',
