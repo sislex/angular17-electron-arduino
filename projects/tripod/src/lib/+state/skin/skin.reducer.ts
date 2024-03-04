@@ -13,7 +13,7 @@ export interface AboutPartialState {
 }
 
 export const initialState: SkinState = {
-    skin: 'buttons',
+    skin: 'buttonsVideo',
     skinsList: ['buttons', 'buttonsVideo'],
 };
 

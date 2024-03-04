@@ -35,7 +35,6 @@ import {SkinMoveKeyboardEventsService} from '../../services/keyboardEvents.servi
   providers: [SkinMoveKeyboardEventsService],
 })
 export class ControlButtonsContainer implements OnInit, AfterViewInit {
-
   steps$ = this.store.select(getSteps);
   delayModify$ = this.store.select(getDelayModify);
 

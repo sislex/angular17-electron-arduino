@@ -1,9 +1,14 @@
 <page-layout>
   <nav-panel-container toplBar></nav-panel-container>
-  <div body>
-
-    <img class="qqq" src="../../../../../../../../src/assets/images/blink/ON.png" alt="Video">
+  <div
+    body
+    tabindex="0"
+    #keyboardEventsArea
+    class="height-100"
+    (keydown)="handleKeyboardEvent($event, 'down')"
+    (keyup)="handleKeyboardEvent($event, 'up')">
+    <steps-button [buttons]="(steps$|async)!" [message]="'Steps'" (emitter)="events($event, 'steps')"></steps-button>
+    <steps-button [buttons]="(delayModify$|async)!" [message]="'Delay'" (emitter)="events($event, 'delay')"></steps-button>
     <control-buttons (emitter)="events($event)"></control-buttons>
   </div>
-
 </page-layout>
