@@ -1,21 +1,21 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {H100LayoutComponent, PageLayoutComponent} from '../../../../../ui/src/public-api';
+import {H100LayoutComponent, PageLayoutComponent} from '../../../../../../../ui/src/public-api';
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { sendMessageToDevice } from '../../+state/messages/messages.actions';
-import { ControlButtonsComponent } from '../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
-import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
-import { StepsButtonComponent } from '../../../../../ui/src/lib/components/steps-button/steps-button.component';
-import { MoveViewSkinState } from '../../+state/skins/move-skin/view/move-view-skin.reducer';
-import { getDelayModify, getSteps } from '../../+state/skins/move-skin/view/move-view-skin.selectors';
+import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
+import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
+import { NavPanelContainer } from '../../../../containers/nav-panel-container/nav-panel-container';
+import { StepsButtonComponent } from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
+import { MoveViewSkinState } from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
+import { getDelayModify, getSteps } from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {
   initSkin,
   sendDirection,
   setActiveDelay,
   setActiveStep
-} from '../../+state/skins/move-skin/view/move-view-skin.actions';
-import {SkinMoveKeyboardEventsService} from '../../services/moveSkin/keyboardEvents.service';
+} from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
+import {SkinMoveKeyboardEventsService} from '../../services/keyboardEvents.service';
 
 @Component({
   selector: 'control-buttons-container',

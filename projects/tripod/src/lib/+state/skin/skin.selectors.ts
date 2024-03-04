@@ -7,3 +7,8 @@ export const getSkin = createSelector(
     selectFeature,
     (state: SkinState) => state.skin
 );
+
+export const getSkinsList = createSelector(
+    selectFeature,
+    (state: SkinState) => state.skinsList
+);

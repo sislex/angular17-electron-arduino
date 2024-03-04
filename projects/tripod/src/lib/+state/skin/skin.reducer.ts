@@ -5,6 +5,7 @@ export const TRIPOD_SKIN_FEATURE_KEY = 'tripod/skin';
 
 export interface SkinState {
     skin: string;
+    skinsList: string[];
 }
 
 export interface AboutPartialState {
@@ -12,7 +13,8 @@ export interface AboutPartialState {
 }
 
 export const initialState: SkinState = {
-    skin: 'two'
+    skin: 'buttons',
+    skinsList: ['buttons', 'buttonsVideo'],
 };
 
 export const SkinReducer = createReducer(

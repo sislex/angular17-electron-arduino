@@ -5,8 +5,8 @@ import { RouterOutlet } from '@angular/router';
 import { getSkin } from '../../+state/skin/skin.selectors';
 import { AsyncPipe } from '@angular/common';
 import { init } from '../../+state/config/config.actions';
-import { ControlButtonsContainer } from '../control-buttons-container/control-buttons-container';
-import { ControlVideoContainer } from '../control-video-container/control-video-container';
+import { ControlButtonsContainer } from '../../skins/buttons/containers/control-buttons-container/control-buttons-container';
+import { ControlVideoContainer } from '../../skins/buttonsVideo/containers/control-video-container/control-video-container';
 
 @Component({
   selector: 'control-container',

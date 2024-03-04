@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PageLayoutComponent } from '../../../../../ui/src/public-api';
+import { PageLayoutComponent } from '../../../../../../../ui/src/public-api';
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { sendMessageToDevice } from '../../+state/messages/messages.actions';
-import { getLed, getMode } from '../../+state/config/config.selectors';
-import { ConfigPartialState } from '../../+state/config/config.reducer';
-import { Observable } from 'rxjs';
-import { ControlButtonsComponent } from '../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
-import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
+import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
+import { ConfigPartialState } from '../../../../+state/config/config.reducer';
+import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
+import { NavPanelContainer } from '../../../../containers/nav-panel-container/nav-panel-container';
 
 @Component({
   selector: 'control-video-container',

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
-import { sendMessageToDevice } from '../../+state/messages/messages.actions';
-import { sendDirection, setCtrl, setShift } from '../../+state/skins/move-skin/view/move-view-skin.actions';
+import { sendMessageToDevice } from '../../../+state/messages/messages.actions';
+import { sendDirection, setCtrl, setShift } from '../../../+state/skins/move-skin/view/move-view-skin.actions';
 
 @Injectable()
 export class SkinMoveKeyboardEventsService {
@@ -57,7 +57,7 @@ export class SkinMoveKeyboardEventsService {
         m: 2
       }));
     }
-    
+
     else if (message.key === 'ArrowRight' && note === 'down' && !this.isArrowRightDown) {
       this.isArrowRightDown = true;
       this.store.dispatch(sendDirection({

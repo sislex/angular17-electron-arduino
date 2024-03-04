@@ -1,1 +1,1 @@
-<nav-device  (emitter)="events($event)"></nav-device>
+<nav-device [skinsList]="(getSkinsList$ | async) || []"  (emitter)="events($event)"></nav-device>

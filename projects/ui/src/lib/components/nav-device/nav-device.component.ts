@@ -23,13 +23,14 @@ import { UserListComponent } from '../user-list/user-list.component';
 })
 export class NavDeviceComponent {
   @Input() message: string = '';
+  @Input() skinsList: string[] = [];
 
   @Output() emitter = new EventEmitter();
 
-  buttonClick (data: string) {
+  buttonClick (item: string, note: string = '') {
     this.emitter.emit({
       event: 'NavDeviceComponent:BUTTON_CLICKED',
-      data,
+      data: {item, note},
     });
   }
 
