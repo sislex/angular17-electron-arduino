@@ -4,7 +4,7 @@ import { AboutComponent } from '../../../../../ui/src/lib/components/about/about
 import { Store } from '@ngrx/store';
 import { getAboutList, getAboutTitle } from '../../+state/about/about.selectors';
 import { AboutState} from '../../+state/about/about.reducer';
-import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
+import { NavPanelContainer } from '../../skins/buttons/containers/nav-panel-container/nav-panel-container';
 import { DevicePageLayoutComponent } from '../../../../../ui/src/lib/layouts/device-page-layout/device-page-layout.component';
 
 

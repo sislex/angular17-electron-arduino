@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavDeviceComponent } from '../../../../../ui/src/lib/components/nav-device/nav-device.component';
-import { resetUserFromLocalStorageAndState } from '../../../../../app/src/lib/+state/account/account.actions';
+import { NavDeviceComponent } from '../../../../../../../ui/src/lib/components/nav-device/nav-device.component';
+import { resetUserFromLocalStorageAndState } from '../../../../../../../app/src/lib/+state/account/account.actions';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { setSkin } from '../../+state/skin/skin.actions';
-import {getSkinsList} from '../../+state/skin/skin.selectors';
+import { setSkin } from '../../../../+state/skin/skin.actions';
+import {getSkinsList} from '../../../../+state/skin/skin.selectors';
 import {AsyncPipe} from '@angular/common';
 @Component({
   selector: 'nav-panel-container',
@@ -35,6 +35,8 @@ export class NavPanelContainer {
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.item === 'commandsList') {
       this.router.navigate(['widget/tripod/commandsList']);
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.note === 'skinsList') {
+      this.store.dispatch(setSkin({skin: $event.data.item}));
+    } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.note === 'skinSettings') {
       this.store.dispatch(setSkin({skin: $event.data.item}));
     }
   }

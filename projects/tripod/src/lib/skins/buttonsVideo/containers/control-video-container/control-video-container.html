@@ -7,6 +7,12 @@
     class="height-100"
     (keydown)="handleKeyboardEvent($event, 'down')"
     (keyup)="handleKeyboardEvent($event, 'up')">
+    <div class="video">
+      <div class="video-wrapper">
+        <video-component [src]="'http://192.168.0.208:8080/video'"></video-component>
+      </div>
+    </div>
+
     <steps-button [buttons]="(steps$|async)!" [message]="'Steps'" (emitter)="events($event, 'steps')"></steps-button>
     <steps-button [buttons]="(delayModify$|async)!" [message]="'Delay'" (emitter)="events($event, 'delay')"></steps-button>
     <control-buttons (emitter)="events($event)"></control-buttons>

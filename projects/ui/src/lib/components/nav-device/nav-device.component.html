@@ -1,55 +1,68 @@
 <mat-toolbar color="warn">
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <!-- <span>{{ message }}</span>
-    <button mat-icon-button>
-        <mat-icon>location_on</mat-icon>
-    </button>
-    <button mat-icon-button>
-        <mat-icon>calculate</mat-icon>
-    </button>
-    <button mat-icon-button>
-        <mat-icon>location_searching</mat-icon>
-    </button>-->
-    <span class="example-spacer"></span>
-    <!-- <button mat-icon-button>
-        <mat-icon>signal_cellular_alt</mat-icon>
-    </button>
-    <button mat-icon-button>
-        <mat-icon>battery_charging_full</mat-icon>
-    </button> -->
-    <button mat-icon-button [matMenuTriggerFor]="setting" class="example-icon favorite-icon">
-    <mat-icon>settings</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="buttonClick('controlDevice')">
-        <mat-icon>back_hand</mat-icon>
-        <span>Control device</span>
-    </button>
-    <button mat-menu-item (click)="buttonClick('aboutDWidget')">
-        <mat-icon>help_outline</mat-icon>
-        <span>About the widget</span>
-    </button>
-    <button mat-menu-item (click)="buttonClick('aboutDevice')">
-        <mat-icon>device_unknown</mat-icon>
-        <span>About the device</span>
-    </button>
-    <button mat-menu-item (click)="buttonClick('logDevice')">
-        <mat-icon>feed</mat-icon>
-        <span>Device log</span>
-    </button>
-    <button mat-menu-item (click)="buttonClick('commandsList')">
-        <mat-icon>format_list_numbered</mat-icon>
-        <span>Commands list</span>
-    </button>
-</mat-menu>
-
-<mat-menu #setting="matMenu">
-  @for (item of skinsList; track item) {
-    <button mat-menu-item (click)="buttonClick(item, 'skinsList')">
-        <span>{{item}}</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- <span>{{ message }}</span>
+  <button mat-icon-button>
+      <mat-icon>location_on</mat-icon>
+  </button>
+  <button mat-icon-button>
+      <mat-icon>calculate</mat-icon>
+  </button>
+  <button mat-icon-button>
+      <mat-icon>location_searching</mat-icon>
+  </button>-->
+  <span class="example-spacer"></span>
+  <!-- <button mat-icon-button>
+      <mat-icon>signal_cellular_alt</mat-icon>
+  </button>
+  <button mat-icon-button>
+      <mat-icon>battery_charging_full</mat-icon>
+  </button> -->
+  <button mat-icon-button [matMenuTriggerFor]="skinList" class="example-icon favorite-icon">
+    <mat-icon>screenshot_monitor</mat-icon>
+  </button>
+  @if (skinSettings.length > 0) {
+    <button mat-icon-button [matMenuTriggerFor]="settings" class="example-icon favorite-icon">
+      <mat-icon>settings</mat-icon>
     </button>
   }
-</mat-menu>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="buttonClick('controlDevice')">
+      <mat-icon>back_hand</mat-icon>
+      <span>Control device</span>
+    </button>
+    <button mat-menu-item (click)="buttonClick('aboutDWidget')">
+      <mat-icon>help_outline</mat-icon>
+      <span>About the widget</span>
+    </button>
+    <button mat-menu-item (click)="buttonClick('aboutDevice')">
+      <mat-icon>device_unknown</mat-icon>
+      <span>About the device</span>
+    </button>
+    <button mat-menu-item (click)="buttonClick('logDevice')">
+      <mat-icon>feed</mat-icon>
+      <span>Device log</span>
+    </button>
+    <button mat-menu-item (click)="buttonClick('commandsList')">
+      <mat-icon>format_list_numbered</mat-icon>
+      <span>Commands list</span>
+    </button>
+  </mat-menu>
+
+  <mat-menu #skinList="matMenu">
+    @for (item of skinsList; track item) {
+      <button mat-menu-item (click)="buttonClick(item, 'skinsList')">
+        <span>{{item}}</span>
+      </button>
+    }
+  </mat-menu>
+
+  <mat-menu #settings="matMenu">
+    @for (item of skinSettings; track item) {
+      <button mat-menu-item (click)="buttonClick(item, 'skinSettings')">
+        <span>{{item}}</span>
+      </button>
+    }
+  </mat-menu>
 </mat-toolbar>

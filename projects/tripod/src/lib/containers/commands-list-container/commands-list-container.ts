@@ -5,7 +5,7 @@ import { getCommandsList } from '../../+state/commands-list/commands-list.select
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import {sendMessageToDevice} from '../../+state/messages/messages.actions';
-import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
+import { NavPanelContainer } from '../../skins/buttons/containers/nav-panel-container/nav-panel-container';
 
 
 @Component({

@@ -24,6 +24,7 @@ import { UserListComponent } from '../user-list/user-list.component';
 export class NavDeviceComponent {
   @Input() message: string = '';
   @Input() skinsList: string[] = [];
+  @Input() skinSettings: string[] = [];
 
   @Output() emitter = new EventEmitter();
 

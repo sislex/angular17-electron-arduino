@@ -31,6 +31,7 @@ export class UsbListContainerComponent {
     private readonly store: Store,
     private router: Router,
   ) {
+    // this.router.navigate(['widget', 'tripod']); // Todd Remove this line
   }
 
   buttonClick(message: string, note: any = {}) {

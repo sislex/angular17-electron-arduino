@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
-import { NavPanelContainer } from '../../../../containers/nav-panel-container/nav-panel-container';
 import {getDelayModify, getSteps} from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {MoveViewSkinState} from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
 import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardEvents.service';
@@ -16,6 +15,8 @@ import {
   setActiveStep
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
+import {NavPanelContainer} from '../nav-panel-container/nav-panel-container';
+import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/video.component';
 
 @Component({
   selector: 'control-video-container',
@@ -26,7 +27,8 @@ import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/s
     NavPanelContainer,
     RouterOutlet,
     AsyncPipe,
-    StepsButtonComponent
+    StepsButtonComponent,
+    VideoComponent,
   ],
   templateUrl: './control-video-container.html',
   styleUrl: './control-video-container.scss',
