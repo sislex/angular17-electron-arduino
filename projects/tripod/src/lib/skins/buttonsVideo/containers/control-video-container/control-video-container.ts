@@ -5,18 +5,24 @@ import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
-import {getDelayModify, getSteps} from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
+import {
+  getDelayModify, getOrientation,
+  getQuality,
+  getResolution,
+  getSteps, getVideoUrl, getZoom
+} from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {MoveViewSkinState} from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
 import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardEvents.service';
 import {
   initSkin,
   sendDirection,
-  setActiveDelay,
-  setActiveStep
+  setActiveDelay, setActiveOrientation, setActiveQuality, setActiveResolution,
+  setActiveStep, setActiveZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import {NavPanelContainer} from '../nav-panel-container/nav-panel-container';
 import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/video.component';
+import {RequestsService} from '../../services/requests.service';
 
 @Component({
   selector: 'control-video-container',
@@ -33,11 +39,16 @@ import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/v
   templateUrl: './control-video-container.html',
   styleUrl: './control-video-container.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SkinMoveKeyboardEventsService],
+  providers: [SkinMoveKeyboardEventsService, RequestsService],
 })
 export class ControlVideoContainer implements OnInit, AfterViewInit  {
   steps$ = this.store.select(getSteps);
   delayModify$ = this.store.select(getDelayModify);
+  getVideoUrl$ = this.store.select(getVideoUrl);
+  getQuality$ = this.store.select(getQuality);
+  getResolution$ = this.store.select(getResolution);
+  getZoom$ = this.store.select(getZoom);
+  getOrientation$ = this.store.select(getOrientation);
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
@@ -47,6 +58,7 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   constructor(
     private readonly store: Store<MoveViewSkinState>,
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
+    private requestsService: RequestsService,
   ) {}
 
   ngOnInit() {
@@ -78,9 +90,31 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
       this.store.dispatch(setActiveDelay({
         delay: $event.data
       }));
-    }
-
-    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown') {
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'quality') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.requestsService.setQuality($event.data.data);
+      this.store.dispatch(setActiveQuality({
+        quality: $event.data
+      }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'resolution') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.requestsService.setResolution($event.data.data);
+      this.store.dispatch(setActiveResolution({
+        resolution: $event.data
+      }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'zoom') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.requestsService.setZoom($event.data.data);
+      this.store.dispatch(setActiveZoom({
+        zoom: $event.data
+      }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'orientation') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.requestsService.setOrientation($event.data.data);
+      this.store.dispatch(setActiveOrientation({
+        orientation: $event.data
+      }));
+    } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown') {
       this.timerId = setTimeout(() => {
         this.isLongPress = true;
         this.store.dispatch(sendDirection({

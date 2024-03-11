@@ -3,31 +3,36 @@ import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { MoveViewSkinState } from './move-view-skin.reducer';
-import {initSkin, sendDirection, setActiveDelay, setActiveStep, setDelay, setSteps} from './move-view-skin.actions';
-import { getDelay, getSteps } from './move-view-skin.selectors';
+import {
+  initSkin,
+  sendDirection,
+  setActiveDelay, setActiveOrientation,
+  setActiveQuality, setActiveResolution,
+  setActiveStep, setActiveZoom,
+  setDelay, setOrientation, setQuality, setResolution,
+  setSteps, setZoom
+} from './move-view-skin.actions';
+import {getDelay, getOrientation, getQuality, getResolution, getSteps, getZoom} from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
 
 @Injectable()
 export class SetButtonEffects {
-
 
   setActiveStepsList$ = createEffect(() =>
       this.actions$.pipe(
         ofType( setActiveStep ),
         concatLatestFrom(() => this.store.select( getSteps )),
         tap(([{steps}, stepsList]) => {
-          const newsStepsList = stepsList.map(item => ({
+          const newStepsList = stepsList.map(item => ({
             ...item,
             selected: item === steps
           }));
           this.store.dispatch(setSteps({
-            stepsList: newsStepsList
+            stepsList: newStepsList
           }));
         })
       ),
-    {
-      dispatch: false,
-    }
+    {dispatch: false}
   );
 
   setActiveDelayList$ = createEffect(() =>
@@ -35,19 +40,83 @@ export class SetButtonEffects {
         ofType( setActiveDelay ),
         concatLatestFrom(() => this.store.select( getDelay )),
         tap(([{delay}, delayList]) => {
-          let data;
-          const newsDelayList = delayList.map(item => ({
+          const newDelayList = delayList.map(item => ({
             ...item,
             selected: item === delay
           }));
           this.store.dispatch(setDelay({
-            delayList: newsDelayList
+            delayList: newDelayList
           }));
         })
-      ),
-    {
-      dispatch: false,
-    }
+      ), {dispatch: false}
+  );
+
+  setActiveQuality$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveQuality ),
+        concatLatestFrom(() => this.store.select( getQuality )),
+        tap(([{quality}, delayList]) => {
+          const newQualityList = delayList.map(item => ({
+            ...item,
+            selected: item === quality
+          }));
+
+          this.store.dispatch(setQuality({
+            qualityList: newQualityList
+          }));
+        })
+      ), {dispatch: false}
+  );
+
+  setActiveResolution$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveResolution ),
+        concatLatestFrom(() => this.store.select( getResolution )),
+        tap(([{resolution}, resolutionList]) => {
+          const newResolutionList = resolutionList.map(item => ({
+            ...item,
+            selected: item === resolution
+          }));
+
+          this.store.dispatch(setResolution({
+            resolutionList: newResolutionList
+          }));
+        })
+      ), {dispatch: false}
+  );
+
+  setActiveZoom$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveZoom ),
+        concatLatestFrom(() => this.store.select( getZoom )),
+        tap(([{zoom}, zoomList]) => {
+          const newZoomList = zoomList.map(item => ({
+            ...item,
+            selected: item === zoom
+          }));
+
+          this.store.dispatch(setZoom({
+            zoomList: newZoomList
+          }));
+        })
+      ), {dispatch: false}
+  );
+
+  setActiveOrientation$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveOrientation ),
+        concatLatestFrom(() => this.store.select( getOrientation )),
+        tap(([{orientation}, orientationList]) => {
+          const newOrientationList = orientationList.map(item => ({
+            ...item,
+            selected: item === orientation
+          }));
+
+          this.store.dispatch(setOrientation({
+            orientationList: newOrientationList
+          }));
+        })
+      ), {dispatch: false}
   );
 
   setDirection$ = createEffect(() =>
@@ -85,10 +154,7 @@ export class SetButtonEffects {
               },
             }));
         })
-      ),
-    {
-      dispatch: false,
-    }
+      ), {dispatch: false}
   );
 
   initSkin$ = createEffect(() =>
@@ -105,10 +171,7 @@ export class SetButtonEffects {
             },
           }));
         })
-      ),
-    {
-      dispatch: false,
-    }
+      ), {dispatch: false}
   );
 
 

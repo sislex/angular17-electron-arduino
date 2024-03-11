@@ -14,7 +14,7 @@ export const getDelay = createSelector(
 );
 
 export const getDelayModify = createSelector(
-    selectFeature, 
+    selectFeature,
     (state: MoveViewSkinState) => {
         let result = state.delay;
         if (state.isShift) {
@@ -34,4 +34,34 @@ export const getDelayModify = createSelector(
         }
         return result;
     }
+);
+
+export const getVideoUrlHost = createSelector(
+  selectFeature,
+  (state: MoveViewSkinState) => state.videoUrlHost
+);
+
+export const getVideoUrl = createSelector(
+  selectFeature,
+  (state: MoveViewSkinState) => state.videoUrlHost + '/video'
+);
+
+export const getQuality = createSelector(
+  selectFeature,
+  (state: MoveViewSkinState) => state.quality
+);
+
+export const getResolution = createSelector(
+  selectFeature,
+  (state: MoveViewSkinState) => state.resolution
+);
+
+export const getZoom = createSelector(
+  selectFeature,
+  (state: MoveViewSkinState) => state.zoom
+);
+
+export const getOrientation = createSelector(
+  selectFeature,
+  (state: MoveViewSkinState) => state.orientation
 );
