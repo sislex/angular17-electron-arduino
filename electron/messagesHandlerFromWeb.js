@@ -38,7 +38,7 @@ async  function messagesHandlerFromWeb(json, note) {
           .replace(/\r/g, '')
           .replace(/\x03/g, '');
         messageBuffers[data.deviceName] += messageStr;
-        
+
         if (message.toString().endsWith('\r\n')) {
           sendMessage(note.win, note.channelName, JSON.stringify({
             event: 'FROM_USB_DEVICE',

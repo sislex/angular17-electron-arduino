@@ -1,12 +1,12 @@
 #include <ArduinoJson.h>
+#include <AccelStepper.h>
+#include <MultiStepper.h>
 
-#define M1_ENABLE_PIN 2
-#define M1_STEP_PIN 3
-#define M1_DIR_PIN 4
-
-#define M2_ENABLE_PIN 5
-#define M2_STEP_PIN 6
-#define M2_DIR_PIN 7
+// Определите номера шага и направления для двух моторов
+#define motor1Step 2
+#define motor1Dir 5
+#define motor2Step 3
+#define motor2Dir 6
 
 class Info {
   private:
@@ -33,7 +33,7 @@ class Info {
         StaticJsonDocument<1024> doc;
         doc["type"] = type;
         doc["s1"] = s1;
-        doc["s2"] = s2;
+//         doc["s2"] = s2;
         doc["d"] = d;
 
         String output;
@@ -58,18 +58,15 @@ class Info {
 
 Info info("tripod", 0, 0, 1);
 
+AccelStepper stepper1(AccelStepper::DRIVER, motor1Step, motor1Dir);
+AccelStepper stepper2(AccelStepper::DRIVER, motor2Step, motor2Dir);
+
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
 unsigned long previousMillis = 0;
 
 void setup() {
-  pinMode(M1_STEP_PIN, OUTPUT);
-  pinMode(M1_DIR_PIN, OUTPUT);
-  pinMode(M1_ENABLE_PIN, OUTPUT);
 
-  pinMode(M2_STEP_PIN, OUTPUT);
-  pinMode(M2_DIR_PIN, OUTPUT);
-  pinMode(M2_ENABLE_PIN, OUTPUT);
 
   Serial.begin(9600);
   inputString.reserve(200);      // резервируем место для входной строки
@@ -128,28 +125,23 @@ void sendDeviceInfo(const String& timestamp) {
   Serial.println(json);
 }
 
-void moveEngineToOneStep(int stepPin, int dirPin, int dir) {
-  digitalWrite(dirPin, dir);
-  digitalWrite(stepPin, HIGH);
-  digitalWrite(stepPin, LOW);
-}
-
-int getStepsAndMoveEngine(const int currentSteps, const int mode, const int stepPin, const int dirPin) {
+int getStepsAndMoveEngine(const int currentSteps, const int mode, const AccelStepper stepper) {
   int steps = currentSteps;
   if (currentSteps != 0) {
-   int dir = HIGH;
+   int dir = 1;
     if (currentSteps > 0) {
        if (mode == 1) {
          steps--;
        }
      } else if (currentSteps < 0)  {
-       dir = LOW;
+       dir = -1;
        if (mode == 1) {
          steps++;
        }
      }
 
-     moveEngineToOneStep(stepPin, dirPin, dir);
+     stepper.moveTo(dir);
+     stepper.runToPosition();
   }
 
   return steps;
@@ -162,8 +154,8 @@ void move() {
     if (currentMillis - previousMillis >= info.d) {
       previousMillis = currentMillis;
 
-      info.s1 = getStepsAndMoveEngine(info.s1, info.m, M1_STEP_PIN, M1_DIR_PIN);
-      info.s2 = getStepsAndMoveEngine(info.s2, info.m, M2_STEP_PIN, M2_DIR_PIN);
+      info.s1 = getStepsAndMoveEngine(info.s1, info.m, stepper1);
+      info.s2 = getStepsAndMoveEngine(info.s2, info.m, stepper2);
     }
   }
 }
