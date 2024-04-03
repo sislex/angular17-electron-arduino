@@ -1,1 +1,1 @@
-<img class="video-image" alt="video" [src]="src">
+<img #content crossOrigin="anonymous"  class="video-image" alt="video" [src]="src" (load)="contentReady()">

@@ -9,7 +9,7 @@
     (keyup)="handleKeyboardEvent($event, 'up')">
     <div class="video">
       <div class="video-wrapper">
-        <video-component [src]="(getVideoUrl$ | async)!"></video-component>
+        <app-video-container></app-video-container>
       </div>
     </div>
     <div class="controls">

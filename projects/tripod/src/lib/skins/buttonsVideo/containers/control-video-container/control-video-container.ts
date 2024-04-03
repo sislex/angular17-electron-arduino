@@ -21,8 +21,8 @@ import {
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import {NavPanelContainer} from '../nav-panel-container/nav-panel-container';
-import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/video.component';
 import {RequestsService} from '../../services/requests.service';
+import {VideoContainerComponent} from '../video-conteiner/video-container.component';
 
 @Component({
   selector: 'control-video-container',
@@ -34,7 +34,7 @@ import {RequestsService} from '../../services/requests.service';
     RouterOutlet,
     AsyncPipe,
     StepsButtonComponent,
-    VideoComponent,
+    VideoContainerComponent,
   ],
   templateUrl: './control-video-container.html',
   styleUrl: './control-video-container.scss',
@@ -44,7 +44,6 @@ import {RequestsService} from '../../services/requests.service';
 export class ControlVideoContainer implements OnInit, AfterViewInit  {
   steps$ = this.store.select(getSteps);
   delayModify$ = this.store.select(getDelayModify);
-  getVideoUrl$ = this.store.select(getVideoUrl);
   getQuality$ = this.store.select(getQuality);
   getResolution$ = this.store.select(getResolution);
   getZoom$ = this.store.select(getZoom);

@@ -19,6 +19,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {provideHttpClient, withFetch} from '@angular/common/http';
+import {TARGETS_FEATURE_KEY, targetsReducer} from '../../../tripod/src/lib/+state/targets/targets.reducer';
+import {TargetsEffects} from '../../../tripod/src/lib/+state/targets/targets.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,11 +37,13 @@ export const appConfig: ApplicationConfig = {
     provideState(COMMANDS_LIST_FEATURE_KEY, commandsReducer),
     provideState(USB_FEATURE_KEY, usbReducer),
     provideState(ABOUT_FEATURE_KEY, aboutReducer),
+    provideState(TARGETS_FEATURE_KEY, targetsReducer),
     provideEffects([
         ConfigEffects,
         AccountEffects,
         MessagesEffects,
         UsbEffects,
+        TargetsEffects,
     ]),
     provideAnimations(),
     provideAnimations()
