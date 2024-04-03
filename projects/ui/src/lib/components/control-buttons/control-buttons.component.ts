@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ControlButtonsComponent {
   @Input() message: string = '';
+  
   @Output() emitter = new EventEmitter()
 
   buttonHold(data: string, note: any) {
