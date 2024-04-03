@@ -66,7 +66,8 @@ AccelStepper stepper2(AccelStepper::DRIVER, motor2Step, motor2Dir);
 
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
-unsigned long previousMillis = 0;
+unsigned long previousMillis1 = 0;
+unsigned long previousMillis2 = 0;
 
 void setup() {
 
@@ -153,8 +154,8 @@ int getStepsAndMoveEngine(const int currentSteps, const int mode, const AccelSte
 void move() {
   if (info.s1 != 0) {
     unsigned long currentMillis1 = millis();
-    if (currentMillis1 - previousMillis >= info.d1) {
-      previousMillis = currentMillis1;
+    if (currentMillis1 - previousMillis1 >= info.d1) {
+      previousMillis1 = currentMillis1;
 
       info.s1 = getStepsAndMoveEngine(info.s1, info.m, stepper1);
     }
@@ -162,8 +163,8 @@ void move() {
   
   if (info.s2 != 0) {
     unsigned long currentMillis2 = millis();
-    if (currentMillis2 - previousMillis >= info.d2) {
-      previousMillis = currentMillis2;
+    if (currentMillis2 - previousMillis2 >= info.d2) {
+      previousMillis2 = currentMillis2;
 
       info.s2 = getStepsAndMoveEngine(info.s2, info.m, stepper2);
     }

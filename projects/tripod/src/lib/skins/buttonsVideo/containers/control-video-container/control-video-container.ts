@@ -25,7 +25,7 @@ import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/v
 import {RequestsService} from '../../services/requests.service';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
+// import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
 
 @Component({
   selector: 'control-video-container',
@@ -57,7 +57,7 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   getOrientation$ = this.store.select(getOrientation);
   targets$ = this.store.select(getTargets);
   displayTargets$ = this.store.select(getDisplayTargets);
-  targetsList$ = this.store.select(getTargetsList);
+  // targetsList$ = this.store.select(getTargetsList);
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
