@@ -1,0 +1,7 @@
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style" vertical>
+    @for (target of targets; track target) {
+        <mat-button-toggle (click)="buttonClick(target.posData)">
+            {{target.targetName}}
+        </mat-button-toggle>
+    }
+</mat-button-toggle-group>

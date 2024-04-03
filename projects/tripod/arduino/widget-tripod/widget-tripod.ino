@@ -14,16 +14,18 @@ class Info {
   public:
     int s1; // steps for engine 1
     int s2; // steps for engine 2
-    int d; // delay
+    int d1; // delay for engine 1
+    int d2; // delay for engine 2
     int m; // mode (mode = 1 - by 1 steps, mode = 2 by specified quantity)
 
     Info(
       const String& t = "tripod",
       int s1 = 0,
       int s2 = 0,
-      int d = 1,
+      int d1 = 1,
+      int d2 = 1,
       int m = 2
-      ) : type(t), s1(s1), s2(s2), d(d), m(m) {}
+      ) : type(t), s1(s1), s2(s2), d1(d1), d2(d2), m(m) {}
 
     String getType() const {
         return type;
@@ -34,7 +36,8 @@ class Info {
         doc["type"] = type;
         doc["s1"] = s1;
 //         doc["s2"] = s2;
-        doc["d"] = d;
+        // doc["d1"] = d1;
+        // doc["d2"] = d2;
 
         String output;
         serializeJson(doc, output);
@@ -56,14 +59,15 @@ class Info {
     }
 };
 
-Info info("tripod", 0, 0, 1);
+Info info("tripod", 0, 0, 1, 1);
 
 AccelStepper stepper1(AccelStepper::DRIVER, motor1Step, motor1Dir);
 AccelStepper stepper2(AccelStepper::DRIVER, motor2Step, motor2Dir);
 
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
-unsigned long previousMillis = 0;
+unsigned long previousMillis1 = 0;
+unsigned long previousMillis2 = 0;
 
 void setup() {
 
@@ -148,17 +152,25 @@ int getStepsAndMoveEngine(const int currentSteps, const int mode, const AccelSte
 }
 
 void move() {
-  const bool isMoveNeeded = info.s1 != 0 || info.s2 != 0;
-  if (isMoveNeeded) {
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= info.d) {
-      previousMillis = currentMillis;
+  if (info.s1 != 0) {
+    unsigned long currentMillis1 = millis();
+    if (currentMillis1 - previousMillis1 >= info.d1) {
+      previousMillis1 = currentMillis1;
 
       info.s1 = getStepsAndMoveEngine(info.s1, info.m, stepper1);
+    }
+  }
+  
+  if (info.s2 != 0) {
+    unsigned long currentMillis2 = millis();
+    if (currentMillis2 - previousMillis2 >= info.d2) {
+      previousMillis2 = currentMillis2;
+
       info.s2 = getStepsAndMoveEngine(info.s2, info.m, stepper2);
     }
   }
 }
+
 
 void events(const String message) {
   StaticJsonDocument<200> doc;
@@ -171,15 +183,20 @@ void events(const String message) {
     if (strcmp(event, "SET") == 0) {
       const int s1 = doc["data"]["s1"];
       const int s2 = doc["data"]["s2"];
-      const int d = doc["data"]["d"];
+      const int d1 = doc["data"]["d1"];
+      const int d2 = doc["data"]["d2"];
       const int m = doc["data"]["m"];
 
       if (m != 0) {
         info.m = m;
       }
 
-       if (d != 0) {
-        info.d = d;
+       if (d1 != 0) {
+        info.d1 = d1;
+      }
+
+      if (d2 != 0) {
+        info.d2 = d2;
       }
 
       info.s1 = getSteps(info.s1, s1, info.m);

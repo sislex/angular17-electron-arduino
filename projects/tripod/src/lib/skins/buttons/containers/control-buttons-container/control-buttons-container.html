@@ -8,7 +8,8 @@
     (keydown)="handleKeyboardEvent($event, 'down')"
     (keyup)="handleKeyboardEvent($event, 'up')">
     <steps-button [buttons]="(steps$|async)!" [message]="'Steps'" (emitter)="events($event, 'steps')"></steps-button>
-    <steps-button [buttons]="(delayModify$|async)!" [message]="'Delay'" (emitter)="events($event, 'delay')"></steps-button>
+    <steps-button [buttons]="(delayModify1$|async)!" [message]="'Delay horizontal'" (emitter)="events($event, 'delay1')"></steps-button>
+    <steps-button [buttons]="(delayModify2$|async)!" [message]="'Delay vertical'" (emitter)="events($event, 'delay2')"></steps-button>
     <control-buttons (emitter)="events($event)"></control-buttons>
   </div>
 </page-layout>

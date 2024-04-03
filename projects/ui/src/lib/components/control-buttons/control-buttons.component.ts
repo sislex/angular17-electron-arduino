@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy, HostListener, Input} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlButtonsComponent {
+  @Input() message: string = '';
+  
   @Output() emitter = new EventEmitter()
 
   buttonHold(data: string, note: any) {
