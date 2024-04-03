@@ -6,18 +6,18 @@ import { AsyncPipe } from '@angular/common';
 import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
 import {
-  getDelayModify1, getDelayModify2, getOrientation,
+  getDelayModify1, getDelayModify2, getDisplayTargets, getOrientation,
   getQuality,
   getResolution,
-  getSteps, getVideoUrl, getZoom
+  getSteps, getTargets, getVideoUrl, getZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {MoveViewSkinState} from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
 import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardEvents.service';
 import {
   initSkin,
   sendDirection,
-  setActiveDelay1, setActiveOrientation, setActiveQuality, setActiveResolution,
-  setActiveStep, setActiveZoom
+  setActiveDelay1, setActiveDisplayTargets, setActiveOrientation, setActiveQuality, setActiveResolution,
+  setActiveStep, setActiveTargets, setActiveZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import {NavPanelContainer} from '../nav-panel-container/nav-panel-container';
@@ -25,6 +25,9 @@ import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/v
 import {RequestsService} from '../../services/requests.service';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { TargetsListComponent } from '../../../../../../../ui/src/lib/components/targets-list/targets-list.component';
+import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
+import { IDataTarget } from '../../../../+state/skins/move-skin/targets/targets.reducer';
 
 @Component({
   selector: 'control-video-container',
@@ -54,12 +57,15 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   getResolution$ = this.store.select(getResolution);
   getZoom$ = this.store.select(getZoom);
   getOrientation$ = this.store.select(getOrientation);
-  displayTargets$ = this.store.select(getOrientation);
+  targets$ = this.store.select(getTargets);
+  displayTargets$ = this.store.select(getDisplayTargets);
+  targetsList$ = this.store.select(getTargetsList);
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
   private timerId: any;
   private isLongPress: boolean = false;
+  eventTargetsTrue: boolean = false;
 
   constructor(
     private readonly store: Store<MoveViewSkinState>,
@@ -85,6 +91,24 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
       this.store.dispatch(setActiveStep({
         steps: $event.data
       }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'targets') {
+      if ($event.data.data == true ) {
+        this.eventTargetsTrue = true;
+      } else {
+        this.eventTargetsTrue = false;
+      };
+      this.keyboardEventsArea.nativeElement.focus();
+      this.store.dispatch(setActiveTargets({
+        targets: $event.data
+      }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'displayTargets') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.store.dispatch(setActiveDisplayTargets({
+        displayTargets: $event.data
+      }));
+    // } else if ($event.event === 'LightTarget:BUTTON_CLICKED' && note === 'targetsList') {
+    //   this.getOverlayStyles($event.data)
+    //   console.log()
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(sendMessageToDevice({
@@ -156,5 +180,3 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
     }
   }
 }
-
-

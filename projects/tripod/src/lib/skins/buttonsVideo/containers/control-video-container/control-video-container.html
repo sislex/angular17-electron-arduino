@@ -87,7 +87,7 @@
           <video-component [src]="(getVideoUrl$ | async)!"></video-component>
           @if (eventTargetsTrue  == true) { 
             <div class="overlay-text">Скорость распознавания кадра</div> 
-            <targets-list [targets]="(targetsList$ | async)" (emitter)="events($event, 'targetsList')"></targets-list>
+            <!-- <targets-list [targets]="(targetsList$ | async)" (emitter)="events($event, 'targetsList')"></targets-list> -->
             <div class="overlay2"></div>
             <div class="overlay1"></div>
           }
