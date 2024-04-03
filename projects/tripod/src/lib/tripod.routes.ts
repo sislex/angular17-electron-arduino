@@ -13,7 +13,7 @@ import { MessagesEffects } from './+state/messages/messages.effects';
 import { ConfigEffects } from './+state/config/config.effects';
 import { TRIPOD_CONFIG_FEATURE_KEY, ConfigReducer } from './+state/config/config.reducer';
 import { MoveViewSkinReducer, TRIPOD_VIEW_SKIN_FEATURE_KEY } from './+state/skins/move-skin/view/move-view-skin.reducer';
-import { SetButtonEffects } from './+state/skins/move-skin/view/messages.effects';
+import { SetButtonEffects } from './+state/skins/move-skin/view/move-view-skin.effects';
 
   export const tripodRoutes: Routes = [
     {

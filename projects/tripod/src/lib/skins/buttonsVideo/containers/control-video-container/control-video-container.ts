@@ -6,7 +6,7 @@ import { AsyncPipe } from '@angular/common';
 import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
 import {
-  getDelayModify, getOrientation,
+  getDelayModify1, getDelayModify2, getOrientation,
   getQuality,
   getResolution,
   getSteps, getVideoUrl, getZoom
@@ -16,7 +16,7 @@ import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardE
 import {
   initSkin,
   sendDirection,
-  setActiveDelay, setActiveOrientation, setActiveQuality, setActiveResolution,
+  setActiveDelay1, setActiveOrientation, setActiveQuality, setActiveResolution,
   setActiveStep, setActiveZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
@@ -43,7 +43,8 @@ import {RequestsService} from '../../services/requests.service';
 })
 export class ControlVideoContainer implements OnInit, AfterViewInit  {
   steps$ = this.store.select(getSteps);
-  delayModify$ = this.store.select(getDelayModify);
+  delayModify1$ = this.store.select(getDelayModify1);
+  delayModify2$ = this.store.select(getDelayModify2);
   getVideoUrl$ = this.store.select(getVideoUrl);
   getQuality$ = this.store.select(getQuality);
   getResolution$ = this.store.select(getResolution);
@@ -79,16 +80,27 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
       this.store.dispatch(setActiveStep({
         steps: $event.data
       }));
-    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay') {
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(sendMessageToDevice({
         message: {
           event: 'SET',
-          data: {d: $event.data.data}
+          data: {d1: $event.data.data}
         },
       }));
-      this.store.dispatch(setActiveDelay({
-        delay: $event.data
+      this.store.dispatch(setActiveDelay1({
+        delay1: $event.data
+      }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay2') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.store.dispatch(sendMessageToDevice({
+        message: {
+          event: 'SET',
+          data: {d2: $event.data.data}
+        },
+      }));
+      this.store.dispatch(setActiveDelay1({
+        delay1: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'quality') {
       this.keyboardEventsArea.nativeElement.focus();

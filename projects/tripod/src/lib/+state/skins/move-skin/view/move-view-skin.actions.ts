@@ -13,9 +13,14 @@ export const setActiveStep = createAction(
   props<{ steps: IMoveSkin }>()
 );
 
-export const setDelay = createAction(
-  '[Skin] setDelay',
-  props<{ delayList: IMoveSkin[] }>()
+export const setDelay1 = createAction(
+  '[Skin] setDelay1',
+  props<{ delayList1: IMoveSkin[] }>()
+);
+
+export const setDelay2 = createAction(
+  '[Skin] setDelay2',
+  props<{ delayList2: IMoveSkin[] }>()
 );
 
 export const setQuality = createAction(
@@ -38,9 +43,14 @@ export const setOrientation = createAction(
   props<{ orientationList: IMoveSkin[] }>()
 );
 
-export const setActiveDelay = createAction(
+export const setActiveDelay1 = createAction(
   '[Skin] setActiveDelay',
-  props<{ delay: IMoveSkin }>()
+  props<{ delay1: IMoveSkin }>()
+);
+
+export const setActiveDelay2 = createAction(
+  '[Skin] setActiveDelay',
+  props<{ delay2: IMoveSkin }>()
 );
 
 export const setActiveQuality = createAction(

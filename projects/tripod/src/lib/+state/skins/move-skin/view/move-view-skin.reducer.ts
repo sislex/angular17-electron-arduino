@@ -10,7 +10,8 @@ export interface IMoveSkin {
 }
 
 export interface MoveViewSkinState {
-  delay: IMoveSkin[];
+  delay1: IMoveSkin[];
+  delay2: IMoveSkin[];
   steps: IMoveSkin[];
   videoUrlHost: string;
   quality: IMoveSkin[];
@@ -26,7 +27,14 @@ export interface AboutPartialState {
 }
 
 export const initialState: MoveViewSkinState = {
-  delay: [
+  delay1: [
+    {text: '1', data:  1, selected: false},
+    {text: '3', data:  3, selected: false},
+    {text: '5', data:  5, selected: true},
+    {text: '10', data:  10, selected: false},
+    {text: '20', data:  20, selected: false},
+  ],
+  delay2: [
     {text: '1', data:  1, selected: false},
     {text: '3', data:  3, selected: false},
     {text: '5', data:  5, selected: true},
@@ -76,7 +84,8 @@ export const initialState: MoveViewSkinState = {
 export const MoveViewSkinReducer = createReducer(
     initialState,
     on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
-    on(ViewSkinActions.setDelay, (state, {delayList}) => ({ ...state, delay: delayList })),
+    on(ViewSkinActions.setDelay1, (state, {delayList1}) => ({ ...state, delay1: delayList1 })),
+    on(ViewSkinActions.setDelay2, (state, {delayList2}) => ({ ...state, delay2: delayList2 })),
     on(ViewSkinActions.setQuality, (state, {qualityList}) => ({ ...state, quality: qualityList })),
     on(ViewSkinActions.setResolution, (state, {resolutionList}) => ({ ...state, resolution: resolutionList })),
     on(ViewSkinActions.setOrientation, (state, {orientationList}) => ({ ...state, orientation: orientationList })),

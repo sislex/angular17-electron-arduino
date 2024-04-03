@@ -6,13 +6,13 @@ import { MoveViewSkinState } from './move-view-skin.reducer';
 import {
   initSkin,
   sendDirection,
-  setActiveDelay, setActiveOrientation,
+  setActiveDelay2, setActiveDelay1, setActiveOrientation,
   setActiveQuality, setActiveResolution,
   setActiveStep, setActiveZoom,
-  setDelay, setOrientation, setQuality, setResolution,
+  setDelay1, setDelay2, setOrientation, setQuality, setResolution,
   setSteps, setZoom
 } from './move-view-skin.actions';
-import {getDelay, getOrientation, getQuality, getResolution, getSteps, getZoom} from './move-view-skin.selectors';
+import {getDelay1, getDelay2, getOrientation, getQuality, getResolution, getSteps, getZoom} from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
 
 @Injectable()
@@ -35,17 +35,33 @@ export class SetButtonEffects {
     {dispatch: false}
   );
 
-  setActiveDelayList$ = createEffect(() =>
+  setActiveDelayList2$ = createEffect(() =>
       this.actions$.pipe(
-        ofType( setActiveDelay ),
-        concatLatestFrom(() => this.store.select( getDelay )),
-        tap(([{delay}, delayList]) => {
-          const newDelayList = delayList.map(item => ({
+        ofType( setActiveDelay2 ),
+        concatLatestFrom(() => this.store.select( getDelay2 )),
+        tap(([{delay2}, delayList]) => {
+          const newDelayList2 = delayList.map(item => ({
             ...item,
-            selected: item === delay
+            selected: item === delay2
           }));
-          this.store.dispatch(setDelay({
-            delayList: newDelayList
+          this.store.dispatch(setDelay2({
+            delayList2: newDelayList2
+          }));
+        })
+      ), {dispatch: false}
+  );
+
+  setActiveDelayList1$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveDelay1 ),
+        concatLatestFrom(() => this.store.select( getDelay1 )),
+        tap(([{delay1}, delayList]) => {
+          const newDelayList1 = delayList.map(item => ({
+            ...item,
+            selected: item === delay1
+          }));
+          this.store.dispatch(setDelay1({
+            delayList1: newDelayList1
           }));
         })
       ), {dispatch: false}
@@ -157,17 +173,33 @@ export class SetButtonEffects {
       ), {dispatch: false}
   );
 
-  initSkin$ = createEffect(() =>
+  initSkin1$ = createEffect(() =>
       this.actions$.pipe(
         ofType( initSkin ),
-        concatLatestFrom(() => this.store.select( getDelay )),
+        concatLatestFrom(() => this.store.select( getDelay1 )),
         tap(([, delayList]) => {
-          const d = delayList.find(item => item.selected)?.data;
+          const d1 = delayList.find(item => item.selected)?.data;
 
           this.store.dispatch(sendMessageToDevice({
             message: {
               event: 'SET',
-              data: {d}
+              data: {d1}
+            },
+          }));
+        })
+      ), {dispatch: false}
+  );
+  initSkin2$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( initSkin ),
+        concatLatestFrom(() => this.store.select( getDelay2 )),
+        tap(([, delayList]) => {
+          const d2 = delayList.find(item => item.selected)?.data;
+
+          this.store.dispatch(sendMessageToDevice({
+            message: {
+              event: 'SET',
+              data: {d2}
             },
           }));
         })

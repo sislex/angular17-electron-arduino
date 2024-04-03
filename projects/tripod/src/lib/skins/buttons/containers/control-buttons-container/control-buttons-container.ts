@@ -8,11 +8,12 @@ import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/compone
 import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
 import { StepsButtonComponent } from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import { MoveViewSkinState } from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
-import { getDelayModify, getSteps } from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
+import { getDelayModify1, getDelayModify2, getSteps } from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {
   initSkin,
   sendDirection,
-  setActiveDelay,
+  setActiveDelay1,
+  setActiveDelay2,
   setActiveStep
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {SkinMoveKeyboardEventsService} from '../../services/keyboardEvents.service';
@@ -36,7 +37,8 @@ import {SkinMoveKeyboardEventsService} from '../../services/keyboardEvents.servi
 })
 export class ControlButtonsContainer implements OnInit, AfterViewInit {
   steps$ = this.store.select(getSteps);
-  delayModify$ = this.store.select(getDelayModify);
+  delayModify1$ = this.store.select(getDelayModify1);
+  delayModify2$ = this.store.select(getDelayModify2);
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
@@ -66,16 +68,27 @@ export class ControlButtonsContainer implements OnInit, AfterViewInit {
       this.store.dispatch(setActiveStep({
         steps: $event.data
       }));
-    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay') {
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(sendMessageToDevice({
         message: {
           event: 'SET',
-          data: {d: $event.data.data}
+          data: {d1: $event.data.data}
         },
       }));
-      this.store.dispatch(setActiveDelay({
-        delay: $event.data
+      this.store.dispatch(setActiveDelay1({
+        delay1: $event.data
+      }));
+    } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay2') {
+      this.keyboardEventsArea.nativeElement.focus();
+      this.store.dispatch(sendMessageToDevice({
+        message: {
+          event: 'SET',
+          data: {d2: $event.data.data}
+        },
+      }));
+      this.store.dispatch(setActiveDelay2({
+        delay2: $event.data
       }));
     }
 
