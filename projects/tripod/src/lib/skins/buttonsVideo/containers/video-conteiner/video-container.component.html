@@ -1,0 +1,11 @@
+<video-component [src]="(getVideoUrl$ | async)!"  (emitter)="events($event)"></video-component>
+@if (isContentReady && !!(getCoordinatesStyles$ | async) && (getCoordinatesStyles$ | async)!.length > 0) {
+  @for (coordinate of (getCoordinatesStyles$ | async); track coordinate) {
+    <rectangle [style]="coordinate"></rectangle>
+  }
+}
+
+<div class="info">
+  <p class="sr-only">OverageRecognitionTime: {{getOverageRecognitionTime$ | async}}</p>
+  <p class="sr-only">Distance to center: {{(getTheDistanceToTheCenterOfTheNearestTarget$ | async) | json}}</p>
+</div>
