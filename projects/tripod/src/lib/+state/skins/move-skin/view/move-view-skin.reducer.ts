@@ -18,6 +18,8 @@ export interface MoveViewSkinState {
   resolution: IMoveSkin[];
   zoom: IMoveSkin[];
   orientation: IMoveSkin[];
+  targets: IMoveSkin[];
+  displayTargets: IMoveSkin[];
   isShift: boolean;
   isCtrl: boolean;
 }
@@ -77,6 +79,14 @@ export const initialState: MoveViewSkinState = {
     {text: '180', data:  'upsidedown', selected: false},
     {text: '270', data:  'upsidedown_portrait', selected: false},
   ],
+  targets: [
+    {text: 'ON', data:  true, selected: false},
+    {text: 'OFF', data:  false, selected: true},
+  ],
+  displayTargets: [
+    {text: 'Display ON', data:  'displayOn', selected: true},
+    {text: 'Display OFF', data:  'displayOff', selected: false},
+  ],
   isShift: false,
   isCtrl: false,
 };
@@ -84,6 +94,8 @@ export const initialState: MoveViewSkinState = {
 export const MoveViewSkinReducer = createReducer(
     initialState,
     on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
+    on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, targets: targetsList })),
+    on(ViewSkinActions.setDisplayTargets, (state, {displayTargetsList}) => ({ ...state, displayTargets: displayTargetsList })),
     on(ViewSkinActions.setDelay1, (state, {delayList1}) => ({ ...state, delay1: delayList1 })),
     on(ViewSkinActions.setDelay2, (state, {delayList2}) => ({ ...state, delay2: delayList2 })),
     on(ViewSkinActions.setQuality, (state, {qualityList}) => ({ ...state, quality: qualityList })),
