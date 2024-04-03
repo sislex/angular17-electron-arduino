@@ -10,9 +10,9 @@ import {
   setActiveQuality, setActiveResolution,
   setActiveStep, setActiveZoom,
   setDelay1, setDelay2, setOrientation, setQuality, setResolution,
-  setSteps, setZoom
+  setSteps, setZoom, setActiveDisplayTargets, setActiveTargets, setTargets, setDisplayTargets
 } from './move-view-skin.actions';
-import {getDelay1, getDelay2, getOrientation, getQuality, getResolution, getSteps, getZoom} from './move-view-skin.selectors';
+import {getDelay1, getDelay2, getDisplayTargets, getOrientation, getQuality, getResolution, getSteps, getTargets, getZoom} from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
 
 @Injectable()
@@ -65,6 +65,40 @@ export class SetButtonEffects {
           }));
         })
       ), {dispatch: false}
+  );
+
+  setActiveTargetsList$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveTargets ),
+        concatLatestFrom(() => this.store.select( getTargets )),
+        tap(([{targets}, targetsList]) => {
+          const newTargetsList = targetsList.map(item => ({
+            ...item,
+            selected: item === targets
+          }));
+          this.store.dispatch(setTargets({
+            targetsList: newTargetsList
+          }));
+        })
+      ),
+    {dispatch: false}
+  );
+
+  setActiveDisplayargetsList$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType( setActiveDisplayTargets ),
+        concatLatestFrom(() => this.store.select( getDisplayTargets )),
+        tap(([{displayTargets}, displayTargetsList]) => {
+          const newDisplayTargetsList = displayTargetsList.map(item => ({
+            ...item,
+            selected: item === displayTargets
+          }));
+          this.store.dispatch(setDisplayTargets({
+            displayTargetsList: newDisplayTargetsList
+          }));
+        })
+      ),
+    {dispatch: false}
   );
 
   setActiveQuality$ = createEffect(() =>
