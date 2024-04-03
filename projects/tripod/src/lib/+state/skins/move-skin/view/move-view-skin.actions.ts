@@ -44,12 +44,12 @@ export const setOrientation = createAction(
 );
 
 export const setActiveDelay1 = createAction(
-  '[Skin] setActiveDelay',
+  '[Skin] setActiveDelay1',
   props<{ delay1: IMoveSkin }>()
 );
 
 export const setActiveDelay2 = createAction(
-  '[Skin] setActiveDelay',
+  '[Skin] setActiveDelay2',
   props<{ delay2: IMoveSkin }>()
 );
 

@@ -16,7 +16,7 @@ import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardE
 import {
   initSkin,
   sendDirection,
-  setActiveDelay1, setActiveDisplayTargets, setActiveOrientation, setActiveQuality, setActiveResolution,
+  setActiveDelay1, setActiveDelay2, setActiveDisplayTargets, setActiveOrientation, setActiveQuality, setActiveResolution,
   setActiveStep, setActiveTargets, setActiveZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
@@ -25,9 +25,7 @@ import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/v
 import {RequestsService} from '../../services/requests.service';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { TargetsListComponent } from '../../../../../../../ui/src/lib/components/targets-list/targets-list.component';
 import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
-import { IDataTarget } from '../../../../+state/skins/move-skin/targets/targets.reducer';
 
 @Component({
   selector: 'control-video-container',
@@ -106,9 +104,6 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
       this.store.dispatch(setActiveDisplayTargets({
         displayTargets: $event.data
       }));
-    // } else if ($event.event === 'LightTarget:BUTTON_CLICKED' && note === 'targetsList') {
-    //   this.getOverlayStyles($event.data)
-    //   console.log()
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(sendMessageToDevice({
@@ -128,8 +123,8 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
           data: {d2: $event.data.data}
         },
       }));
-      this.store.dispatch(setActiveDelay1({
-        delay1: $event.data
+      this.store.dispatch(setActiveDelay2({
+        delay2: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'quality') {
       this.keyboardEventsArea.nativeElement.focus();
