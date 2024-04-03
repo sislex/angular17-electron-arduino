@@ -93,3 +93,25 @@ export const getOrientation = createSelector(
   selectFeature,
   (state: MoveViewSkinState) => state.orientation
 );
+
+export const getTargets = createSelector(
+    selectFeature,
+    (state: MoveViewSkinState) => state.targets
+  );
+  
+  export const getDisplayTargets = createSelector(
+    selectFeature,
+    (state: MoveViewSkinState) => {
+      let result = state.displayTargets;
+      const isOn = state.targets.find(item => item.selected)?.data === true;
+      if (!isOn) {
+        result = state.displayTargets.map(item => ({
+          ...item,
+          selected: true,
+        }));
+      }
+  
+      return result;
+    }
+  );
+  

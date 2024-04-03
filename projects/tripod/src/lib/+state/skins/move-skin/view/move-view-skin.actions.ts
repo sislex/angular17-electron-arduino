@@ -88,3 +88,33 @@ export const setCtrl = createAction(
   props<{ isCtrl: boolean}>()
 );
 
+export const setTargets = createAction(
+  '[Skin] setTargets',
+  props<{ targetsList: IMoveSkin[] }>()
+);
+
+export const setActiveTargets = createAction(
+  '[Skin] setActiveTargets',
+  props<{ targets: IMoveSkin }>()
+);
+
+export const offDisplayTargets = createAction(
+  '[Skin] offDisplayTargets',
+  props<{ displayTargets: IMoveSkin[] }>()
+);
+
+export const onDisplayTargets = createAction(
+  '[Skin] onDisplayTargets',
+  props<{ displayTargets: IMoveSkin }>()
+);
+
+export const setDisplayTargets = createAction(
+  '[Skin] setDisplayTargets',
+  props<{ displayTargetsList: IMoveSkin[] }>()
+);
+
+export const setActiveDisplayTargets = createAction(
+  '[Skin] setActiveDisplayTargets',
+  props<{ displayTargets: IMoveSkin }>()
+);
+
