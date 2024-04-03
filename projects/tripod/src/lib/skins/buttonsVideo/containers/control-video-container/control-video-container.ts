@@ -23,6 +23,8 @@ import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/s
 import {NavPanelContainer} from '../nav-panel-container/nav-panel-container';
 import {VideoComponent} from '../../../../../../../ui/src/lib/components/video/video.component';
 import {RequestsService} from '../../services/requests.service';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @Component({
   selector: 'control-video-container',
@@ -35,6 +37,8 @@ import {RequestsService} from '../../services/requests.service';
     AsyncPipe,
     StepsButtonComponent,
     VideoComponent,
+    MatExpansionModule,
+    MatSidenavModule,
   ],
   templateUrl: './control-video-container.html',
   styleUrl: './control-video-container.scss',
@@ -50,6 +54,7 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   getResolution$ = this.store.select(getResolution);
   getZoom$ = this.store.select(getZoom);
   getOrientation$ = this.store.select(getOrientation);
+  displayTargets$ = this.store.select(getOrientation);
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
