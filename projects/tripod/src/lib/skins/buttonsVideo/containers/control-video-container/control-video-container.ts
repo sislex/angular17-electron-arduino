@@ -25,6 +25,8 @@ import {RequestsService} from '../../services/requests.service';
 import {VideoContainerComponent} from '../video-conteiner/video-container.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { getTheDistanceToTheCenterOfTheNearestTarget } from '../../../../+state/targets/targets.selectors';
+import { CoordinatesMessagesService } from '../../services/cognitionEvents.service';
 // import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
 
 @Component({
@@ -56,7 +58,8 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   getOrientation$ = this.store.select(getOrientation);
   targets$ = this.store.select(getTargets);
   displayTargets$ = this.store.select(getDisplayTargets);
-  // targetsList$ = this.store.select(getTargetsList);
+  targetCoordinates$ = this.store.select(getTheDistanceToTheCenterOfTheNearestTarget);
+  
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
@@ -68,7 +71,14 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
     private readonly store: Store<MoveViewSkinState>,
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
     private requestsService: RequestsService,
-  ) {}
+    private coordinatesMessagesService: CoordinatesMessagesService,
+  ) {
+    this.targetCoordinates$.subscribe((coordinates) => {
+      if (coordinates) {
+        this.coordinatesMessagesService.sendCoordinates(coordinates);
+      }
+    })
+  }
 
   ngOnInit() {
     this.store.dispatch(initSkin());

@@ -31,6 +31,13 @@ export class TargetsEffects {
                currentCoordinatesNumber,
                overageRecognitionTime,
              ]) => {
+              recognitionData = JSON.parse(JSON.stringify(recognitionData));
+              recognitionData.coordinates = recognitionData.coordinates.map((item: ICoordinatesItem) => ({
+                top: 1 * item.top,
+                left: 1 * item.left,
+                width: 1 * item.width,
+                height: 1 * item.height,
+              }));
           currentCoordinatesNumber = currentCoordinatesNumber + 1;
 
           const newCoordinatesList = {
