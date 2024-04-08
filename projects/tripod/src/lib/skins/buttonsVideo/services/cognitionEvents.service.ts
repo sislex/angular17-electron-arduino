@@ -3,79 +3,49 @@ import { Store } from '@ngrx/store';
 import { sendDirection } from '../../../+state/skins/move-skin/view/move-view-skin.actions';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class CoordinatesMessagesService {
+    work1 = false;
+    work2 = false;
 
     constructor(
         private readonly store: Store,
-      ) {
-      }
+    ) {}
 
-    sendCoordinates(coordinates: {top: number; left: number}) {
-        let work1 = false;
-        let work2 = false;
-        if (coordinates.left > 5 && coordinates.left < 50) {
-            if (!work1) {
-                work1 = true;
-                this.store.dispatch(sendDirection({
-                direction: 'UP',
+    sendDirection(direction: string) {
+        setTimeout(() => {
+            this.store.dispatch(sendDirection({
+                direction: direction,
                 m: 2
             }));
-        } else if ((coordinates.left > -5 && coordinates.left < 5)  || coordinates.left > 50 || coordinates.left < -50){ 
-            work1 = false;
-                this.store.dispatch(sendDirection({
-                direction: 'UP',
-                m: 2
-            }));
-        }
-    }
-        if (coordinates.left < -5 && coordinates.left > -50) {
-            if (!work1) {
-                work1 = true;
-                this.store.dispatch(sendDirection({
-                direction: 'DOWN',
-                m: 2
-            }));
-        } else if ((coordinates.left > -5 && coordinates.left < 5)  || coordinates.left > 50 || coordinates.left < -50){ 
-            work1 = false;
-                this.store.dispatch(sendDirection({
-                direction: 'DOWN',
-                m: 2
-            }));
-        }
+            // console.log('PLAY', coordinates);
+        }, 15);
     }
 
-        if (coordinates.top > 5 && coordinates.top < 50) {
-            if (!work2) {
-                work2 = true;
-                this.store.dispatch(sendDirection({
-                direction: 'RIGHT',
-                m: 2
-            }));
-        } else if ((coordinates.top > -5 && coordinates.top < 5)  || coordinates.top > 50 || coordinates.top < -50){ 
-            work2 = false;
-                this.store.dispatch(sendDirection({
-                direction: 'RIGHT',
-                m: 2
-            }));
+        sendCoordinates(coordinates: {top: number; left: number}) {
+        const { left, top } = coordinates;
+
+        if (Math.abs(top) > 5 && Math.abs(top) < 50 && !this.work2) {
+            this.work2 = true;
+            this.sendDirection(top > 0 ? 'RIGHT' : 'LEFT');
         }
-    }
-        if (coordinates.top < -5 && coordinates.top > -50) {
-            if (!work2) {
-                work2 = true;
-                this.store.dispatch(sendDirection({
-                direction: 'LEFT',
-                m: 2
-            }));
-        } else if ((coordinates.top > -5 && coordinates.top < 5)  || coordinates.top > 50 || coordinates.top < -50){ 
-            work2 = false;
-                this.store.dispatch(sendDirection({
-                direction: 'LEFT',
-                m: 2
-            }));
+
+        if (Math.abs(left) > 5 && Math.abs(left) < 50 && !this.work1) {
+            this.work1 = true;
+            this.sendDirection(left > 0 ? 'UP' : 'DOWN');
+        };
+
+        if ((!coordinates.top || Math.abs(top) <= 5 || Math.abs(top) >= 50) && this.work2) {
+            this.work2 = false;
+            this.sendDirection('HORIZONTALSTOP');
         }
-        
-    }
+
+        if ((!coordinates.left || Math.abs(left) <= 5 || Math.abs(left) >= 50) && this.work1) {
+            this.work1 = false;
+            this.sendDirection('VERTICALSTOP');
+
+        }
+
     }
 }

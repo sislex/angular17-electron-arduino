@@ -53,7 +53,7 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowLeft' && note === 'up') {
       this.isArrowLeftDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'LEFT',
+        direction: 'HORIZONTALSTOP',
         m: 2
       }));
     }
@@ -67,7 +67,7 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowRight' && note === 'up') {
       this.isArrowRightDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'RIGHT',
+        direction: 'HORIZONTALSTOP',
         m: 2
       }));
     }
@@ -81,7 +81,7 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowUp' && note === 'up') {
       this.isArrowUpDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'UP',
+        direction: 'VERTICALSTOP',
         m: 2
       }));
     }
@@ -95,7 +95,7 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowDown' && note === 'up') {
       this.isArrowDownDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'DOWN',
+        direction: 'VERTICALSTOP',
         m: 2
       }));
     }

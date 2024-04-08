@@ -9,6 +9,11 @@ export interface IMoveSkin {
     selected: boolean;
 }
 
+export interface IDirect {
+  s1: number;
+  s2: number;
+}
+
 export interface MoveViewSkinState {
   delay1: IMoveSkin[];
   delay2: IMoveSkin[];
@@ -22,6 +27,7 @@ export interface MoveViewSkinState {
   displayTargets: IMoveSkin[];
   isShift: boolean;
   isCtrl: boolean;
+  direction: IDirect[];
 }
 
 export interface AboutPartialState {
@@ -29,6 +35,8 @@ export interface AboutPartialState {
 }
 
 export const initialState: MoveViewSkinState = {
+  direction: [{s1: 0, s2: 0}],
+
   delay1: [
     {text: '1', data:  1, selected: false},
     {text: '3', data:  3, selected: false},
@@ -95,6 +103,7 @@ export const MoveViewSkinReducer = createReducer(
     initialState,
     on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
     on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, targets: targetsList })),
+    on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction: direction })),
     on(ViewSkinActions.setDisplayTargets, (state, {displayTargetsList}) => ({ ...state, displayTargets: displayTargetsList })),
     on(ViewSkinActions.setDelay1, (state, {delayList1}) => ({ ...state, delay1: delayList1 })),
     on(ViewSkinActions.setDelay2, (state, {delayList2}) => ({ ...state, delay2: delayList2 })),

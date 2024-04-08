@@ -98,6 +98,11 @@ export const getTargets = createSelector(
     selectFeature,
     (state: MoveViewSkinState) => state.targets
   );
+
+export const getDirection = createSelector(
+    selectFeature,
+    (state: MoveViewSkinState) => state.direction
+  );
   
   export const getDisplayTargets = createSelector(
     selectFeature,

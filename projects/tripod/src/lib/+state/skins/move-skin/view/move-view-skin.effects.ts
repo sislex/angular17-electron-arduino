@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { async, tap } from 'rxjs';
 import { MoveViewSkinState } from './move-view-skin.reducer';
 import {
   initSkin,
@@ -10,10 +10,11 @@ import {
   setActiveQuality, setActiveResolution,
   setActiveStep, setActiveZoom,
   setDelay1, setDelay2, setOrientation, setQuality, setResolution,
-  setSteps, setZoom, setActiveDisplayTargets, setActiveTargets, setTargets, setDisplayTargets
+  setSteps, setZoom, setActiveDisplayTargets, setActiveTargets, setTargets, setDisplayTargets, setDirection
 } from './move-view-skin.actions';
-import {getDelay1, getDelay2, getDisplayTargets, getOrientation, getQuality, getResolution, getSteps, getTargets, getZoom} from './move-view-skin.selectors';
+import {getDelay1, getDelay2, getDirection, getDisplayTargets, getOrientation, getQuality, getResolution, getSteps, getTargets, getZoom} from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
+import { AsyncPipe } from '@angular/common';
 
 @Injectable()
 export class SetButtonEffects {
@@ -169,42 +170,94 @@ export class SetButtonEffects {
       ), {dispatch: false}
   );
 
-  setDirection$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType( sendDirection ),
-        concatLatestFrom(() => this.store.select( getSteps )),
-        tap(([{direction, m}, stepsList]) => {
-          const steps = stepsList.find(item => item.selected)?.data;
-          let data;
-            if (direction === 'RIGHT') {
-              data = {
-              s1: m === 1 ? steps : 1,
-              };
-            }
-            if (direction === 'LEFT') {
-              data = {
-              s1: m === 1 ? -steps : -1,
-              };
-            }
-            if (direction === 'UP') {
-              data = {
-              s2: m === 1 ? steps : 1,
-              };
-            }
-            if (direction === 'DOWN') {
-              data = {
-              s2: m === 1 ? -steps : -1,
-              };
-            }
 
-            this.store.dispatch(sendMessageToDevice({
-              message: {
-                event: 'SET',
-                data: {...data, m}
-              },
-            }));
-        })
-      ), {dispatch: false}
+
+  // setDirection$ = createEffect(() =>
+  //     this.actions$.pipe(
+  //       ofType( sendDirection ),
+  //       concatLatestFrom(() => this.store.select( getSteps )),
+  //       tap(([{direction, m}, stepsList]) => {
+  //         const steps = stepsList.find(item => item.selected)?.data;
+  //         let data;
+  //           if (direction === 'RIGHT') {
+  //             data = {
+  //             s1: m === 1 ? steps : 1,
+  //             };
+  //           }
+  //           if (direction === 'LEFT') {
+  //             data = {
+  //             s1: m === 1 ? -steps : -1,
+  //             };
+  //           }
+  //           if (direction === 'UP') {
+  //             data = {
+  //             s2: m === 1 ? steps : 1,
+  //             };
+  //           }
+  //           if (direction === 'DOWN') {
+  //             data = {
+  //             s2: m === 1 ? -steps : -1,
+  //             };
+  //           }
+  //           if (direction === 'HOTIZONTALSTOP') {
+  //             data = {
+  //             s1: 0,
+  //             };
+  //           }
+  //           if (direction === 'VERTICALSTOP') {
+  //             data = {
+  //             s2: 0,
+  //             };
+  //           }
+
+  //           this.store.dispatch(sendMessageToDevice({
+  //             message: {
+  //               event: 'SET',
+  //               data: {...data, m}
+  //             },
+              
+  //           }));
+  //           console.log ('ушло', data);
+            
+  //       })
+  //     ), {dispatch: false}
+  // );
+
+  sendDirection$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(sendDirection),
+      concatLatestFrom(() => this.store.select(getDirection)),
+      tap(([{direction, m}, directionState]) => {
+        let newDirectionState = directionState.map(item => ({...item}));
+        if (direction === 'LEFT') {
+          newDirectionState = newDirectionState.map(item => ({...item, s1: item.s1 === 0 ? -1 : item.s1}));
+        } else if (direction === 'RIGHT') {
+          newDirectionState = newDirectionState.map(item => ({...item, s1: item.s1 === 0 ? 1 : item.s1}));
+        } else if (direction === 'DOWN') {
+          newDirectionState = newDirectionState.map(item => ({...item, s2: item.s2 === 0 ? -1 : item.s2}));
+        } else if (direction === 'UP') {
+          newDirectionState = newDirectionState.map(item => ({...item, s2: item.s2 === 0 ? 1 : item.s2}));
+        } else if (direction === 'HORIZONTALSTOP') {
+          newDirectionState = newDirectionState.map(item => ({...item, s1: 0}));
+        } else if (direction === 'VERTICALSTOP') {
+          newDirectionState = newDirectionState.map(item => ({...item, s2: 0}));
+        }
+
+        this.store.dispatch(setDirection({
+          direction: newDirectionState
+        }));
+      
+        const { s1, s2} = newDirectionState[0];
+
+        this.store.dispatch(sendMessageToDevice({
+          message: {
+            event: 'SET',
+            data: { s1, s2, m}
+          },
+        }))
+      })
+      
+    ), {dispatch: false}
   );
 
   initSkin1$ = createEffect(() =>
@@ -223,6 +276,7 @@ export class SetButtonEffects {
         })
       ), {dispatch: false}
   );
+
   initSkin2$ = createEffect(() =>
       this.actions$.pipe(
         ofType( initSkin ),

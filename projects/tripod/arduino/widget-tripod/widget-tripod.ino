@@ -107,20 +107,7 @@ void eventSerial() {
 
 int getSteps(const int currentSteps, const int newSteps, const int mode) {
   int steps = currentSteps;
-  if (newSteps != 0) {
-    if (mode == 1) {
-      steps += newSteps;
-    } else {
-     if (mode == 2) {
-       if (currentSteps == newSteps) { // stop engine
-        steps = 0;
-       } else {
-        steps = newSteps;
-       }
-     }
-    }
-  }
-
+    steps = newSteps;
   return steps;
 }
 
@@ -191,7 +178,7 @@ void events(const String message) {
         info.m = m;
       }
 
-       if (d1 != 0) {
+      if (d1 != 0) {
         info.d1 = d1;
       }
 
