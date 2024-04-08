@@ -76,11 +76,11 @@ export const setActiveOrientation = createAction(
 export const sendDirection = createAction(
   '[MoveViewSkin] sendDirection',
   props<{ direction: string, m: number }>()
-);
+);  
 
 export const setDirection = createAction(
   '[Move View Skin] setDirection',
-  props<{ direction: Array<{s1: number, s2: number}> }>()
+  props<{ direction: {s1: number, s2: number, d1: number, d2: number} }>()
 );
 
 export const setShift = createAction(

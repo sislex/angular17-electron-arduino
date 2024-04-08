@@ -14,13 +14,12 @@ export class CoordinatesMessagesService {
     ) {}
 
     sendDirection(direction: string) {
-        setTimeout(() => {
+        // setTimeout(() => {
             this.store.dispatch(sendDirection({
                 direction: direction,
                 m: 2
             }));
-            // console.log('PLAY', coordinates);
-        }, 15);
+        // }, 15);
     }
 
         sendCoordinates(coordinates: {top: number; left: number}) {

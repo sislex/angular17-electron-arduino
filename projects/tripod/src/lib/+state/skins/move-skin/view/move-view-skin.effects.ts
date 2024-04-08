@@ -228,71 +228,73 @@ export class SetButtonEffects {
       ofType(sendDirection),
       concatLatestFrom(() => this.store.select(getDirection)),
       tap(([{direction, m}, directionState]) => {
-        let newDirectionState = directionState.map(item => ({...item}));
+        let newDirectionState = {...directionState};
         if (direction === 'LEFT') {
-          newDirectionState = newDirectionState.map(item => ({...item, s1: item.s1 === 0 ? -1 : item.s1}));
+          newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? -1 : newDirectionState.s1};
         } else if (direction === 'RIGHT') {
-          newDirectionState = newDirectionState.map(item => ({...item, s1: item.s1 === 0 ? 1 : item.s1}));
+          newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? -1 : newDirectionState.s1};
         } else if (direction === 'DOWN') {
-          newDirectionState = newDirectionState.map(item => ({...item, s2: item.s2 === 0 ? -1 : item.s2}));
+          newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? -1 : newDirectionState.s2};
         } else if (direction === 'UP') {
-          newDirectionState = newDirectionState.map(item => ({...item, s2: item.s2 === 0 ? 1 : item.s2}));
+          newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? -1 : newDirectionState.s2};
         } else if (direction === 'HORIZONTALSTOP') {
-          newDirectionState = newDirectionState.map(item => ({...item, s1: 0}));
+          newDirectionState = {...newDirectionState, s1: 0};
         } else if (direction === 'VERTICALSTOP') {
-          newDirectionState = newDirectionState.map(item => ({...item, s2: 0}));
+          newDirectionState = {...newDirectionState, s2: 0};
         }
 
         this.store.dispatch(setDirection({
           direction: newDirectionState
         }));
       
-        const { s1, s2} = newDirectionState[0];
+        const { s1, s2, d1, d2} = newDirectionState;
 
         this.store.dispatch(sendMessageToDevice({
           message: {
             event: 'SET',
-            data: { s1, s2, m}
+            data: { s1, s2, m, d1, d2}
           },
         }))
+        console.log('В микроконтроллер s1:', s1, ' s2:', s2, ' m:', m, ' d1:', d1, ' d2:', d2);
       })
       
     ), {dispatch: false}
   );
 
-  initSkin1$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType( initSkin ),
-        concatLatestFrom(() => this.store.select( getDelay1 )),
-        tap(([, delayList]) => {
-          const d1 = delayList.find(item => item.selected)?.data;
+  // initSkin1$ = createEffect(() =>
+  //     this.actions$.pipe(
+  //       ofType( initSkin ),
+  //       concatLatestFrom(() => this.store.select( getDelay1 )),
+  //       tap(([, delayList]) => {
+  //         const d1 = delayList.find(item => item.selected)?.data;
+          
 
-          this.store.dispatch(sendMessageToDevice({
-            message: {
-              event: 'SET',
-              data: {d1}
-            },
-          }));
-        })
-      ), {dispatch: false}
-  );
+  //         this.store.dispatch(sendMessageToDevice({
+  //           message: {
+  //             event: 'SET',
+  //             data: {d1}
+  //           },
+  //         }));
+  //       })
+  //     ), {dispatch: false}
+  // );
 
-  initSkin2$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType( initSkin ),
-        concatLatestFrom(() => this.store.select( getDelay2 )),
-        tap(([, delayList]) => {
-          const d2 = delayList.find(item => item.selected)?.data;
+  // initSkin2$ = createEffect(() =>
+  //     this.actions$.pipe(
+  //       ofType( initSkin ),
+  //       concatLatestFrom(() => this.store.select( getDelay2 )),
+  //       tap(([, delayList]) => {
+  //         const d2 = delayList.find(item => item.selected)?.data;
 
-          this.store.dispatch(sendMessageToDevice({
-            message: {
-              event: 'SET',
-              data: {d2}
-            },
-          }));
-        })
-      ), {dispatch: false}
-  );
+  //         this.store.dispatch(sendMessageToDevice({
+  //           message: {
+  //             event: 'SET',
+  //             data: {d2}
+  //           },
+  //         }));
+  //       })
+  //     ), {dispatch: false}
+  // );
 
 
   constructor(

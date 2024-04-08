@@ -12,6 +12,8 @@ export interface IMoveSkin {
 export interface IDirect {
   s1: number;
   s2: number;
+  d1: number;
+  d2: number;
 }
 
 export interface MoveViewSkinState {
@@ -27,7 +29,7 @@ export interface MoveViewSkinState {
   displayTargets: IMoveSkin[];
   isShift: boolean;
   isCtrl: boolean;
-  direction: IDirect[];
+  direction: IDirect;
 }
 
 export interface AboutPartialState {
@@ -35,7 +37,7 @@ export interface AboutPartialState {
 }
 
 export const initialState: MoveViewSkinState = {
-  direction: [{s1: 0, s2: 0}],
+  direction: {s1: 0, s2: 0, d1: 0, d2: 0},
 
   delay1: [
     {text: '1', data:  1, selected: false},

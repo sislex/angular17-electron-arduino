@@ -70,23 +70,23 @@ export class ControlButtonsContainer implements OnInit, AfterViewInit {
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
-      this.store.dispatch(sendMessageToDevice({
-        message: {
-          event: 'SET',
-          data: {d1: $event.data.data}
-        },
-      }));
+      // this.store.dispatch(sendMessageToDevice({
+      //   message: {
+      //     event: 'SET',
+      //     data: {d1: $event.data.data}
+      //   },
+      // }));
       this.store.dispatch(setActiveDelay1({
         delay1: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay2') {
       this.keyboardEventsArea.nativeElement.focus();
-      this.store.dispatch(sendMessageToDevice({
-        message: {
-          event: 'SET',
-          data: {d2: $event.data.data}
-        },
-      }));
+      // this.store.dispatch(sendMessageToDevice({
+      //   message: {
+      //     event: 'SET',
+      //     data: {d2: $event.data.data}
+      //   },
+      // }));
       this.store.dispatch(setActiveDelay2({
         delay2: $event.data
       }));

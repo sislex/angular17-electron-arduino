@@ -10,12 +10,16 @@ export const getSteps = createSelector(
 
 export const getDelay1 = createSelector(
     selectFeature,
-    (state: MoveViewSkinState) => state.delay1
+    (state: MoveViewSkinState) => state.delay1.map(item => ({
+      ...item, selected: item.data === state.direction.d1
+    }))
 );
 
 export const getDelay2 = createSelector(
     selectFeature,
-    (state: MoveViewSkinState) => state.delay2
+    (state: MoveViewSkinState) => state.delay2.map(item => ({
+      ...item, selected: item.data === state.direction.d2
+    }))
 );
 
 export const getDelayModify1 = createSelector(
