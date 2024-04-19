@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { async, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { MoveViewSkinState } from './move-view-skin.reducer';
 import {
-  initSkin,
   sendDirection,
   setActiveDelay2, setActiveDelay1, setActiveOrientation,
   setActiveQuality, setActiveResolution,
   setActiveStep, setActiveZoom,
-  setDelay1, setDelay2, setOrientation, setQuality, setResolution,
-  setSteps, setZoom, setActiveDisplayTargets, setActiveTargets, setTargets, setDisplayTargets, setDirection
+  setDelayList1, setDelayList2, setOrientation, setQuality, setResolution,
+  setSteps, setZoom, setActiveDisplayTargets, setActiveTargets, setTargets, setDisplayTargets, setDirection, setDelay2, setDelay1, sendDataMove, setSendDirection
 } from './move-view-skin.actions';
-import {getDelay1, getDelay2, getDirection, getDisplayTargets, getOrientation, getQuality, getResolution, getSteps, getTargets, getZoom} from './move-view-skin.selectors';
+import {getActiveDelay1, getActiveDelay2, getDelay1, getDelay2, getDirection, getDisplayTargets, getOrientation, getQuality, getResolution, getSendDirection, getSteps, getTargets, getZoom} from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
-import { AsyncPipe } from '@angular/common';
+import { ProcessingObjectData } from '../../../../skins/buttonsVideo/services/processingObjectData.service';
 
 @Injectable()
 export class SetButtonEffects {
@@ -36,40 +35,9 @@ export class SetButtonEffects {
     {dispatch: false}
   );
 
-  setActiveDelayList2$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType( setActiveDelay2 ),
-        concatLatestFrom(() => this.store.select( getDelay2 )),
-        tap(([{delay2}, delayList]) => {
-          const newDelayList2 = delayList.map(item => ({
-            ...item,
-            selected: item === delay2
-          }));
-          this.store.dispatch(setDelay2({
-            delayList2: newDelayList2
-          }));
-        })
-      ), {dispatch: false}
-  );
-
-  setActiveDelayList1$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType( setActiveDelay1 ),
-        concatLatestFrom(() => this.store.select( getDelay1 )),
-        tap(([{delay1}, delayList]) => {
-          const newDelayList1 = delayList.map(item => ({
-            ...item,
-            selected: item === delay1
-          }));
-          this.store.dispatch(setDelay1({
-            delayList1: newDelayList1
-          }));
-        })
-      ), {dispatch: false}
-  );
-
+  
   setActiveTargetsList$ = createEffect(() =>
-      this.actions$.pipe(
+  this.actions$.pipe(
         ofType( setActiveTargets ),
         concatLatestFrom(() => this.store.select( getTargets )),
         tap(([{targets}, targetsList]) => {
@@ -82,7 +50,7 @@ export class SetButtonEffects {
           }));
         })
       ),
-    {dispatch: false}
+      {dispatch: false}
   );
 
   setActiveDisplayargetsList$ = createEffect(() =>
@@ -98,12 +66,12 @@ export class SetButtonEffects {
             displayTargetsList: newDisplayTargetsList
           }));
         })
-      ),
+        ),
     {dispatch: false}
-  );
-
+    );
+    
   setActiveQuality$ = createEffect(() =>
-      this.actions$.pipe(
+  this.actions$.pipe(
         ofType( setActiveQuality ),
         concatLatestFrom(() => this.store.select( getQuality )),
         tap(([{quality}, delayList]) => {
@@ -118,9 +86,9 @@ export class SetButtonEffects {
         })
       ), {dispatch: false}
   );
-
+  
   setActiveResolution$ = createEffect(() =>
-      this.actions$.pipe(
+  this.actions$.pipe(
         ofType( setActiveResolution ),
         concatLatestFrom(() => this.store.select( getResolution )),
         tap(([{resolution}, resolutionList]) => {
@@ -134,9 +102,9 @@ export class SetButtonEffects {
           }));
         })
       ), {dispatch: false}
-  );
-
-  setActiveZoom$ = createEffect(() =>
+      );
+      
+      setActiveZoom$ = createEffect(() =>
       this.actions$.pipe(
         ofType( setActiveZoom ),
         concatLatestFrom(() => this.store.select( getZoom )),
@@ -145,24 +113,24 @@ export class SetButtonEffects {
             ...item,
             selected: item === zoom
           }));
-
+          
           this.store.dispatch(setZoom({
             zoomList: newZoomList
           }));
         })
-      ), {dispatch: false}
-  );
-
-  setActiveOrientation$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType( setActiveOrientation ),
+        ), {dispatch: false}
+        );
+        
+        setActiveOrientation$ = createEffect(() =>
+        this.actions$.pipe(
+          ofType( setActiveOrientation ),
         concatLatestFrom(() => this.store.select( getOrientation )),
         tap(([{orientation}, orientationList]) => {
           const newOrientationList = orientationList.map(item => ({
             ...item,
             selected: item === orientation
           }));
-
+          
           this.store.dispatch(setOrientation({
             orientationList: newOrientationList
           }));
@@ -170,132 +138,154 @@ export class SetButtonEffects {
       ), {dispatch: false}
   );
 
+  setActiveDelayList1$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType( setActiveDelay1 ),
+      concatLatestFrom(() => this.store.select( getActiveDelay1 )),
+      tap(([{delay1}, delayList]) => {
+        const newDelayList = delayList.map(item => ({
+          ...item,
+          selected: item === delay1
+        }));
+        this.store.dispatch(setDelayList1({
+          activeDelayList1: newDelayList
+        }));
+        // console.log('setActiveDelayList1', newDelayList)
+      })
+    ), {dispatch: false}
+  );
 
+  setActiveDelayList2$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType( setActiveDelay2 ),
+      concatLatestFrom(() => this.store.select( getActiveDelay2 )),
+      tap(([{delay2}, delayList]) => {
+        const newDelayList = delayList.map(item => ({
+          ...item,
+          selected: item === delay2
+        }));
+        this.store.dispatch(setDelayList2({
+          activeDelayList2: newDelayList
+        }));
+        // console.log('setActiveDelayList2', newDelayList)
+      })
+    ), {dispatch: false}
+  );
 
-  // setDirection$ = createEffect(() =>
-  //     this.actions$.pipe(
-  //       ofType( sendDirection ),
-  //       concatLatestFrom(() => this.store.select( getSteps )),
-  //       tap(([{direction, m}, stepsList]) => {
-  //         const steps = stepsList.find(item => item.selected)?.data;
-  //         let data;
-  //           if (direction === 'RIGHT') {
-  //             data = {
-  //             s1: m === 1 ? steps : 1,
-  //             };
-  //           }
-  //           if (direction === 'LEFT') {
-  //             data = {
-  //             s1: m === 1 ? -steps : -1,
-  //             };
-  //           }
-  //           if (direction === 'UP') {
-  //             data = {
-  //             s2: m === 1 ? steps : 1,
-  //             };
-  //           }
-  //           if (direction === 'DOWN') {
-  //             data = {
-  //             s2: m === 1 ? -steps : -1,
-  //             };
-  //           }
-  //           if (direction === 'HOTIZONTALSTOP') {
-  //             data = {
-  //             s1: 0,
-  //             };
-  //           }
-  //           if (direction === 'VERTICALSTOP') {
-  //             data = {
-  //             s2: 0,
-  //             };
-  //           }
+  setActiveDelay1$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType( setDelayList1 ),
+      concatLatestFrom(() => this.store.select( getDelay1 )),
+      tap(([{activeDelayList1}, delayList]) => {
+        this.store.dispatch(setDelay1({
+          delay: delayList
+        }));
+        this.store.dispatch(sendDataMove());
+        // console.log('setActiveDelay1', delayList)
+      })
+    ), {dispatch: false}
+  );
 
-  //           this.store.dispatch(sendMessageToDevice({
-  //             message: {
-  //               event: 'SET',
-  //               data: {...data, m}
-  //             },
-              
-  //           }));
-  //           console.log ('ушло', data);
-            
-  //       })
-  //     ), {dispatch: false}
-  // );
+  setActiveDelay2$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType( setDelayList2 ),
+      concatLatestFrom(() => this.store.select( getDelay2 )),
+      tap(([{activeDelayList2}, delayList]) => {
+        this.store.dispatch(setDelay2({
+          delay: delayList
+        }));
+        this.store.dispatch(sendDataMove());
+        // console.log('setActiveDelay2', delayList)
+      })
+    ), {dispatch: false}
+  );
 
-  sendDirection$ = createEffect(() =>
+  setDirection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(sendDirection),
       concatLatestFrom(() => this.store.select(getDirection)),
-      tap(([{direction, m}, directionState]) => {
+      tap(([{direction}, directionState]) => {
         let newDirectionState = {...directionState};
         if (direction === 'LEFT') {
           newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? -1 : newDirectionState.s1};
         } else if (direction === 'RIGHT') {
-          newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? -1 : newDirectionState.s1};
+          newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? 1 : newDirectionState.s1};
         } else if (direction === 'DOWN') {
           newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? -1 : newDirectionState.s2};
         } else if (direction === 'UP') {
-          newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? -1 : newDirectionState.s2};
+          newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? 1 : newDirectionState.s2};
         } else if (direction === 'HORIZONTALSTOP') {
           newDirectionState = {...newDirectionState, s1: 0};
         } else if (direction === 'VERTICALSTOP') {
           newDirectionState = {...newDirectionState, s2: 0};
         }
-
         this.store.dispatch(setDirection({
           direction: newDirectionState
         }));
-      
-        const { s1, s2, d1, d2} = newDirectionState;
+
+        this.store.dispatch(sendDataMove());
+        // console.log('setDirection', newDirectionState)
+      })
+    ), {dispatch: false}
+  );
+  
+
+  sendDataMove$ = createEffect(() =>
+    this.actions$.pipe(
+    ofType( sendDataMove ),
+    concatLatestFrom(() => [
+      this.store.select( getSendDirection ),
+      this.store.select( getDirection ),
+    ]),
+    tap(([, sendDirection, direction]) => {
+      // console.log( 'новый получили', direction )
+      // console.log( 'старый получили', sendDirection )
+      if (
+        sendDirection.s1 != direction.s1
+        || sendDirection.s2 != direction.s2
+        || sendDirection.d1 != direction.d1
+        || sendDirection.d2 != direction.d2
+      ) {
+        this.store.dispatch(setSendDirection({
+          sendDirection: direction
+        }));
 
         this.store.dispatch(sendMessageToDevice({
           message: {
             event: 'SET',
-            data: { s1, s2, m, d1, d2}
+            data: direction
           },
-        }))
-        console.log('В микроконтроллер s1:', s1, ' s2:', s2, ' m:', m, ' d1:', d1, ' d2:', d2);
+        }));
+        }
       })
-      
     ), {dispatch: false}
   );
 
-  // initSkin1$ = createEffect(() =>
-  //     this.actions$.pipe(
-  //       ofType( initSkin ),
-  //       concatLatestFrom(() => this.store.select( getDelay1 )),
-  //       tap(([, delayList]) => {
-  //         const d1 = delayList.find(item => item.selected)?.data;
-          
+//   matchingTargets$ = createEffect(() =>
+//   this.actions$.pipe(
+//     ofType(matchingTargets),
+//     concatLatestFrom(() => this.store.select(getTargetsList)),
+//     tap(([{targetsList}, oldList]) => {
+//       let newTargetsList = this.processingObjectData.processMatchingTargets(targetsList, oldList);
+//       this.store.dispatch(checkNewTargetsList({targetsList: newTargetsList}))
+//     })
+//   ), {dispatch: false}
+// );                  
 
-  //         this.store.dispatch(sendMessageToDevice({
-  //           message: {
-  //             event: 'SET',
-  //             data: {d1}
-  //           },
-  //         }));
-  //       })
-  //     ), {dispatch: false}
-  // );
+//   checkNewTargetsList$ = createEffect(() =>
+//   this.actions$.pipe(
+//   ofType( checkNewTargetsList ),
+//   concatLatestFrom(() => this.store.select( getTargetsList )),
+//   tap(([{targetsList}, oldTargetsList]) => {
 
-  // initSkin2$ = createEffect(() =>
-  //     this.actions$.pipe(
-  //       ofType( initSkin ),
-  //       concatLatestFrom(() => this.store.select( getDelay2 )),
-  //       tap(([, delayList]) => {
-  //         const d2 = delayList.find(item => item.selected)?.data;
-
-  //         this.store.dispatch(sendMessageToDevice({
-  //           message: {
-  //             event: 'SET',
-  //             data: {d2}
-  //           },
-  //         }));
-  //       })
-  //     ), {dispatch: false}
-  // );
-
+//     // console.log ('получил', oldTargetsList)
+//     // console.log ('передал', targetsList)
+//     this.store.dispatch( setNewTargetsList ({
+//       NewTargetsList: targetsList
+//     }));
+//     })
+//   ), {dispatch: false}
+// ); 
 
   constructor(
     private store: Store<MoveViewSkinState>,

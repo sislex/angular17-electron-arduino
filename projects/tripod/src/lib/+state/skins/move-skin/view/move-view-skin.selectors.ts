@@ -10,17 +10,23 @@ export const getSteps = createSelector(
 
 export const getDelay1 = createSelector(
     selectFeature,
-    (state: MoveViewSkinState) => state.delay1.map(item => ({
-      ...item, selected: item.data === state.direction.d1
-    }))
+    (state: MoveViewSkinState) => state.delay1.find(item => item.selected)?.data
 );
 
 export const getDelay2 = createSelector(
     selectFeature,
-    (state: MoveViewSkinState) => state.delay2.map(item => ({
-      ...item, selected: item.data === state.direction.d2
-    }))
+    (state: MoveViewSkinState) => state.delay2.find(item => item.selected)?.data
 );
+
+export const getActiveDelay1 = createSelector(
+    selectFeature,
+    (state: MoveViewSkinState) => state.delay1
+);
+
+export const getActiveDelay2 = createSelector(
+    selectFeature,
+    (state: MoveViewSkinState) => state.delay2
+  );
 
 export const getDelayModify1 = createSelector(
     selectFeature,
@@ -99,13 +105,18 @@ export const getOrientation = createSelector(
 );
 
 export const getTargets = createSelector(
-    selectFeature,
-    (state: MoveViewSkinState) => state.targets
-  );
+  selectFeature,
+  (state: MoveViewSkinState) => state.targets
+);
 
 export const getDirection = createSelector(
     selectFeature,
     (state: MoveViewSkinState) => state.direction
+  );
+
+export const getSendDirection = createSelector(
+    selectFeature,
+    (state: MoveViewSkinState) => state.sendDirection
   );
   
   export const getDisplayTargets = createSelector(

@@ -7,7 +7,7 @@ import {AsyncPipe, JsonPipe} from '@angular/common';
 import {RectangleComponent} from '../../../../../../../ui/src/lib/components/rectangle/rectangle.component';
 import {
   getCoordinatesStyles,
-  getOverageRecognitionTime,
+  getOverageRecognitionTime, getTargetsData, getTargetsList,
   getTheDistanceToTheCenterOfTheNearestTarget
 } from '../../../../+state/targets/targets.selectors';
 import {UserListComponent} from '../../../../../../../ui/src/lib/components/user-list/user-list.component';
@@ -35,6 +35,9 @@ export class VideoContainerComponent implements OnDestroy {
   getCoordinatesStyles$ = this.store.select(getCoordinatesStyles);
   getOverageRecognitionTime$ = this.store.select(getOverageRecognitionTime);
   getTheDistanceToTheCenterOfTheNearestTarget$ = this.store.select(getTheDistanceToTheCenterOfTheNearestTarget);
+  getTargetsData$ = this.store.select(getTargetsData);
+
+
 
   private destroy$ = new Subject<void>();
 
@@ -116,7 +119,7 @@ export class VideoContainerComponent implements OnDestroy {
       this.store.dispatch(addCoordinates({recognitionData: $event.data}));
       this.cdr.detectChanges();
 
-      const recognitionInterval = 100;
+      const recognitionInterval = 1000;
 
       if (recognitionInterval > 0) {
         setTimeout(() => {

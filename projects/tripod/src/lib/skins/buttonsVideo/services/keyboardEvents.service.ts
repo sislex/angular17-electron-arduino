@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { sendMessageToDevice } from '../../../+state/messages/messages.actions';
 import { sendDirection, setCtrl, setShift } from '../../../+state/skins/move-skin/view/move-view-skin.actions';
 
@@ -78,6 +78,7 @@ export class SkinMoveKeyboardEventsService {
         direction: 'UP',
         m: 2
       }));
+      
     } else if (message.key === 'ArrowUp' && note === 'up') {
       this.isArrowUpDown = false;
       this.store.dispatch(sendDirection({

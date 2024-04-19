@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule} from '@angular/material/button-toggle';
-import { ITarget, ITargetsState } from '../../../../../tripod/src/lib/+state/skins/move-skin/targets/targets.reducer';
+import {ITarget} from "../../../../../tripod/src/lib/+state/targets/targets.reducer";
 
 @Component({
   selector: 'targets-list',

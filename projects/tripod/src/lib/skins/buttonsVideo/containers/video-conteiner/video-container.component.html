@@ -5,7 +5,18 @@
   }
 }
 
+@for (target of (getTargetsData$ | async); track target) {
+<p class="sr-only"></p>
+}
+
 <div class="info">
   <p class="sr-only">OverageRecognitionTime: {{getOverageRecognitionTime$ | async}}</p>
   <p class="sr-only">Distance to center: {{(getTheDistanceToTheCenterOfTheNearestTarget$ | async) | json}}</p>
+  @for (target of ((getTargetsData$ | async)); track target) {
+    <p class="sr-only">Tatget: {{target.id}}, counter:{{target.counter}}</p>
+  }
+
+
+
 </div>
+

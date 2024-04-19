@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import {Actions, concatLatestFrom, createEffect, ofType} from '@ngrx/effects';
-import {tap, withLatestFrom} from 'rxjs';
-import {addCoordinates, addCoordinatesData} from './targets.actions';
-import {Store} from '@ngrx/store';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { tap } from 'rxjs';
+import { addCoordinates, addCoordinatesData, matchingTargets, setNewTargetsList} from './targets.actions';
+import { Store } from '@ngrx/store';
 import {
   getCurrentCoordinatesNumber,
   getNumberOfCoordinates, getOverageRecognitionTime,
-  getCoordinatesList
+  getCoordinatesList,
+  getTargetsList,
+  getLastDistanceList,
 } from './targets.selectors';
 import {ICoordinatesItem} from './targets.reducer';
+import { ProcessingObjectData } from '../../skins/buttonsVideo/services/processingObjectData.service';
 
 @Injectable()
 export class TargetsEffects {
@@ -30,14 +33,14 @@ export class TargetsEffects {
                numberOfCoordinates,
                currentCoordinatesNumber,
                overageRecognitionTime,
-             ]) => {
-              recognitionData = JSON.parse(JSON.stringify(recognitionData));
-              recognitionData.coordinates = recognitionData.coordinates.map((item: ICoordinatesItem) => ({
-                top: 1 * item.top,
-                left: 1 * item.left,
-                width: 1 * item.width,
-                height: 1 * item.height,
-              }));
+            ]) => {
+          recognitionData = JSON.parse(JSON.stringify(recognitionData));
+          recognitionData.coordinates = recognitionData.coordinates.map((item: ICoordinatesItem) => ({
+            top: 1 * item.top,
+            left: 1 * item.left,
+            width: 1 * item.width,
+            height: 1 * item.height,
+          }));
           currentCoordinatesNumber = currentCoordinatesNumber + 1;
 
           const newCoordinatesList = {
@@ -61,6 +64,7 @@ export class TargetsEffects {
           };
 
           this.store.dispatch(addCoordinatesData({data}));
+          this.store.dispatch(matchingTargets());
         })
       ),
     {
@@ -68,8 +72,28 @@ export class TargetsEffects {
     }
   );
 
+  matchingTargets$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType( matchingTargets ),
+      concatLatestFrom(() => [
+        this.store.select( getTargetsList ),
+        this.store.select( getLastDistanceList ),
+      ]),
+  tap(([, oldTargetsList, newCoordinatesList]) => {
+    console.log ('было', oldTargetsList)
+    console.log ('пришло', newCoordinatesList)
+    let newTargetsList = this.processingObjectData.processMatchingTargets(newCoordinatesList, oldTargetsList);
+        this.store.dispatch(setNewTargetsList({newTargetsList}));
+        console.log ('Прошло через сервис', newTargetsList)
+      })
+    ), {dispatch: false}
+  );
+
+
+
   constructor(
     private readonly store: Store,
     private actions$: Actions,
+    private processingObjectData: ProcessingObjectData,
   ) {}
 }

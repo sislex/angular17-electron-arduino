@@ -30,6 +30,7 @@ export interface MoveViewSkinState {
   isShift: boolean;
   isCtrl: boolean;
   direction: IDirect;
+  sendDirection: IDirect;
 }
 
 export interface AboutPartialState {
@@ -37,7 +38,10 @@ export interface AboutPartialState {
 }
 
 export const initialState: MoveViewSkinState = {
-  direction: {s1: 0, s2: 0, d1: 0, d2: 0},
+
+  sendDirection: {s1: 0, s2: 0, d1: 0, d2: 0},
+
+  direction: {s1: 0, s2: 0, d1: 5, d2: 5},
 
   delay1: [
     {text: '1', data:  1, selected: false},
@@ -104,11 +108,15 @@ export const initialState: MoveViewSkinState = {
 export const MoveViewSkinReducer = createReducer(
     initialState,
     on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
-    on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, targets: targetsList })),
+    on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, stargets: targetsList })),
     on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction: direction })),
+    on(ViewSkinActions.setSendDirection, (state, {sendDirection}) => ({ ...state, sendDirection: sendDirection })),
+
+    on(ViewSkinActions.setDelayList1, (state, {activeDelayList1}) => ({ ...state, delay1: activeDelayList1})),
+    on(ViewSkinActions.setDelayList2, (state, {activeDelayList2}) => ({ ...state, delay2: activeDelayList2 })),
+    on(ViewSkinActions.setDelay2, (state, {delay}) => ({ ...state, direction: {...state.direction, d2: delay} })),
+    on(ViewSkinActions.setDelay1, (state, {delay}) => ({ ...state, direction: {...state.direction, d1: delay} })),
     on(ViewSkinActions.setDisplayTargets, (state, {displayTargetsList}) => ({ ...state, displayTargets: displayTargetsList })),
-    on(ViewSkinActions.setDelay1, (state, {delayList1}) => ({ ...state, delay1: delayList1 })),
-    on(ViewSkinActions.setDelay2, (state, {delayList2}) => ({ ...state, delay2: delayList2 })),
     on(ViewSkinActions.setQuality, (state, {qualityList}) => ({ ...state, quality: qualityList })),
     on(ViewSkinActions.setResolution, (state, {resolutionList}) => ({ ...state, resolution: resolutionList })),
     on(ViewSkinActions.setOrientation, (state, {orientationList}) => ({ ...state, orientation: orientationList })),
