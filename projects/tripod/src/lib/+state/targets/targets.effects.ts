@@ -80,11 +80,8 @@ export class TargetsEffects {
         this.store.select( getLastDistanceList ),
       ]),
   tap(([, oldTargetsList, newCoordinatesList]) => {
-    console.log ('было', oldTargetsList)
-    console.log ('пришло', newCoordinatesList)
     let newTargetsList = this.processingObjectData.processMatchingTargets(newCoordinatesList, oldTargetsList);
         this.store.dispatch(setNewTargetsList({newTargetsList}));
-        console.log ('Прошло через сервис', newTargetsList)
       })
     ), {dispatch: false}
   );

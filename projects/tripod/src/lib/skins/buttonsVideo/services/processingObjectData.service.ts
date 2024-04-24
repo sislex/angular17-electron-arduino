@@ -18,15 +18,26 @@ export class ProcessingObjectData {
     return Math.abs(distanceTarget - distanceObject) / distanceTarget * 100;
   }
 
+  getLastId(targets: ITarget[]) {
+    let lastId = -1;
+    targets.forEach(target => {
+      if (lastId < target.id) {
+        lastId = target.id;
+      }
+    })
+
+    return lastId;
+  }
+
   processMatchingTargets(coordinates: ICoordinates[], targets: ITarget[]): ITarget[] {
     let newTargetList: ITarget[] = [];
+    let lastId = this.getLastId(targets);
 
     if (targets.length === 0) {
-      newTargetList = coordinates.map((coordinate, key) => {
-        return new Target(key, coordinate);
+      newTargetList = coordinates.map((coordinate) => {
+        return new Target(++lastId, coordinate);
       });
     } else {
-      const  noMatchTargets: ITarget[] = [];
       const matchTargetsWithCoordinates: any = [];
 
       targets.forEach(target => {
@@ -37,10 +48,39 @@ export class ProcessingObjectData {
           matchTargetsWithCoordinates.push({target, coordinates: coordinatesList});
         }
       });
+      let matchTargets: ITarget[] = [];
+      if (matchTargetsWithCoordinates.length !== 0) {
+        console.log('2',matchTargetsWithCoordinates);
+       matchTargets  = this.getTargets(matchTargetsWithCoordinates).map(target => {
+          return {
+            ...target,
+            counter: target.counter + 1,
+          }
+        });
+      }
 
-      const  matchTargets: ITarget[] = this.getTargets(matchTargetsWithCoordinates);
+      newTargetList.push(...matchTargets);
 
+      const noMatchTargets: ITarget[] = targets.filter(target => {
+        return !matchTargets.find(item => item.id === target.id);
+      }).map(target => ({
+        ...target,
+        counter: target.counter - 1,
+      })).filter(target => {
+        return target.counter > 0;
+      });
 
+      newTargetList.push(...noMatchTargets);
+
+      const noMatchCoordinates = coordinates.filter(coordinate => {
+        return !matchTargets.find((item) => {
+          return item.coordinates.top === coordinate.top &&
+            item.coordinates.left === coordinate.left &&
+            item.coordinates.radius === coordinate.radius
+        });
+      }).map(coordinate => new Target(++lastId, coordinate))
+
+      newTargetList.push(...noMatchCoordinates);
 
     }
 
@@ -54,7 +94,6 @@ export class ProcessingObjectData {
         return target.coordinates.find(coordinateItem => coordinateItem === coordinates);
       }).sort((a, b) =>
         this.distanceByCoordinates(coordinates, a.target.coordinates) - this.distanceByCoordinates(coordinates, b.target.coordinates));
-
       const foundTarget = {
         ...targetList[0].target,
         coordinates: coordinates,
