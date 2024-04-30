@@ -1,0 +1,40 @@
+<page-layout>
+  <nav-panel-container toplBar></nav-panel-container>
+  <mat-sidenav-container class="example-container" body>
+    <mat-sidenav mode="side" opened>
+      <div class="controls">
+        <mat-accordion>
+
+          <mat-nav-list>
+            @for (menuItem of getSideMenu$ | async; track menuItem.name) {
+              <a
+                mat-list-item
+                [disabled]="menuItem.isSelected"
+                (click)="selectMenu(menuItem)"
+              >{{menuItem.name}}</a>
+            }
+          </mat-nav-list>
+
+          <mat-nav-list>
+            @for (target of ((getTargetsData$ | async)); track target.id) {
+              @if (target.counter > 10) {
+                <button class="sr-only" [disabled]="(getSelectedId$|async) === target.id" (click)="buttonClick(target.id)">Tatget: {{target.id}}, {{target.counter}}</button>
+                <br>
+              }
+            }
+          </mat-nav-list>
+
+        </mat-accordion>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+      @if (isVideoView$ | async) {
+        <!--      <app-camera-recognition></app-camera-recognition>-->
+        <video-test-container></video-test-container>
+      }
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</page-layout>
+

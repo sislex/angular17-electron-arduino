@@ -39,8 +39,8 @@ export interface IViewState {
   currentCoordinatesNumber: number;
   overageRecognitionTime: number;
   coordinatesList: { [key: number]: ICoordinatesItem[] };
-  coordinatesList2: ICoordinatesItem[];
   targetsList: ITarget [];
+  selectedId: number;
 }
 
 export const initialViewState: IViewState = {
@@ -48,8 +48,8 @@ export const initialViewState: IViewState = {
   currentCoordinatesNumber: 0,
   overageRecognitionTime: 0,
   coordinatesList:  {},
-  coordinatesList2: [],
   targetsList: [],
+  selectedId: -1,
 };
 
 export const targetsReducer = createReducer(
@@ -61,4 +61,5 @@ export const targetsReducer = createReducer(
     overageRecognitionTime: data.overageRecognitionTime,
   })),
   on(TargetsAction.setNewTargetsList, (state, {newTargetsList}) => ({ ...state, targetsList: newTargetsList })),
+  on(TargetsAction.setActiveTarget, (state, {selectedId}) => ({ ...state, selectedId })),
 );

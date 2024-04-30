@@ -6,6 +6,16 @@ export const addCoordinates = createAction(
   props<{ recognitionData: {coordinates: ICoordinatesItem[], recognitionTime: number} }>()
 );
 
+export const setActiveTarget = createAction(
+  '[Targets] setActiveTarget',
+  props<{ selectedId: number }>()
+);
+
+// export const setNewActiveTarget = createAction(
+//   '[Targets] setNewActiveTarget',
+//   props<{ targetsList: ITarget[] }>()
+// );
+
 export const addCoordinatesData = createAction(
   '[Targets] addCoordinatesData',
   props<{ data: {

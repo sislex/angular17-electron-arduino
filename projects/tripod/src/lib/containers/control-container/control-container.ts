@@ -7,6 +7,9 @@ import { AsyncPipe } from '@angular/common';
 import { init } from '../../+state/config/config.actions';
 import { ControlButtonsContainer } from '../../skins/buttons/containers/control-buttons-container/control-buttons-container';
 import { ControlVideoContainer } from '../../skins/buttonsVideo/containers/control-video-container/control-video-container';
+import {
+  ControlVideoTestContainer
+} from "../../skins/videoTest/container/control-video-container/control-video-test-container";
 
 @Component({
   selector: 'control-container',
@@ -17,6 +20,7 @@ import { ControlVideoContainer } from '../../skins/buttonsVideo/containers/contr
     AsyncPipe,
     ControlButtonsContainer,
     ControlVideoContainer,
+    ControlVideoTestContainer,
   ],
   templateUrl: './control-container.html',
   styles: ``,

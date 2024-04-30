@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs';
-import { addCoordinates, addCoordinatesData, matchingTargets, setNewTargetsList} from './targets.actions';
+import {
+  addCoordinates,
+  addCoordinatesData,
+  matchingTargets,
+  // setActiveTarget, setNewActiveTarget,
+  setNewTargetsList
+} from './targets.actions';
 import { Store } from '@ngrx/store';
 import {
   getCurrentCoordinatesNumber,
   getNumberOfCoordinates, getOverageRecognitionTime,
   getCoordinatesList,
   getTargetsList,
-  getLastDistanceList,
+  getLastDistanceList, getCoordinateList,
 } from './targets.selectors';
 import {ICoordinatesItem} from './targets.reducer';
 import { ProcessingObjectData } from '../../skins/buttonsVideo/services/processingObjectData.service';
@@ -71,6 +77,26 @@ export class TargetsEffects {
       dispatch: false,
     }
   );
+
+  // setActiveNewTarget$ = createEffect(() =>
+  //     this.actions$.pipe(
+  //       ofType( setActiveTarget ),
+  //       concatLatestFrom(() => this.store.select( getTargetsList )),
+  //       tap(([{target}, coordinatesList]) => {
+  //         console.log('На входе', coordinatesList)
+  //         const newActiveTargets = coordinatesList.map(item => ({
+  //           ...item,
+  //           selected: item === target
+  //         }));
+  //         this.store.dispatch(setNewActiveTarget({
+  //           targetsList: newActiveTargets
+  //
+  //         }));
+  //         console.log('На выходе', newActiveTargets)
+  //       })
+  //     ),
+  //   {dispatch: false}
+  // );
 
   matchingTargets$ = createEffect(() =>
     this.actions$.pipe(

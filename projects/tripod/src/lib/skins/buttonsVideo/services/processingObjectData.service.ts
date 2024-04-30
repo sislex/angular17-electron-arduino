@@ -33,6 +33,8 @@ export class ProcessingObjectData {
     let newTargetList: ITarget[] = [];
     let lastId = this.getLastId(targets);
 
+    console.log('1', coordinates)
+
     if (targets.length === 0) {
       newTargetList = coordinates.map((coordinate) => {
         return new Target(++lastId, coordinate);
@@ -50,14 +52,21 @@ export class ProcessingObjectData {
       });
       let matchTargets: ITarget[] = [];
       if (matchTargetsWithCoordinates.length !== 0) {
-        console.log('2',matchTargetsWithCoordinates);
-       matchTargets  = this.getTargets(matchTargetsWithCoordinates).map(target => {
-          return {
-            ...target,
-            counter: target.counter + 1,
+        matchTargets  = this.getTargets(matchTargetsWithCoordinates).map(target => {
+
+          let counter = target.counter + 1;
+          if (counter === 10) {
+            counter = 20;
+          } else if (counter > 20) {
+            counter = 20;
+          } else if (counter === 11) {
+            counter = 0;
           }
+          return {...target, counter}
         });
+
       }
+
 
       newTargetList.push(...matchTargets);
 
@@ -81,39 +90,38 @@ export class ProcessingObjectData {
       }).map(coordinate => new Target(++lastId, coordinate))
 
       newTargetList.push(...noMatchCoordinates);
-
     }
-
-    return newTargetList;
+    console.log(newTargetList)
+    return newTargetList
   }
 
-    getTargets(matchTargetsWithCoordinates: ITargetsWithCoordinates[], matchTargets: ITarget[] = []) {
-      const coordinates = matchTargetsWithCoordinates[0].coordinates[0];
+  getTargets(matchTargetsWithCoordinates: ITargetsWithCoordinates[], matchTargets: ITarget[] = []) {
+    const coordinates = matchTargetsWithCoordinates[0].coordinates[0];
 
-      const targetList = matchTargetsWithCoordinates.filter(target => {
-        return target.coordinates.find(coordinateItem => coordinateItem === coordinates);
-      }).sort((a, b) =>
-        this.distanceByCoordinates(coordinates, a.target.coordinates) - this.distanceByCoordinates(coordinates, b.target.coordinates));
-      const foundTarget = {
-        ...targetList[0].target,
-        coordinates: coordinates,
-      };
+    const targetList = matchTargetsWithCoordinates.filter(target => {
+      return target.coordinates.find(coordinateItem => coordinateItem === coordinates);
+    }).sort((a, b) =>
+      this.distanceByCoordinates(coordinates, a.target.coordinates) - this.distanceByCoordinates(coordinates, b.target.coordinates));
+    const foundTarget = {
+      ...targetList[0].target,
+      coordinates: coordinates,
+    };
 
-      matchTargets.push(foundTarget);
+    matchTargets.push(foundTarget);
 
-      const newMatchTargetsWithCoordinates = matchTargetsWithCoordinates
-        .filter(matchTargetWithCoordinates => matchTargetWithCoordinates.target !== targetList[0].target)
-        .map(matchTargetWithCoordinates => {
-          return {target: matchTargetWithCoordinates.target, coordinates: matchTargetWithCoordinates.coordinates.filter(coordinateItem => {
+    const newMatchTargetsWithCoordinates = matchTargetsWithCoordinates
+      .filter(matchTargetWithCoordinates => matchTargetWithCoordinates.target !== targetList[0].target)
+      .map(matchTargetWithCoordinates => {
+        return {target: matchTargetWithCoordinates.target, coordinates: matchTargetWithCoordinates.coordinates.filter(coordinateItem => {
             return coordinateItem.left !== coordinates.left || coordinateItem.top !== coordinates.top || coordinateItem.radius !== coordinates.radius;
-            })};
+          })};
       })
-        .filter(matchTargetWithCoordinates => matchTargetWithCoordinates.coordinates.length > 0);
+      .filter(matchTargetWithCoordinates => matchTargetWithCoordinates.coordinates.length > 0);
 
-      if (newMatchTargetsWithCoordinates.length !== 0) {
-        matchTargets = this.getTargets(newMatchTargetsWithCoordinates, matchTargets);
-      }
-
-      return matchTargets;
+    if (newMatchTargetsWithCoordinates.length !== 0) {
+      matchTargets = this.getTargets(newMatchTargetsWithCoordinates, matchTargets);
     }
+
+    return matchTargets;
+  }
 }

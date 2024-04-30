@@ -1,5 +1,5 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {ICoordinates, ICoordinatesItem, IViewState, TARGETS_FEATURE_KEY} from './targets.reducer';
+import {ICoordinates, IViewState, TARGETS_FEATURE_KEY} from './targets.reducer';
 import {findNearestPointToCenter} from '../../../../../app/src/lib/halpers/coordinates-utils';
 
 export const selectFeature = createFeatureSelector<IViewState>(TARGETS_FEATURE_KEY);
@@ -9,19 +9,9 @@ export const getCoordinatesList = createSelector(
   (state: IViewState) => state.coordinatesList
 );
 
-// Новый селектор
-export const getLastArrayFromCoordinatesList = createSelector(
-  getCoordinatesList,
-  (coordinatesList) => {
-    if (Object.keys(coordinatesList).length === 0) {
-      // Возвращаем undefined, если список пуст
-      return undefined;
-    }
-    let keys = Object.keys(coordinatesList).map(Number);
-    let lastKey = Math.max(...keys);
-    let lastArray = coordinatesList[lastKey];
-    return lastArray;
-  }
+export const getCoordinateList= createSelector(
+  selectFeature,
+  (state: IViewState) => state.coordinatesList[state.currentCoordinatesNumber]
 );
 
 export const getCoordinatesStyles = createSelector(
@@ -88,6 +78,38 @@ export const getLastDistanceList = createSelector(
 export const getTargetsList = createSelector(
   selectFeature,
   (state: IViewState) => state.targetsList
+);
+
+export const getSelectedId = createSelector(
+  selectFeature,
+  (state: IViewState) => state.selectedId
+)
+
+export const getTargetsStyles = createSelector(
+  selectFeature,
+  (state: IViewState) => {
+    let result: any[] = [];
+
+    if (state.targetsList) {
+      state.targetsList.forEach(item => {
+        let color = 'blue'
+          if (state.selectedId === item.id) {
+            color = 'green';
+          }
+          if (item.counter > 10) {
+            result.push({
+              top: (50 - item.coordinates.top - item.coordinates.radius) + '%',
+              left: (50 - item.coordinates.left - item.coordinates.radius) + '%',
+              width: item.coordinates.radius * 2 / 1.333 + '%',
+              height: item.coordinates.radius * 2 + '%',
+              'border-color': color,
+            })
+          }
+        }
+      )
+    }
+    return result;
+  }
 );
 
 export const getTargetsData = createSelector(

@@ -59,7 +59,7 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   targets$ = this.store.select(getTargets);
   displayTargets$ = this.store.select(getDisplayTargets);
   targetCoordinates$ = this.store.select(getTheDistanceToTheCenterOfTheNearestTarget);
-  
+
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
