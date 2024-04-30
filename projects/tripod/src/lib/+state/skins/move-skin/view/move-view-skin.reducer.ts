@@ -39,7 +39,7 @@ export interface AboutPartialState {
 
 export const initialState: MoveViewSkinState = {
 
-  sendDirection: {s1: 0, s2: 0, d1: 0, d2: 0},
+  sendDirection: {s1: 0, s2: 0, d1: 5, d2: 5},
 
   direction: {s1: 0, s2: 0, d1: 5, d2: 5},
 
@@ -111,7 +111,6 @@ export const MoveViewSkinReducer = createReducer(
     on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, stargets: targetsList })),
     on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction: direction })),
     on(ViewSkinActions.setSendDirection, (state, {sendDirection}) => ({ ...state, sendDirection: sendDirection })),
-
     on(ViewSkinActions.setDelayList1, (state, {activeDelayList1}) => ({ ...state, delay1: activeDelayList1})),
     on(ViewSkinActions.setDelayList2, (state, {activeDelayList2}) => ({ ...state, delay2: activeDelayList2 })),
     on(ViewSkinActions.setDelay2, (state, {delay}) => ({ ...state, direction: {...state.direction, d2: delay} })),

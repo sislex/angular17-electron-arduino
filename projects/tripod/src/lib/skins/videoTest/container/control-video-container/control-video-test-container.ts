@@ -17,9 +17,10 @@ import {IMenuItem} from "../../../../+state/view/view.reducer";
 import {selectSideMenu} from "../../../../+state/view/view.actions";
 import {
   getSelectedId,
-  getTargetsList,
+  getTargetsList, getTargetsListCoordinate,
 } from "../../../../+state/targets/targets.selectors";
 import {setActiveTarget} from "../../../../+state/targets/targets.actions";
+import {CoordinatesMessagesService} from "../../../buttonsVideo/services/cognitionEvents.service";
 
 @Component({
   selector: 'control-video-test-container',
@@ -48,11 +49,19 @@ export class ControlVideoTestContainer implements OnInit, AfterViewInit  {
 
   constructor(
     private readonly store: Store,
-  ){}
+    private coordinatesMessagesService: CoordinatesMessagesService,
+  ) {
+    this.getTargetCoordinates$.subscribe((coordinates) => {
+      if (coordinates) {
+        this.coordinatesMessagesService.sendCoordinates(coordinates);
+      }
+    })
+  }
 
   getSideMenu$ = this.store.select(getSideMenu);
   isVideoView$ = this.store.select(isVideoView);
   getTargetsData$ = this.store.select(getTargetsList);
+  getTargetCoordinates$ = this.store.select(getTargetsListCoordinate);
   getSelectedId$ = this.store.select(getSelectedId);
 
 

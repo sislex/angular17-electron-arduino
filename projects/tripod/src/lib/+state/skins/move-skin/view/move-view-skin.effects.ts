@@ -35,7 +35,7 @@ export class SetButtonEffects {
     {dispatch: false}
   );
 
-  
+
   setActiveTargetsList$ = createEffect(() =>
   this.actions$.pipe(
         ofType( setActiveTargets ),
@@ -69,7 +69,7 @@ export class SetButtonEffects {
         ),
     {dispatch: false}
     );
-    
+
   setActiveQuality$ = createEffect(() =>
   this.actions$.pipe(
         ofType( setActiveQuality ),
@@ -86,7 +86,7 @@ export class SetButtonEffects {
         })
       ), {dispatch: false}
   );
-  
+
   setActiveResolution$ = createEffect(() =>
   this.actions$.pipe(
         ofType( setActiveResolution ),
@@ -103,7 +103,7 @@ export class SetButtonEffects {
         })
       ), {dispatch: false}
       );
-      
+
       setActiveZoom$ = createEffect(() =>
       this.actions$.pipe(
         ofType( setActiveZoom ),
@@ -113,14 +113,14 @@ export class SetButtonEffects {
             ...item,
             selected: item === zoom
           }));
-          
+
           this.store.dispatch(setZoom({
             zoomList: newZoomList
           }));
         })
         ), {dispatch: false}
         );
-        
+
         setActiveOrientation$ = createEffect(() =>
         this.actions$.pipe(
           ofType( setActiveOrientation ),
@@ -130,7 +130,7 @@ export class SetButtonEffects {
             ...item,
             selected: item === orientation
           }));
-          
+
           this.store.dispatch(setOrientation({
             orientationList: newOrientationList
           }));
@@ -219,6 +219,7 @@ export class SetButtonEffects {
         } else if (direction === 'VERTICALSTOP') {
           newDirectionState = {...newDirectionState, s2: 0};
         }
+        console.log('новый дирекшн',newDirectionState)
         this.store.dispatch(setDirection({
           direction: newDirectionState
         }));
@@ -228,7 +229,7 @@ export class SetButtonEffects {
       })
     ), {dispatch: false}
   );
-  
+
 
   sendDataMove$ = createEffect(() =>
     this.actions$.pipe(
@@ -246,6 +247,7 @@ export class SetButtonEffects {
         || sendDirection.d1 != direction.d1
         || sendDirection.d2 != direction.d2
       ) {
+        console.log('ОБНОВЛЕНИЕ НА', direction)
         this.store.dispatch(setSendDirection({
           sendDirection: direction
         }));
@@ -260,32 +262,6 @@ export class SetButtonEffects {
       })
     ), {dispatch: false}
   );
-
-//   matchingTargets$ = createEffect(() =>
-//   this.actions$.pipe(
-//     ofType(matchingTargets),
-//     concatLatestFrom(() => this.store.select(getTargetsList)),
-//     tap(([{targetsList}, oldList]) => {
-//       let newTargetsList = this.processingObjectData.processMatchingTargets(targetsList, oldList);
-//       this.store.dispatch(checkNewTargetsList({targetsList: newTargetsList}))
-//     })
-//   ), {dispatch: false}
-// );                  
-
-//   checkNewTargetsList$ = createEffect(() =>
-//   this.actions$.pipe(
-//   ofType( checkNewTargetsList ),
-//   concatLatestFrom(() => this.store.select( getTargetsList )),
-//   tap(([{targetsList}, oldTargetsList]) => {
-
-//     // console.log ('получил', oldTargetsList)
-//     // console.log ('передал', targetsList)
-//     this.store.dispatch( setNewTargetsList ({
-//       NewTargetsList: targetsList
-//     }));
-//     })
-//   ), {dispatch: false}
-// ); 
 
   constructor(
     private store: Store<MoveViewSkinState>,

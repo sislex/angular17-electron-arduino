@@ -1,5 +1,5 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {ICoordinates, IViewState, TARGETS_FEATURE_KEY} from './targets.reducer';
+import {ICoordinates, ITarget, IViewState, TARGETS_FEATURE_KEY} from './targets.reducer';
 import {findNearestPointToCenter} from '../../../../../app/src/lib/halpers/coordinates-utils';
 
 export const selectFeature = createFeatureSelector<IViewState>(TARGETS_FEATURE_KEY);
@@ -79,6 +79,15 @@ export const getTargetsList = createSelector(
   selectFeature,
   (state: IViewState) => state.targetsList
 );
+
+export const getTargetsListCoordinate = createSelector(
+  selectFeature,
+  (state: IViewState) => {
+    let mainTarget = state.targetsList.find(item => state.selectedId === item.id);
+    return mainTarget ? mainTarget.coordinates : null;
+  }
+);
+
 
 export const getSelectedId = createSelector(
   selectFeature,
