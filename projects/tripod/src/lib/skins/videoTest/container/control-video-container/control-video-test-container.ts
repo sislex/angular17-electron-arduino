@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
 import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardEvents.service';
-import { initSkin } from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
+import {initSkin, sendDirection} from '../../../../+state/skins/move-skin/view/move-view-skin.actions';
 import {StepsButtonComponent} from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
 import {NavPanelContainer} from '../nav-panel-container/nav-panel-container';
 import {VideoTestContainer} from '../video-test-container/video-test-container';
@@ -14,11 +14,14 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from "@angular/material/list";
 import {getSideMenu, isVideoView} from "../../../../+state/view/view.selectors";
 import {IMenuItem} from "../../../../+state/view/view.reducer";
-import {selectSideMenu} from "../../../../+state/view/view.actions";
+import {selectSideMenu, setAllowRecognition} from "../../../../+state/view/view.actions";
 import {
   getSelectedId,
   getTargetsList, getTargetsListCoordinate,
 } from "../../../../+state/targets/targets.selectors";
+import {
+  getAllowRecognition,
+} from "../../../../+state/view/view.selectors";
 import {setActiveTarget} from "../../../../+state/targets/targets.actions";
 import {CoordinatesMessagesService} from "../../../buttonsVideo/services/cognitionEvents.service";
 
@@ -63,7 +66,11 @@ export class ControlVideoTestContainer implements OnInit, AfterViewInit  {
   getTargetsData$ = this.store.select(getTargetsList);
   getTargetCoordinates$ = this.store.select(getTargetsListCoordinate);
   getSelectedId$ = this.store.select(getSelectedId);
+  allowRecognition$ = this.store.select(getAllowRecognition);
 
+  setAllowRecognition() {
+    this.store.dispatch(setAllowRecognition());
+  }
 
   selectMenu(menuItem: IMenuItem) {
     this.store.dispatch(selectSideMenu({menuItem}));
@@ -79,5 +86,15 @@ export class ControlVideoTestContainer implements OnInit, AfterViewInit  {
 
   buttonClick(selectedId: number) {
     this.store.dispatch(setActiveTarget({selectedId}));
+
+    this.store.dispatch(sendDirection({
+      direction: 'VERTICALSTOP',
+      m: 2
+    }));
+
+    this.store.dispatch(sendDirection({
+      direction: 'HORIZONTALSTOP',
+      m: 2
+    }));
   }
 }

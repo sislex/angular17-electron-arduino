@@ -8,6 +8,11 @@ export const getSideMenu = createSelector(
   (state: IViewState) => state.sideMenu
 );
 
+export const getAllowRecognition = createSelector(
+  selectFeature,
+  (state: IViewState) => state.allowRecognition
+);
+
 export const getSelectedSideMenuItem = createSelector(
   selectFeature,
   (state: IViewState) => state.sideMenu.find(item => item.isSelected)

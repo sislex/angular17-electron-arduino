@@ -5,16 +5,16 @@ import {
   addCoordinates,
   addCoordinatesData,
   matchingTargets,
-  // setActiveTarget, setNewActiveTarget,
-  setNewTargetsList
+  setNewTargetsList,
 } from './targets.actions';
 import { Store } from '@ngrx/store';
 import {
   getCurrentCoordinatesNumber,
-  getNumberOfCoordinates, getOverageRecognitionTime,
+  getNumberOfCoordinates,
+  getOverageRecognitionTime,
   getCoordinatesList,
   getTargetsList,
-  getLastDistanceList, getCoordinateList,
+  getLastDistanceList,
 } from './targets.selectors';
 import {ICoordinatesItem} from './targets.reducer';
 import { ProcessingObjectData } from '../../skins/buttonsVideo/services/processingObjectData.service';
@@ -77,26 +77,6 @@ export class TargetsEffects {
       dispatch: false,
     }
   );
-
-  // setActiveNewTarget$ = createEffect(() =>
-  //     this.actions$.pipe(
-  //       ofType( setActiveTarget ),
-  //       concatLatestFrom(() => this.store.select( getTargetsList )),
-  //       tap(([{target}, coordinatesList]) => {
-  //         console.log('На входе', coordinatesList)
-  //         const newActiveTargets = coordinatesList.map(item => ({
-  //           ...item,
-  //           selected: item === target
-  //         }));
-  //         this.store.dispatch(setNewActiveTarget({
-  //           targetsList: newActiveTargets
-  //
-  //         }));
-  //         console.log('На выходе', newActiveTargets)
-  //       })
-  //     ),
-  //   {dispatch: false}
-  // );
 
   matchingTargets$ = createEffect(() =>
     this.actions$.pipe(

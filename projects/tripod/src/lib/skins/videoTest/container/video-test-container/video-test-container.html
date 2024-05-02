@@ -4,7 +4,14 @@
 <div class="display-flex">
   <div class="image-wrapper">
     @if ((getSelectedSideMenuItem$ | async)!.data.isVideo) {
-      <video #content autoplay playsinline (playing)="contentReady()" [src]="(getSelectedSideMenuItem$ | async)!.data?.src"></video>
+      <video #content autoplay playsinline
+             (playing)="contentReady()"
+             (ended)="stopRecognition(false)"
+             [src]="(getSelectedSideMenuItem$ | async)!.data?.src" controls>
+      </video>
+      <button (click)="content.play(); stopRecognition(true)">Play</button>
+      <button (click)="content.pause(); stopRecognition(false)">Pause</button>
+      <button (click)="content.load(); stopRecognition(true)">Restart</button>
     } @else {
     }
     @if (isContentReady && !!(getTargetsStyles$ | async) && (getTargetsStyles$ | async)!.length > 0) {
@@ -12,5 +19,6 @@
         <rectangle [style]="target"></rectangle>
       }
     }
+
   </div>
 </div>

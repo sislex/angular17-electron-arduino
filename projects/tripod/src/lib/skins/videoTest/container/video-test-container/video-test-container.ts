@@ -14,7 +14,9 @@ import {getImageData} from '../../../../../../../app/src/lib/halpers/images-util
 import {Subject, take, takeUntil} from 'rxjs';
 import {getIntervalTime} from '../../../../../../../app/src/lib/halpers/coordinates-utils';
 import {addCoordinates} from '../../../../+state/targets/targets.actions';
-import {getSelectedSideMenuItem} from "../../../../+state/view/view.selectors";
+import {getAllowRecognition, getSelectedSideMenuItem} from "../../../../+state/view/view.selectors";
+import {ICoordinatesItem} from "../../../../+state/targets/targets.reducer";
+import {setIsRecognition} from "../../../../+state/view/view.actions";
 
 @Component({
   selector: 'video-test-container',
@@ -38,7 +40,7 @@ export class VideoTestContainer implements OnDestroy {
   getOverageRecognitionTime$ = this.store.select(getOverageRecognitionTime);
   getTheDistanceToTheCenterOfTheNearestTarget$ = this.store.select(getTheDistanceToTheCenterOfTheNearestTarget);
   getSelectedSideMenuItem$ = this.store.select(getSelectedSideMenuItem).pipe(take(1));
-
+  allowRecognition$ = this.store.select(getAllowRecognition);
 
 
   private destroy$ = new Subject<void>();
@@ -46,6 +48,8 @@ export class VideoTestContainer implements OnDestroy {
   isContentReady = false;
   workerIsReady = false;
   isRecognizing = false;
+  recognizing = true;
+
 
   private cameraSize: {width: number, height: number} = {
     width:  320,
@@ -66,11 +70,25 @@ export class VideoTestContainer implements OnDestroy {
     this.recognitionWorkerService.getWorkerMessages().pipe(takeUntil(this.destroy$)).subscribe((message) => {
       this.events(message);
     });
+
+    this.allowRecognition$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.recognizing = value;
+      if (this.recognizing) {
+        this.sendImage()
+      }
+    });
   }
 
-  ngOnDestroy() {
+  stopRecognition(event$: boolean){
+    this.store.dispatch(setIsRecognition({allowRecognition: event$}));
+    if (!event$) {
+      this.sendImage()
+    }
+  }
+
+    ngOnDestroy() {
     if (this.contentElement && this.contentElement.nativeElement) {
-      this.isContentReady = false;
+        this.isContentReady = false;
       const contentElement = this.contentElement.nativeElement;
       contentElement.src = '';
     }
@@ -78,7 +96,7 @@ export class VideoTestContainer implements OnDestroy {
   }
 
   sendImage() {
-    if (this.isContentReady && this.workerIsReady) {
+    if (this.isContentReady && this.workerIsReady && this.recognizing) {
       this.isRecognizing = true;
 
       const element: any = this.contentElement.nativeElement;
@@ -105,10 +123,12 @@ export class VideoTestContainer implements OnDestroy {
 
   contentReady() {
     this.isContentReady = true;
-    if (!this.isRecognizing) {
+    if (!this.isRecognizing ) {
       this.sendImage();
     }
   }
+
+
 
   events(message: any) {
     // console.log(message);
@@ -118,7 +138,7 @@ export class VideoTestContainer implements OnDestroy {
       this.cdr.detectChanges();
 
       this.getSelectedSideMenuItem$.pipe(take(1)).subscribe((selectedItem) => {
-        const recognitionInterval = selectedItem?.data.recognitionInterval;
+        let recognitionInterval = selectedItem?.data.recognitionInterval;
 
         if (recognitionInterval > 0) {
           setTimeout(() => {
@@ -128,5 +148,7 @@ export class VideoTestContainer implements OnDestroy {
       });
     }
   }
+
+
 
 }

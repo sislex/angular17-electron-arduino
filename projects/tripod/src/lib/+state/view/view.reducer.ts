@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { setSideMenu } from './view.actions';
+import * as ViewAction from './view.actions';
+import {setAllowRecognition} from "./view.actions";
 
 export const VIEW_FEATURE_KEY = 'view';
 
@@ -10,10 +11,12 @@ export interface IMenuItem {
 }
 
 export interface IViewState {
+  allowRecognition: boolean;
   sideMenu: IMenuItem[];
 }
 
 export const initialViewState: IViewState = {
+  allowRecognition: true,
   sideMenu:  [
     {name: 'Image from video', data: {src: 'assets/videos/people.mp4', isVideo: true, scaleRecognition: 2, recognitionInterval: 500}},
   ],
@@ -21,5 +24,7 @@ export const initialViewState: IViewState = {
 
 export const viewReducer = createReducer(
   initialViewState,
-  on(setSideMenu, (state, {sideMenu}) => ({...state, sideMenu})),
+  on(ViewAction.setSideMenu, (state, {sideMenu}) => ({...state, sideMenu})),
+  on(ViewAction.setAllowRecognition, (state) => ({...state, allowRecognition: !state.allowRecognition})),
+  on(ViewAction.setIsRecognition, (state, {allowRecognition}) => ({...state, allowRecognition})),
 );

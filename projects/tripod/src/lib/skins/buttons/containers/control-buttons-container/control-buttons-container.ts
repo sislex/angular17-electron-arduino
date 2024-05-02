@@ -3,7 +3,6 @@ import {H100LayoutComponent, PageLayoutComponent} from '../../../../../../../ui/
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
 import { NavPanelContainer } from '../nav-panel-container/nav-panel-container';
 import { StepsButtonComponent } from '../../../../../../../ui/src/lib/components/steps-button/steps-button.component';
@@ -42,13 +41,10 @@ export class ControlButtonsContainer implements OnInit, AfterViewInit {
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
-  private timerId: any;
-  private isLongPress: boolean = false;
-
   constructor(
     private readonly store: Store<MoveViewSkinState>,
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
-    ) {}
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(initSkin());
@@ -70,50 +66,76 @@ export class ControlButtonsContainer implements OnInit, AfterViewInit {
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
-      // this.store.dispatch(sendMessageToDevice({
-      //   message: {
-      //     event: 'SET',
-      //     data: {d1: $event.data.data}
-      //   },
-      // }));
       this.store.dispatch(setActiveDelay1({
         delay1: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay2') {
       this.keyboardEventsArea.nativeElement.focus();
-      // this.store.dispatch(sendMessageToDevice({
-      //   message: {
-      //     event: 'SET',
-      //     data: {d2: $event.data.data}
-      //   },
-      // }));
       this.store.dispatch(setActiveDelay2({
         delay2: $event.data
       }));
     }
 
-    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown') {
-      this.timerId = setTimeout(() => {
-        this.isLongPress = true;
-        this.store.dispatch(sendDirection({
-          direction: $event.data,
-          m: 2
-        }));
-      }, 170);
-    } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup') {
-      clearTimeout(this.timerId);
-      if (!this.isLongPress) {
-        this.store.dispatch(sendDirection({
-          direction: $event.data,
-          m: 1
-        }));
-      } else {
-        this.store.dispatch(sendDirection({
-        direction: $event.data,
+    let isArrowLeftDown = false;
+    let isArrowRightDown = false;
+    let isArrowUpDown = false;
+    let isArrowDownDown = false;
+
+    if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown' && $event.data === 'LEFT') {
+      isArrowLeftDown = true;
+      this.store.dispatch(sendDirection({
+        direction: 'LEFT',
         m: 2
-        }));
-      }
-      this.isLongPress = false;
+      }));
+    } else if (($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup' && $event.data === 'LEFT')) {
+      isArrowLeftDown = false;
+      this.store.dispatch(sendDirection({
+        direction: 'HORIZONTALSTOP',
+        m: 2
+      }));
+    }
+
+    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown' && $event.data === 'RIGHT') {
+      isArrowRightDown = true;
+      this.store.dispatch(sendDirection({
+        direction: 'RIGHT',
+        m: 2
+      }));
+    } else if (($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup' && $event.data === 'RIGHT')) {
+      isArrowRightDown = false;
+      this.store.dispatch(sendDirection({
+        direction: 'HORIZONTALSTOP',
+        m: 2
+      }));
+    }
+
+    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown' && $event.data === 'UP') {
+      isArrowUpDown = true;
+      this.store.dispatch(sendDirection({
+        direction: 'UP',
+        m: 2
+      }));
+
+    } else if (($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup' && $event.data === 'UP')) {
+      isArrowUpDown = false;
+      this.store.dispatch(sendDirection({
+        direction: 'VERTICALSTOP',
+        m: 2
+      }));
+    }
+
+    else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mousedown' && $event.data === 'DOWN') {
+      isArrowDownDown = true;
+      this.store.dispatch(sendDirection({
+        direction: 'DOWN',
+        m: 2
+      }));
+    } else if ($event.event === 'ControlButtonsComponent:BUTTON_CLICKED' && $event.note === 'mouseup' && $event.data === 'DOWN') {
+      isArrowDownDown = false;
+      this.store.dispatch(sendDirection({
+        direction: 'VERTICALSTOP',
+        m: 2
+      }));
     }
   }
 }

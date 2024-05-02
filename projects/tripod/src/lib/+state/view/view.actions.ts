@@ -10,3 +10,12 @@ export const setSideMenu = createAction(
   '[View] setSideMenu',
   props<{ sideMenu: IMenuItem[] }>()
 );
+
+export const setAllowRecognition = createAction(
+  '[View] setAllowRecognition',
+);
+
+export const setIsRecognition = createAction(
+  '[View] setIsRecognition',
+  props<{ allowRecognition: boolean }>()
+);
