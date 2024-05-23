@@ -13,7 +13,6 @@ import {
 } from './move-view-skin.actions';
 import {getActiveDelay1, getActiveDelay2, getDelay1, getDelay2, getDirection, getDisplayTargets, getOrientation, getQuality, getResolution, getSendDirection, getSteps, getTargets, getZoom} from './move-view-skin.selectors';
 import { sendMessageToDevice } from '../../../messages/messages.actions';
-import { ProcessingObjectData } from '../../../../skins/buttonsVideo/services/processingObjectData.service';
 
 @Injectable()
 export class SetButtonEffects {
@@ -205,31 +204,31 @@ export class SetButtonEffects {
       ofType(sendDirection),
       concatLatestFrom(() => this.store.select(getDirection)),
       tap(([{direction}, directionState]) => {
+
+        console.log('Пришло в эффект из сервиса', direction);
+        console.log('Старое направление использ в эффекте', directionState);
+
         let newDirectionState = {...directionState};
         if (direction === 'LEFT') {
-          newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? -1 : newDirectionState.s1};
+          newDirectionState = {...newDirectionState, s1: -1 };
         } else if (direction === 'RIGHT') {
-          newDirectionState = {...newDirectionState, s1: newDirectionState.s1 === 0 ? 1 : newDirectionState.s1};
+          newDirectionState = {...newDirectionState, s1: 1};
         } else if (direction === 'DOWN') {
-          newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? -1 : newDirectionState.s2};
+          newDirectionState = {...newDirectionState, s2: -1};
         } else if (direction === 'UP') {
-          newDirectionState = {...newDirectionState, s2: newDirectionState.s2 === 0 ? 1 : newDirectionState.s2};
+          newDirectionState = {...newDirectionState, s2: 1};
         } else if (direction === 'HORIZONTALSTOP') {
           newDirectionState = {...newDirectionState, s1: 0};
         } else if (direction === 'VERTICALSTOP') {
           newDirectionState = {...newDirectionState, s2: 0};
         }
-        console.log('новый дирекшн',newDirectionState)
         this.store.dispatch(setDirection({
           direction: newDirectionState
         }));
-
         this.store.dispatch(sendDataMove());
-        // console.log('setDirection', newDirectionState)
       })
     ), {dispatch: false}
   );
-
 
   sendDataMove$ = createEffect(() =>
     this.actions$.pipe(
@@ -239,8 +238,6 @@ export class SetButtonEffects {
       this.store.select( getDirection ),
     ]),
     tap(([, sendDirection, direction]) => {
-      // console.log( 'новый получили', direction )
-      // console.log( 'старый получили', sendDirection )
       if (
         sendDirection.s1 != direction.s1
         || sendDirection.s2 != direction.s2
@@ -248,6 +245,7 @@ export class SetButtonEffects {
         || sendDirection.d2 != direction.d2
       ) {
         console.log('ОБНОВЛЕНИЕ НА', direction)
+
         this.store.dispatch(setSendDirection({
           sendDirection: direction
         }));

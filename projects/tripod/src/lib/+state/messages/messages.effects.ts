@@ -76,7 +76,7 @@ export class MessagesEffects {
               },
             }
           }));
-          
+
           this.store.dispatch(setLog({
             log: {
               timestamp: new Date().toISOString(),

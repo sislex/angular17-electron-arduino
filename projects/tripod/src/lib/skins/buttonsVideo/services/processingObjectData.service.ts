@@ -33,8 +33,6 @@ export class ProcessingObjectData {
     let newTargetList: ITarget[] = [];
     let lastId = this.getLastId(targets);
 
-    console.log('1', coordinates)
-
     if (targets.length === 0) {
       newTargetList = coordinates.map((coordinate) => {
         return new Target(++lastId, coordinate);
@@ -91,7 +89,7 @@ export class ProcessingObjectData {
 
       newTargetList.push(...noMatchCoordinates);
     }
-    console.log(newTargetList)
+    // console.log(newTargetList)
     return newTargetList
   }
 

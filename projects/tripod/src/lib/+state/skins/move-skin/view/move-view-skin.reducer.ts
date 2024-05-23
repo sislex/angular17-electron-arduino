@@ -109,8 +109,10 @@ export const MoveViewSkinReducer = createReducer(
     initialState,
     on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
     on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, stargets: targetsList })),
-    on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction: direction })),
-    on(ViewSkinActions.setSendDirection, (state, {sendDirection}) => ({ ...state, sendDirection: sendDirection })),
+    on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction })),
+    on(ViewSkinActions.setSendDirection, (state, {sendDirection}) => (
+      console.log('Устанавиливается новый дирекшн', sendDirection),
+      { ...state, sendDirection})),
     on(ViewSkinActions.setDelayList1, (state, {activeDelayList1}) => ({ ...state, delay1: activeDelayList1})),
     on(ViewSkinActions.setDelayList2, (state, {activeDelayList2}) => ({ ...state, delay2: activeDelayList2 })),
     on(ViewSkinActions.setDelay2, (state, {delay}) => ({ ...state, direction: {...state.direction, d2: delay} })),
