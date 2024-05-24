@@ -1,10 +1,20 @@
 import {createAction, props} from '@ngrx/store';
-import {ICoordinatesItem} from './targets.reducer';
+import {ICoordinatesItem, ITarget} from './targets.reducer';
 
 export const addCoordinates = createAction(
   '[Targets] addCoordinates',
   props<{ recognitionData: {coordinates: ICoordinatesItem[], recognitionTime: number} }>()
 );
+
+export const setActiveTarget = createAction(
+  '[Targets] setActiveTarget',
+  props<{ selectedId: number }>()
+);
+
+// export const setNewActiveTarget = createAction(
+//   '[Targets] setNewActiveTarget',
+//   props<{ targetsList: ITarget[] }>()
+// );
 
 export const addCoordinatesData = createAction(
   '[Targets] addCoordinatesData',
@@ -13,6 +23,19 @@ export const addCoordinatesData = createAction(
       currentCoordinatesNumber: number,
       overageRecognitionTime: number,
     } }>()
+);
+
+export const matchingTargets = createAction(
+  '[Targets] matchingTargets',
+);
+
+export const setNewTargetsList = createAction(
+  '[Targets] setNewTargetsList',
+  props<{ newTargetsList: ITarget[] }>()
+);
+
+export const checkNewTargetsList = createAction(
+  '[Targets] checkNewTargetsList',
 );
 
 export const setCoordinatesList = createAction(

@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
+import { Injectable } from '@angular/core';
 import { sendMessageToDevice } from '../../../+state/messages/messages.actions';
 import { sendDirection, setCtrl, setShift } from '../../../+state/skins/move-skin/view/move-view-skin.actions';
 
@@ -19,7 +19,6 @@ export class SkinMoveKeyboardEventsService {
   }
 
   events(message: any, note: any) {
-    // console.log('message', message);
     if (message.key === 'Control' && note === 'down' && !this.isCtrlDown) {
       this.isCtrlDown = true;
       this.store.dispatch(setCtrl({
@@ -30,9 +29,7 @@ export class SkinMoveKeyboardEventsService {
       this.store.dispatch(setCtrl({
         isCtrl: false
       }));
-    }
-
-    else if (message.key === 'Shift' && note === 'down' && !this.isShiftDown) {
+    } else if (message.key === 'Shift' && note === 'down' && !this.isShiftDown) {
       this.isShiftDown = true;
       this.store.dispatch(setShift({
         isShift: true
@@ -42,9 +39,7 @@ export class SkinMoveKeyboardEventsService {
       this.store.dispatch(setShift({
         isShift: false
       }));
-    }
-
-    else if (message.key === 'ArrowLeft' && note === 'down' && !this.isArrowLeftDown) {
+    } else if (message.key === 'ArrowLeft' && note === 'down' && !this.isArrowLeftDown) {
       this.isArrowLeftDown = true;
       this.store.dispatch(sendDirection({
         direction: 'LEFT',
@@ -53,12 +48,10 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowLeft' && note === 'up') {
       this.isArrowLeftDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'LEFT',
+        direction: 'HORIZONTALSTOP',
         m: 2
       }));
-    }
-
-    else if (message.key === 'ArrowRight' && note === 'down' && !this.isArrowRightDown) {
+    } else if (message.key === 'ArrowRight' && note === 'down' && !this.isArrowRightDown) {
       this.isArrowRightDown = true;
       this.store.dispatch(sendDirection({
         direction: 'RIGHT',
@@ -67,12 +60,10 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowRight' && note === 'up') {
       this.isArrowRightDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'RIGHT',
+        direction: 'HORIZONTALSTOP',
         m: 2
       }));
-    }
-
-    else if (message.key === 'ArrowUp' && note === 'down' && !this.isArrowUpDown) {
+    } else if (message.key === 'ArrowUp' && note === 'down' && !this.isArrowUpDown) {
       this.isArrowUpDown = true;
       this.store.dispatch(sendDirection({
         direction: 'UP',
@@ -81,12 +72,10 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowUp' && note === 'up') {
       this.isArrowUpDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'UP',
+        direction: 'VERTICALSTOP',
         m: 2
       }));
-    }
-
-    else if (message.key === 'ArrowDown' && note === 'down' && !this.isArrowDownDown) {
+    } else if (message.key === 'ArrowDown' && note === 'down' && !this.isArrowDownDown) {
       this.isArrowDownDown = true;
       this.store.dispatch(sendDirection({
         direction: 'DOWN',
@@ -95,7 +84,7 @@ export class SkinMoveKeyboardEventsService {
     } else if (message.key === 'ArrowDown' && note === 'up') {
       this.isArrowDownDown = false;
       this.store.dispatch(sendDirection({
-        direction: 'DOWN',
+        direction: 'VERTICALSTOP',
         m: 2
       }));
     }

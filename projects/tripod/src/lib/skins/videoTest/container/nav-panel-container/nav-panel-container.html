@@ -1,0 +1,5 @@
+<nav-device
+  [skinSettings]="['Video IP']"
+  [skinsList]="(getSkinsList$ | async) || []"
+  (emitter)="events($event)">
+</nav-device>

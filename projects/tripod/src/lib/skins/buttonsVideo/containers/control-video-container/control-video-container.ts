@@ -3,13 +3,12 @@ import { PageLayoutComponent } from '../../../../../../../ui/src/public-api';
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
 import {
   getDelayModify1, getDelayModify2, getDisplayTargets, getOrientation,
   getQuality,
   getResolution,
-  getSteps, getTargets, getVideoUrl, getZoom
+  getSteps, getTargets, getZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {MoveViewSkinState} from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
 import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardEvents.service';
@@ -25,7 +24,8 @@ import {RequestsService} from '../../services/requests.service';
 import {VideoContainerComponent} from '../video-conteiner/video-container.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
-// import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
+import { getTheDistanceToTheCenterOfTheNearestTarget } from '../../../../+state/targets/targets.selectors';
+import { CoordinatesMessagesService } from '../../services/cognitionEvents.service';
 
 @Component({
   selector: 'control-video-container',
@@ -56,7 +56,8 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
   getOrientation$ = this.store.select(getOrientation);
   targets$ = this.store.select(getTargets);
   displayTargets$ = this.store.select(getDisplayTargets);
-  // targetsList$ = this.store.select(getTargetsList);
+  targetCoordinates$ = this.store.select(getTheDistanceToTheCenterOfTheNearestTarget);
+
 
   @ViewChild('keyboardEventsArea') keyboardEventsArea!: ElementRef;
 
@@ -68,7 +69,14 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
     private readonly store: Store<MoveViewSkinState>,
     private skinMoveKeyboardEventsService: SkinMoveKeyboardEventsService,
     private requestsService: RequestsService,
-  ) {}
+    private coordinatesMessagesService: CoordinatesMessagesService,
+  ) {
+    this.targetCoordinates$.subscribe((coordinates) => {
+      if (coordinates) {
+        this.coordinatesMessagesService.sendCoordinates(coordinates);
+      }
+    })
+  }
 
   ngOnInit() {
     this.store.dispatch(initSkin());
@@ -89,11 +97,7 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
         steps: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'targets') {
-      if ($event.data.data == true ) {
-        this.eventTargetsTrue = true;
-      } else {
-        this.eventTargetsTrue = false;
-      };
+      this.eventTargetsTrue = $event.data.data;
       this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(setActiveTargets({
         targets: $event.data
@@ -105,23 +109,11 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
-      this.store.dispatch(sendMessageToDevice({
-        message: {
-          event: 'SET',
-          data: {d1: $event.data.data}
-        },
-      }));
       this.store.dispatch(setActiveDelay1({
         delay1: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay2') {
       this.keyboardEventsArea.nativeElement.focus();
-      this.store.dispatch(sendMessageToDevice({
-        message: {
-          event: 'SET',
-          data: {d2: $event.data.data}
-        },
-      }));
       this.store.dispatch(setActiveDelay2({
         delay2: $event.data
       }));

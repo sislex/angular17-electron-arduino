@@ -1,0 +1,22 @@
+<h2>{{(getSelectedSideMenuItem$ | async)!.name}}</h2>
+<p class="sr-only">OverageRecognitionTime: {{getOverageRecognitionTime$ | async}}</p>
+<p class="sr-only">Distance to center: {{(getTheDistanceToTheCenterOfTheNearestTarget$ | async) | json}}</p>
+<div class="display-flex">
+  <div class="image-wrapper">
+    @if ((getSelectedSideMenuItem$ | async)!.data.isVideo) {
+      <video #content autoplay playsinline
+             (playing)="contentReady()"
+             (ended)="stopRecognition(false)"
+             [src]="(getSelectedSideMenuItem$ | async)!.data?.src" controls>
+      </video>
+      <button (click)="content.play(); stopRecognition(true)">Play</button>
+      <button (click)="content.pause(); stopRecognition(false)">Pause</button>
+      <button (click)="content.load(); stopRecognition(true)">Restart</button>
+    } @else {}
+    @if (isContentReady && !!(getTargetsStyles$ | async) && (getTargetsStyles$ | async)!.length > 0) {
+      @for (target of (getTargetsStyles$ | async); track target) {
+        <rectangle [style]="target"></rectangle>
+      }
+    }
+  </div>
+</div>

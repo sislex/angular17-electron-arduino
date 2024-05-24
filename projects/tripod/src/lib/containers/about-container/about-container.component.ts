@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { AboutComponent } from '../../../../../ui/src/lib/components/about/about.component';
 import { Store } from '@ngrx/store';

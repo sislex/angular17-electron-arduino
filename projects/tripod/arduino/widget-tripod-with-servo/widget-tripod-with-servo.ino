@@ -1,6 +1,9 @@
 #include <ArduinoJson.h>
 #include <AccelStepper.h>
 #include <MultiStepper.h>
+#include <Servo.h>
+
+#define Servo_PWM 3 // определяем пин D6 для ШИМ-сигнала
 
 // Определите номера шага и направления для двух моторов
 #define motor1Step 2
@@ -35,9 +38,6 @@ class Info {
         StaticJsonDocument<1024> doc;
         doc["type"] = type;
         doc["s1"] = s1;
-//         doc["s2"] = s2;
-        // doc["d1"] = d1;
-        // doc["d2"] = d2;
 
         String output;
         serializeJson(doc, output);
@@ -64,14 +64,19 @@ Info info("tripod", 0, 0, 1, 1);
 AccelStepper stepper1(AccelStepper::DRIVER, motor1Step, motor1Dir);
 AccelStepper stepper2(AccelStepper::DRIVER, motor2Step, motor2Dir);
 
+Servo MG995_Servo;
+
 String inputString = "";         // строка для хранения входящих данных
 bool stringComplete = false;     // флаг, указывающий, что строка полностью прочитана
 unsigned long previousMillis1 = 0;
 unsigned long previousMillis2 = 0;
 
+bool isMoving = false;
+unsigned long moveInterval = 50; // время движения в миллисекундах
+unsigned long stopInterval = 100; // время остановки в миллисекундах
+unsigned long currentInterval = moveInterval; // текущий интервал
+
 void setup() {
-
-
   Serial.begin(9600);
   inputString.reserve(200);      // резервируем место для входной строки
 
@@ -107,20 +112,7 @@ void eventSerial() {
 
 int getSteps(const int currentSteps, const int newSteps, const int mode) {
   int steps = currentSteps;
-  if (newSteps != 0) {
-    if (mode == 1) {
-      steps += newSteps;
-    } else {
-     if (mode == 2) {
-       if (currentSteps == newSteps) { // stop engine
-        steps = 0;
-       } else {
-        steps = newSteps;
-       }
-     }
-    }
-  }
-
+    steps = newSteps;
   return steps;
 }
 
@@ -163,14 +155,27 @@ void move() {
 
   if (info.s2 != 0) {
     unsigned long currentMillis2 = millis();
-    if (currentMillis2 - previousMillis2 >= info.d2) {
+    if (currentMillis2 - previousMillis2 >= currentInterval) {
       previousMillis2 = currentMillis2;
-
-      info.s2 = getStepsAndMoveEngine(info.s2, info.m, stepper2);
+      if (isMoving) {
+        MG995_Servo.detach(); // останавливаем серву
+        isMoving = false;
+        currentInterval = stopInterval; // устанавливаем интервал остановки
+      } else {
+        MG995_Servo.attach(3);
+        if (info.s2 == 1) {
+          MG995_Servo.write(100);
+        } else if (info.s2 == -1) {
+          MG995_Servo.write(80);
+        }
+        isMoving = true;
+        currentInterval = moveInterval; // устанавливаем интервал движения
+      }
     }
+  } else {
+    MG995_Servo.detach();
   }
 }
-
 
 void events(const String message) {
   StaticJsonDocument<200> doc;
@@ -191,7 +196,7 @@ void events(const String message) {
         info.m = m;
       }
 
-       if (d1 != 0) {
+      if (d1 != 0) {
         info.d1 = d1;
       }
 

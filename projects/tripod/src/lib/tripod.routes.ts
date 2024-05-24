@@ -14,6 +14,10 @@ import { ConfigEffects } from './+state/config/config.effects';
 import { TRIPOD_CONFIG_FEATURE_KEY, ConfigReducer } from './+state/config/config.reducer';
 import { MoveViewSkinReducer, TRIPOD_VIEW_SKIN_FEATURE_KEY } from './+state/skins/move-skin/view/move-view-skin.reducer';
 import { SetButtonEffects } from './+state/skins/move-skin/view/move-view-skin.effects';
+import {VIEW_FEATURE_KEY, viewReducer} from "./+state/view/view.reducer";
+import {TARGETS_FEATURE_KEY, targetsReducer} from "./+state/targets/targets.reducer";
+import {ViewEffects} from "./+state/view/view.effects";
+import {TargetsEffects} from "./+state/targets/targets.effects";
 
   export const tripodRoutes: Routes = [
     {
@@ -25,10 +29,15 @@ import { SetButtonEffects } from './+state/skins/move-skin/view/move-view-skin.e
         provideState(TRIPOD_COMMANDS_LIST_FEATURE_KEY, CommandsReducer),
         provideState(TRIPOD_SKIN_FEATURE_KEY, SkinReducer),
         provideState(TRIPOD_VIEW_SKIN_FEATURE_KEY, MoveViewSkinReducer),
+        provideState(TRIPOD_VIEW_SKIN_FEATURE_KEY, MoveViewSkinReducer),
+        provideState(VIEW_FEATURE_KEY, viewReducer),
+        provideState(TARGETS_FEATURE_KEY, targetsReducer),
         provideEffects([
           MessagesEffects,
           SetButtonEffects,
           ConfigEffects,
+          ViewEffects,
+          TargetsEffects,
         ]),
       ],
       children: [

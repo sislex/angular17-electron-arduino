@@ -13,14 +13,14 @@ export const setActiveStep = createAction(
   props<{ steps: IMoveSkin }>()
 );
 
-export const setDelay1 = createAction(
-  '[MoveViewSkin] setDelay1',
-  props<{ delayList1: IMoveSkin[] }>()
+export const setDelayList1 = createAction(
+  '[MoveViewSkin] setDelayList1',
+  props<{ activeDelayList1: IMoveSkin[] }>()
 );
 
-export const setDelay2 = createAction(
-  '[MoveViewSkin] setDelay2',
-  props<{ delayList2: IMoveSkin[] }>()
+export const setDelayList2 = createAction(
+  '[MoveViewSkin] setDelayList2',
+  props<{ activeDelayList2: IMoveSkin[] }>()
 );
 
 export const setQuality = createAction(
@@ -73,9 +73,33 @@ export const setActiveOrientation = createAction(
   props<{ orientation: IMoveSkin }>()
 );
 
+export const sendDataMove = createAction(
+  '[MoveViewSkin] sendDataMove',
+);  
+
 export const sendDirection = createAction(
   '[MoveViewSkin] sendDirection',
   props<{ direction: string, m: number }>()
+);  
+
+export const setDirection = createAction(
+  '[Move View Skin] setDirection',
+  props<{ direction: {s1: number, s2: number, d1: number, d2: number} }>()
+);
+
+export const setSendDirection = createAction(
+  '[Move View Skin] setSendDirection',
+  props<{ sendDirection: {s1: number, s2: number, d1: number, d2: number} }>()
+);
+
+export const setDelay1 = createAction(
+  '[Move View Skin] setDelay1',
+  props<{ delay: number }>()
+);
+
+export const setDelay2 = createAction(
+  '[Move View Skin] setDelay2',
+  props<{ delay: number }>()
 );
 
 export const setShift = createAction(

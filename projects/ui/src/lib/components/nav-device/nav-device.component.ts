@@ -10,13 +10,15 @@ import { UserListComponent } from '../user-list/user-list.component';
 @Component({
   selector: 'nav-device',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
     MatMenuModule,
-    UserListComponent],
+    UserListComponent
+  ],
   templateUrl: './nav-device.component.html',
   styleUrl: './nav-device.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

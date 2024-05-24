@@ -1,0 +1,46 @@
+<page-layout>
+  <nav-panel-container toplBar></nav-panel-container>
+  <mat-sidenav-container class="example-container" body>
+    <mat-sidenav mode="side" opened>
+      <div class="controls">
+        <mat-accordion>
+          <mat-nav-list>
+            <a mat-list-item (click)="setAllowRecognition()">
+              @if ((allowRecognition$|async)){
+                Stop Recognition
+              } @else {
+                Start Recognition
+              }
+            </a>
+            @for (menuItem of getSideMenu$ | async; track menuItem.name) {
+              <a
+                mat-list-item
+                [disabled]="menuItem.isSelected"
+                (click)="selectMenu(menuItem)"
+              >{{menuItem.name}}</a>
+            }
+            @for (target of ((getTargetsData$ | async)); track target.id) {
+              @if (target.counter > 10) {
+                <a mat-list-item [disabled]="(getSelectedId$|async) === target.id"
+                   (click)="buttonClick(target.id)">Tatget: {{target.id}}, {{target.counter}}</a>
+              }
+            }
+            <div class="bottom">
+              @if ((getSelectedId$|async) != -1){
+                <a mat-list-item (click)="buttonClick(-1)">Stop Target</a>
+              }
+            </div>
+          </mat-nav-list>
+        </mat-accordion>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+      @if (isVideoView$ | async) {
+        <video-test-container></video-test-container>
+      }
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</page-layout>
+
