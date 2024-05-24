@@ -7,7 +7,6 @@ import { sendDirection } from '../../../+state/skins/move-skin/view/move-view-sk
 })
 export class CoordinatesMessagesService {
 
-
   constructor(
     private readonly store: Store,
   ) {}
@@ -17,10 +16,7 @@ export class CoordinatesMessagesService {
       direction: direction,
       m: 2
     }));
-    console.log('Отправили месседж из сервиса', direction);
   }
-
-
 
   sendCoordinates(coordinates: {top: number; left: number; radius: number}) {
     const { left, top } = coordinates;

@@ -89,7 +89,6 @@ export class ProcessingObjectData {
 
       newTargetList.push(...noMatchCoordinates);
     }
-    // console.log(newTargetList)
     return newTargetList
   }
 

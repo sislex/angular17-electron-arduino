@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Injectable } from '@angular/core';
 import { sendMessageToDevice } from '../../../+state/messages/messages.actions';
 import { sendDirection, setCtrl, setShift } from '../../../+state/skins/move-skin/view/move-view-skin.actions';
 
@@ -19,7 +19,6 @@ export class SkinMoveKeyboardEventsService {
   }
 
   events(message: any, note: any) {
-    // console.log('message', message);
     if (message.key === 'Control' && note === 'down' && !this.isCtrlDown) {
       this.isCtrlDown = true;
       this.store.dispatch(setCtrl({

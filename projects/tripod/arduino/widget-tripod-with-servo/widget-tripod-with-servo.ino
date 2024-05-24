@@ -5,8 +5,6 @@
 
 #define Servo_PWM 3 // определяем пин D6 для ШИМ-сигнала
 
-
-
 // Определите номера шага и направления для двух моторов
 #define motor1Step 2
 #define motor1Dir 5
@@ -40,9 +38,6 @@ class Info {
         StaticJsonDocument<1024> doc;
         doc["type"] = type;
         doc["s1"] = s1;
-//         doc["s2"] = s2;
-        // doc["d1"] = d1;
-        // doc["d2"] = d2;
 
         String output;
         serializeJson(doc, output);
@@ -82,8 +77,6 @@ unsigned long stopInterval = 100; // время остановки в милли
 unsigned long currentInterval = moveInterval; // текущий интервал
 
 void setup() {
-
-
   Serial.begin(9600);
   inputString.reserve(200);      // резервируем место для входной строки
 
@@ -94,9 +87,6 @@ void setup() {
 void loop() {
   getMessagesFromSerial();
   move();
-
-
-
 }
 
 void getMessagesFromSerial() {
@@ -163,32 +153,28 @@ void move() {
     }
   }
 
-
-
-if (info.s2 != 0) {
-  unsigned long currentMillis2 = millis();
-  if (currentMillis2 - previousMillis2 >= currentInterval) {
-    previousMillis2 = currentMillis2;
-    if (isMoving) {
-      MG995_Servo.detach(); // останавливаем серву
-      isMoving = false;
-      currentInterval = stopInterval; // устанавливаем интервал остановки
-    } else {
-      MG995_Servo.attach(3);
-      if (info.s2 == 1) {
-        MG995_Servo.write(100);
-      } else if (info.s2 == -1) {
-        MG995_Servo.write(80);
+  if (info.s2 != 0) {
+    unsigned long currentMillis2 = millis();
+    if (currentMillis2 - previousMillis2 >= currentInterval) {
+      previousMillis2 = currentMillis2;
+      if (isMoving) {
+        MG995_Servo.detach(); // останавливаем серву
+        isMoving = false;
+        currentInterval = stopInterval; // устанавливаем интервал остановки
+      } else {
+        MG995_Servo.attach(3);
+        if (info.s2 == 1) {
+          MG995_Servo.write(100);
+        } else if (info.s2 == -1) {
+          MG995_Servo.write(80);
+        }
+        isMoving = true;
+        currentInterval = moveInterval; // устанавливаем интервал движения
       }
-      isMoving = true;
-      currentInterval = moveInterval; // устанавливаем интервал движения
     }
+  } else {
+    MG995_Servo.detach();
   }
-} else {
-  MG995_Servo.detach();
-}
-
-
 }
 
 void events(const String message) {

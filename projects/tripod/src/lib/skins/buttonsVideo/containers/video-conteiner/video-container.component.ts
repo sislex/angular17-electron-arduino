@@ -119,7 +119,7 @@ export class VideoContainerComponent implements OnDestroy {
       this.store.dispatch(addCoordinates({recognitionData: $event.data}));
       this.cdr.detectChanges();
 
-      const recognitionInterval = 1000;
+      const recognitionInterval = 100;
 
       if (recognitionInterval > 0) {
         setTimeout(() => {

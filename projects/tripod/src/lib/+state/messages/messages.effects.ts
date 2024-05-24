@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { messageFromDevice, sendMessage } from '../../../../../app/src/lib/+state/messages/messages.actions';
 import { tap } from 'rxjs';
-import { messageForWidget, sendMessageToDevice, setLog } from './messages.actions';
+import { Store } from '@ngrx/store';
+import { Injectable } from '@angular/core';
 import { getDeviceName } from './messages.selectors';
 import { TripodMessagesPartialState } from './messages.reducer';
+import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
+import { messageForWidget, sendMessageToDevice, setLog } from './messages.actions';
 import { MessagesPartialState } from '../../../../../app/src/lib/+state/messages/messages.reducer';
+import { messageFromDevice, sendMessage } from '../../../../../app/src/lib/+state/messages/messages.actions';
 
 @Injectable()
 export class MessagesEffects {
@@ -95,5 +95,4 @@ export class MessagesEffects {
     private store: Store<TripodMessagesPartialState | MessagesPartialState>,
     private actions$: Actions,
   ) {}
-
 }

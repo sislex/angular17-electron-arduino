@@ -12,13 +12,11 @@
       <button (click)="content.play(); stopRecognition(true)">Play</button>
       <button (click)="content.pause(); stopRecognition(false)">Pause</button>
       <button (click)="content.load(); stopRecognition(true)">Restart</button>
-    } @else {
-    }
+    } @else {}
     @if (isContentReady && !!(getTargetsStyles$ | async) && (getTargetsStyles$ | async)!.length > 0) {
       @for (target of (getTargetsStyles$ | async); track target) {
         <rectangle [style]="target"></rectangle>
       }
     }
-
   </div>
 </div>

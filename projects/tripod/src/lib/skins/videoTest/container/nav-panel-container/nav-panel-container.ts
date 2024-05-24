@@ -22,7 +22,6 @@ export class NavPanelContainer {
   ) {}
 
   events($event: any) {
-    // console.log($event);
     if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.item === 'control') {
       this.store.dispatch(resetUserFromLocalStorageAndState()); // DELETE?
     } else  if ($event.event === 'NavDeviceComponent:BUTTON_CLICKED' && $event.data.item === 'cable') {

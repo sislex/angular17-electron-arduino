@@ -34,12 +34,12 @@ export class TargetsEffects {
           ],
         ),
         tap(([
-          {recognitionData},
+               {recognitionData},
                coordinatesList ,
                numberOfCoordinates,
                currentCoordinatesNumber,
                overageRecognitionTime,
-            ]) => {
+             ]) => {
           recognitionData = JSON.parse(JSON.stringify(recognitionData));
           recognitionData.coordinates = recognitionData.coordinates.map((item: ICoordinatesItem) => ({
             top: 1 * item.top,
@@ -48,7 +48,6 @@ export class TargetsEffects {
             height: 1 * item.height,
           }));
           currentCoordinatesNumber = currentCoordinatesNumber + 1;
-
           const newCoordinatesList = {
             ...coordinatesList,
             [currentCoordinatesNumber]: recognitionData.coordinates,
@@ -56,7 +55,6 @@ export class TargetsEffects {
           if (newCoordinatesList[currentCoordinatesNumber - numberOfCoordinates]) {
             delete newCoordinatesList[currentCoordinatesNumber - numberOfCoordinates];
           }
-
           if (overageRecognitionTime === 0) {
             overageRecognitionTime = recognitionData.recognitionTime;
           }
@@ -85,14 +83,12 @@ export class TargetsEffects {
         this.store.select( getTargetsList ),
         this.store.select( getLastDistanceList ),
       ]),
-  tap(([, oldTargetsList, newCoordinatesList]) => {
-    let newTargetsList = this.processingObjectData.processMatchingTargets(newCoordinatesList, oldTargetsList);
+      tap(([, oldTargetsList, newCoordinatesList]) => {
+        let newTargetsList = this.processingObjectData.processMatchingTargets(newCoordinatesList, oldTargetsList);
         this.store.dispatch(setNewTargetsList({newTargetsList}));
       })
     ), {dispatch: false}
   );
-
-
 
   constructor(
     private readonly store: Store,

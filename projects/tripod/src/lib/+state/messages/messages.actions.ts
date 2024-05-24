@@ -9,7 +9,6 @@ export const setDeviceName = createAction(
 export const sendMessageToDevice = createAction(
   `[deviceMessages] sendMessageToDevice`,
   props<{ message: IMessage }>(),
-
 );
 
 export const setLog = createAction(

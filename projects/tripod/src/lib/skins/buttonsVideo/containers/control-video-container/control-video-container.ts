@@ -3,13 +3,12 @@ import { PageLayoutComponent } from '../../../../../../../ui/src/public-api';
 import { Store } from '@ngrx/store';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { sendMessageToDevice } from '../../../../+state/messages/messages.actions';
 import { ControlButtonsComponent } from '../../../../../../../ui/src/lib/components/control-buttons/control-buttons.component';
 import {
   getDelayModify1, getDelayModify2, getDisplayTargets, getOrientation,
   getQuality,
   getResolution,
-  getSteps, getTargets, getVideoUrl, getZoom
+  getSteps, getTargets, getZoom
 } from '../../../../+state/skins/move-skin/view/move-view-skin.selectors';
 import {MoveViewSkinState} from '../../../../+state/skins/move-skin/view/move-view-skin.reducer';
 import {SkinMoveKeyboardEventsService} from '../../../buttons/services/keyboardEvents.service';
@@ -27,7 +26,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { getTheDistanceToTheCenterOfTheNearestTarget } from '../../../../+state/targets/targets.selectors';
 import { CoordinatesMessagesService } from '../../services/cognitionEvents.service';
-// import { getTargetsList } from '../../../../+state/skins/move-skin/targets/targets.selectors';
 
 @Component({
   selector: 'control-video-container',
@@ -99,11 +97,7 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
         steps: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'targets') {
-      if ($event.data.data == true ) {
-        this.eventTargetsTrue = true;
-      } else {
-        this.eventTargetsTrue = false;
-      };
+      this.eventTargetsTrue = $event.data.data;
       this.keyboardEventsArea.nativeElement.focus();
       this.store.dispatch(setActiveTargets({
         targets: $event.data
@@ -115,23 +109,11 @@ export class ControlVideoContainer implements OnInit, AfterViewInit  {
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay1') {
       this.keyboardEventsArea.nativeElement.focus();
-      // this.store.dispatch(sendMessageToDevice({
-      //   message: {
-      //     event: 'SET',
-      //     data: {d1: $event.data.data}
-      //   },
-      // }));
       this.store.dispatch(setActiveDelay1({
         delay1: $event.data
       }));
     } else if ($event.event === 'SetButtonsComponent:BUTTON_CLICKED' && note === 'delay2') {
       this.keyboardEventsArea.nativeElement.focus();
-      // this.store.dispatch(sendMessageToDevice({
-      //   message: {
-      //     event: 'SET',
-      //     data: {d2: $event.data.data}
-      //   },
-      // }));
       this.store.dispatch(setActiveDelay2({
         delay2: $event.data
       }));

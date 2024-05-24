@@ -4,9 +4,9 @@ import * as ViewSkinActions from './move-view-skin.actions';
 export const TRIPOD_VIEW_SKIN_FEATURE_KEY = 'tripod/skins/move-skin/view';
 
 export interface IMoveSkin {
-    text: string;
-    data: any;
-    selected: boolean;
+  text: string;
+  data: any;
+  selected: boolean;
 }
 
 export interface IDirect {
@@ -34,7 +34,7 @@ export interface MoveViewSkinState {
 }
 
 export interface AboutPartialState {
-    readonly [TRIPOD_VIEW_SKIN_FEATURE_KEY]: MoveViewSkinState;
+  readonly [TRIPOD_VIEW_SKIN_FEATURE_KEY]: MoveViewSkinState;
 }
 
 export const initialState: MoveViewSkinState = {
@@ -106,23 +106,21 @@ export const initialState: MoveViewSkinState = {
 };
 
 export const MoveViewSkinReducer = createReducer(
-    initialState,
-    on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
-    on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, stargets: targetsList })),
-    on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction })),
-    on(ViewSkinActions.setSendDirection, (state, {sendDirection}) => (
-      console.log('Устанавиливается новый дирекшн', sendDirection),
-      { ...state, sendDirection})),
-    on(ViewSkinActions.setDelayList1, (state, {activeDelayList1}) => ({ ...state, delay1: activeDelayList1})),
-    on(ViewSkinActions.setDelayList2, (state, {activeDelayList2}) => ({ ...state, delay2: activeDelayList2 })),
-    on(ViewSkinActions.setDelay2, (state, {delay}) => ({ ...state, direction: {...state.direction, d2: delay} })),
-    on(ViewSkinActions.setDelay1, (state, {delay}) => ({ ...state, direction: {...state.direction, d1: delay} })),
-    on(ViewSkinActions.setDisplayTargets, (state, {displayTargetsList}) => ({ ...state, displayTargets: displayTargetsList })),
-    on(ViewSkinActions.setQuality, (state, {qualityList}) => ({ ...state, quality: qualityList })),
-    on(ViewSkinActions.setResolution, (state, {resolutionList}) => ({ ...state, resolution: resolutionList })),
-    on(ViewSkinActions.setOrientation, (state, {orientationList}) => ({ ...state, orientation: orientationList })),
-    on(ViewSkinActions.setZoom, (state, {zoomList}) => ({ ...state, zoom: zoomList })),
-    on(ViewSkinActions.setShift, (state, {isShift}) => ({ ...state, isShift })),
-    on(ViewSkinActions.setCtrl, (state, {isCtrl}) => ({ ...state, isCtrl })),
+  initialState,
+  on(ViewSkinActions.setSteps, (state, {stepsList}) => ({ ...state, steps: stepsList })),
+  on(ViewSkinActions.setTargets, (state, {targetsList}) => ({ ...state, stargets: targetsList })),
+  on(ViewSkinActions.setDirection, (state, {direction}) => ({ ...state, direction })),
+  on(ViewSkinActions.setSendDirection, (state, {sendDirection}) => ({ ...state, sendDirection})),
+  on(ViewSkinActions.setDelayList1, (state, {activeDelayList1}) => ({ ...state, delay1: activeDelayList1})),
+  on(ViewSkinActions.setDelayList2, (state, {activeDelayList2}) => ({ ...state, delay2: activeDelayList2 })),
+  on(ViewSkinActions.setDelay2, (state, {delay}) => ({ ...state, direction: {...state.direction, d2: delay} })),
+  on(ViewSkinActions.setDelay1, (state, {delay}) => ({ ...state, direction: {...state.direction, d1: delay} })),
+  on(ViewSkinActions.setDisplayTargets, (state, {displayTargetsList}) => ({ ...state, displayTargets: displayTargetsList })),
+  on(ViewSkinActions.setQuality, (state, {qualityList}) => ({ ...state, quality: qualityList })),
+  on(ViewSkinActions.setResolution, (state, {resolutionList}) => ({ ...state, resolution: resolutionList })),
+  on(ViewSkinActions.setOrientation, (state, {orientationList}) => ({ ...state, orientation: orientationList })),
+  on(ViewSkinActions.setZoom, (state, {zoomList}) => ({ ...state, zoom: zoomList })),
+  on(ViewSkinActions.setShift, (state, {isShift}) => ({ ...state, isShift })),
+  on(ViewSkinActions.setCtrl, (state, {isCtrl}) => ({ ...state, isCtrl })),
 );
 
