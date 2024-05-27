@@ -64,7 +64,7 @@ export const initialState: MoveViewSkinState = {
     {text: '100', data:  100, selected: true},
     {text: '200', data:  200, selected: false},
   ],
-  videoUrlHost: 'http://192.168.0.208:8080',
+  videoUrlHost: 'http://192.168.0.15:8080',
   quality: [
     {text: '10', data:  10, selected: false},
     {text: '20', data:  20, selected: false},

@@ -1,6 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
 import * as ViewAction from './view.actions';
-import {setAllowRecognition} from "./view.actions";
 
 export const VIEW_FEATURE_KEY = 'view';
 

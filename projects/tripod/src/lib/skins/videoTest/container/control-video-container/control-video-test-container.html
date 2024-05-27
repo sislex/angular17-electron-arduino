@@ -16,13 +16,23 @@
               <a
                 mat-list-item
                 [disabled]="menuItem.isSelected"
-                (click)="selectMenu(menuItem)"
-              >{{menuItem.name}}</a>
+                (click)="selectMenu(menuItem)">
+                {{menuItem.name}}
+              </a>
             }
-            @for (target of ((getTargetsData$ | async)); track target.id) {
+            @for (target of getTargetsData$ | async; track target.id) {
               @if (target.counter > 10) {
-                <a mat-list-item [disabled]="(getSelectedId$|async) === target.id"
-                   (click)="buttonClick(target.id)">Tatget: {{target.id}}, {{target.counter}}</a>
+                @if ((getSelectedId$ | async) === target.id || !(allowRecognition$ | async)) {
+                  <a mat-list-item
+                     [disabled]="(getSelectedId$ | async) === target.id || !(allowRecognition$ | async)">
+                    Target: {{ target.id }}, {{ target.counter }}
+                  </a>
+                } @else {
+                  <a mat-list-item
+                     (click)="buttonClick(target.id)">
+                    Target: {{ target.id }}, {{ target.counter }}
+                  </a>
+                }
               }
             }
             <div class="bottom">

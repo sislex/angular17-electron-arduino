@@ -15,13 +15,8 @@ import {MatListModule} from "@angular/material/list";
 import {getSideMenu, isVideoView} from "../../../../+state/view/view.selectors";
 import {IMenuItem} from "../../../../+state/view/view.reducer";
 import {selectSideMenu, setAllowRecognition} from "../../../../+state/view/view.actions";
-import {
-  getSelectedId,
-  getTargetsList, getTargetsListCoordinate,
-} from "../../../../+state/targets/targets.selectors";
-import {
-  getAllowRecognition,
-} from "../../../../+state/view/view.selectors";
+import {getSelectedId, getTargetsList, getTargetsListCoordinate} from "../../../../+state/targets/targets.selectors";
+import {getAllowRecognition} from "../../../../+state/view/view.selectors";
 import {setActiveTarget} from "../../../../+state/targets/targets.actions";
 import {CoordinatesMessagesService} from "../../../buttonsVideo/services/cognitionEvents.service";
 
@@ -70,6 +65,8 @@ export class ControlVideoTestContainer implements OnInit, AfterViewInit  {
 
   setAllowRecognition() {
     this.store.dispatch(setAllowRecognition());
+
+    this.buttonClick(-1);
   }
 
   selectMenu(menuItem: IMenuItem) {
@@ -85,7 +82,7 @@ export class ControlVideoTestContainer implements OnInit, AfterViewInit  {
   }
 
   buttonClick(selectedId: number) {
-    this.store.dispatch(setActiveTarget({selectedId}));
+      this.store.dispatch(setActiveTarget({selectedId}));
 
     this.store.dispatch(sendDirection({
       direction: 'VERTICALSTOP',

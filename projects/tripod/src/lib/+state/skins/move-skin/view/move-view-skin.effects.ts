@@ -232,10 +232,6 @@ export class SetButtonEffects {
       ofType(sendDirection),
       concatLatestFrom(() => this.store.select(getDirection)),
       tap(([{direction}, directionState]) => {
-
-        console.log('Пришло в эффект из сервиса', direction);
-        console.log('Старое направление использ в эффекте', directionState);
-
         let newDirectionState = {...directionState};
         if (direction === 'LEFT') {
           newDirectionState = {...newDirectionState, s1: -1 };
